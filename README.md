@@ -1,5 +1,5 @@
 # LoanBroaker
-Repository for System integration Loan broker project
+Repository for System integration Loan broker project on Cphbusiness, PBA in software development.
 
 **Table of contents.**
 
