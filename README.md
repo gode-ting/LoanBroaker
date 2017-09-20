@@ -1,6 +1,14 @@
 # LoanBroaker
 Repository for System integration Loan broker project
 
+**Table of contents.**
+
+- [Important links](#important-links)
+- [Authors](#authors)
+- [References](#references)
+
+## Important links
+
 ## Authors
 
 [Frederik Larsen](https://github.com/lalelarsen)
