@@ -1,4 +1,7 @@
 # LoanBroaker
+
+[![Stories in Ready](https://badge.waffle.io/hilleer/LoanBroaker.png?label=ready&title=Ready)](http://waffle.io/hilleer/LoanBroaker)
+
 Repository for System integration Loan broker project on Cphbusiness, PBA in software development.
 
 **Table of contents.**
