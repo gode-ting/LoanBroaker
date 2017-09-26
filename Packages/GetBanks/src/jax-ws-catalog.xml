@@ -4,4 +4,6 @@
     <system systemId="http://localhost:8080/RuleBase/CreditScoreWebService?xsd=1" uri="wsdl/localhost_8080/RuleBase/CreditScoreWebService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/RuleBase/GetBankWebServices?wsdl" uri="wsdl/localhost_8080/RuleBase/GetBankWebServices.wsdl"/>
     <system systemId="http://localhost:8080/RuleBase/GetBankWebServices?xsd=1" uri="wsdl/localhost_8080/RuleBase/GetBankWebServices.xsd_1.xsd"/>
+    <system systemId="http://87.50.16.42:8080/RuleBase/GetBankWebServices?wsdl" uri="wsdl/87.50.16.42_8080/RuleBase/GetBankWebServices.wsdl"/>
+    <system systemId="http://87.50.16.42:8080/RuleBase/GetBankWebServices?xsd=1" uri="wsdl/87.50.16.42_8080/RuleBase/GetBankWebServices.xsd_1.xsd"/>
 </catalog>

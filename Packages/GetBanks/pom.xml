@@ -31,13 +31,13 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/RuleBase/GetBankWebServices.wsdl</wsdlFile>
+                                <wsdlFile>87.50.16.42_8080/RuleBase/GetBankWebServices.wsdl</wsdlFile>
                             </wsdlFiles>
                             <packageName></packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:8080/RuleBase/GetBankWebServices?wsdl</wsdlLocation>
+                            <wsdlLocation>http://87.50.16.42:8080/RuleBase/GetBankWebServices?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/GetBankWebServices.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-GetBankWebServices</id>
@@ -70,7 +70,17 @@
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
-            <version>3.2.3</version>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
         </dependency>
     </dependencies>
 </project>
