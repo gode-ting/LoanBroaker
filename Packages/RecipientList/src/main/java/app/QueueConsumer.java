@@ -53,7 +53,6 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             AMQP.BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
         HashMap application = (HashMap) SerializationUtils.deserialize(body);
         delegate.didConsumeMessageWithOptionalException(application, null);
     }

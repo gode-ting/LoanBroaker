@@ -1,7 +1,7 @@
 package app.rulebase;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
 import org.apache.commons.lang.SerializationUtils;
 
 import javax.jws.WebService;
@@ -13,8 +13,8 @@ public class CreditScoreWebService {
 
     @WebMethod(operationName = "getBankRules")
     public byte[] getCreditScore(@WebParam(name = "creditScore") int creditScore) {
-        AllBanks allBanks = new AllBanks();
-        List<Bank> bankList = allBanks.getBanksByCreditScore(creditScore);
-        return SerializationUtils.serialize((Serializable) bankList);
+        AllBanks service = new AllBanks();
+        HashMap bankResults = service.getBanksByCreditScore(creditScore);
+        return SerializationUtils.serialize((Serializable) bankResults);
     }
 }
