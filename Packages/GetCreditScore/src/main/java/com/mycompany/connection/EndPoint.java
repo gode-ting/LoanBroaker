@@ -9,6 +9,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 /**
  *
@@ -24,7 +25,7 @@ public abstract class EndPoint {
     protected Connection connection;
     protected String endPointName;
 	
-    public EndPoint(String endpointName) throws IOException{
+    public EndPoint(String endpointName) throws IOException, TimeoutException{
          this.endPointName = endpointName;
 		
          //Create a connection factory
@@ -51,7 +52,7 @@ public abstract class EndPoint {
      * Close channel and connection. Not necessary as it happens implicitly any way. 
      * @throws IOException
      */
-     public void close() throws IOException{
+     public void close() throws IOException, TimeoutException{
          this.channel.close();
          this.connection.close();
      }

@@ -1,8 +1,8 @@
 
-package com.mycompany.app;
+package app;
 
-import com.mycompany.connection.EndPoint;
-import com.mycompany.interfaces.ProducerDelegate;
+import connection.EndPoint;
+import interfaces.ProducerDelegate;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
@@ -35,3 +35,4 @@ public class Producer extends EndPoint {
         t.run();
     }
 }
+
