@@ -23,7 +23,7 @@ public class Dummy {
 
     protected static Connection connection;
     protected static Channel channel;
-    protected static String endPointName = "queue_in";
+    protected static String endPointName = "LoanBroker9.getCreditScore_in";
 
     public static void main(String[] args) {
         //Create a connection factory
@@ -47,7 +47,7 @@ public class Dummy {
             channel.queueDeclare(endPointName, false, false, false, null);
             
             HashMap message = new HashMap();
-            message.put("message", "hej");
+            message.put("ssn", "123456-7890");
             
             channel.basicPublish("", endPointName, null, SerializationUtils.serialize(message));
             System.out.println("message sent");

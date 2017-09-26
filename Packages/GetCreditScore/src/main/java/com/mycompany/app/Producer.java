@@ -27,7 +27,7 @@ public class Producer extends EndPoint {
     }
 
     public void sendMessage(Serializable object) {
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -39,5 +39,6 @@ public class Producer extends EndPoint {
                 }
             }
         });
+        t.run();
     }
 }

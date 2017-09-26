@@ -26,7 +26,7 @@ public class CreditScoreService implements Runnable {
     }
 
     public void getCreditScore(HashMap application) {
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try { // Call Web Service Operation
@@ -37,7 +37,6 @@ public class CreditScoreService implements Runnable {
                     String ssn = (String) application.get("ssn");
                     int score = (int) port.creditScore(ssn);
                     application.put("score", score);
-
                     delegate.didGetCreditScoreWithOptionalException(application, null);
 
                 } catch (Exception ex) {
@@ -45,6 +44,7 @@ public class CreditScoreService implements Runnable {
                 }
             }
         });
+        t.run();
     }
 
 //    public static void main(String[] args) throws IOException {
