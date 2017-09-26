@@ -27,9 +27,9 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
     
     
     public Main() throws Exception {
-        consumer = new QueueConsumer("queue_in", this);
+        consumer = new QueueConsumer("LoanBroker9.getCreditScore_in", this);
         service = new CreditScoreService(this);
-        producer = new Producer("queue_out", this);
+        producer = new Producer("LoanBroker9.getCreditScore_out", this);
         
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();  
@@ -44,7 +44,9 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
     
     @Override
     public void didGetCreditScoreWithOptionalException(HashMap application, Exception ex) {
-        if      (ex == null) { producer.sendMessage(application); } 
+        if      (ex == null) { producer.sendMessage(application); 
+            
+        } 
         else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
     }
     
