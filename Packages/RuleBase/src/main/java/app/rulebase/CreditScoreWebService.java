@@ -1,5 +1,9 @@
 package app.rulebase;
 
+import java.io.Serializable;
+import java.util.List;
+import org.apache.commons.lang.SerializationUtils;
+
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -8,8 +12,9 @@ import javax.jws.WebParam;
 public class CreditScoreWebService {
 
     @WebMethod(operationName = "getBankRules")
-    public String getCreditScore(@WebParam(name = "snn") String ssn) {
-
-        return ssn;
+    public byte[] getCreditScore(@WebParam(name = "creditScore") int creditScore) {
+        AllBanks allBanks = new AllBanks();
+        List<Bank> bankList = allBanks.getBanksByCreditScore(creditScore);
+        return SerializationUtils.serialize((Serializable) bankList);
     }
 }
