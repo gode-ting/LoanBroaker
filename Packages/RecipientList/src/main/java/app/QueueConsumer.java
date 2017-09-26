@@ -3,24 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.app;
+package app;
 
-import com.mycompany.connection.EndPoint;
-import com.mycompany.interfaces.ConsumerDelegate;
-import com.rabbitmq.client.AMQP.BasicProperties;
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
+import connection.EndPoint;
+import interfaces.ConsumerDelegate;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
 
 /**
  *
- * @author emilgras
+ * @author Daniel
  */
 public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.client.Consumer {
 
@@ -55,8 +52,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      * Called when new message is available.
      */
     public void handleDelivery(String consumerTag, Envelope env,
-            BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
+            AMQP.BasicProperties props, byte[] body) throws IOException {
         HashMap application = (HashMap) SerializationUtils.deserialize(body);
         delegate.didConsumeMessageWithOptionalException(application, null);
     }
