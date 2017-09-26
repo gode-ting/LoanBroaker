@@ -1,5 +1,5 @@
 {
-	"name": "loan-broker-client",
+	"name": "client",
 	"description": "Package for the loan broaker client",
 	"version": "1.0.0",
 	"private": true,
