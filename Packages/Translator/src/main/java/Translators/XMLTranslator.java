@@ -1,5 +1,9 @@
 package Translators;
 
+import interfaces.MainInterface;
+import interfaces.XMLTranslatorInterface;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,16 +16,20 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.commons.lang.SerializationUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class XMLTranslator {
+public class XMLTranslator implements XMLTranslatorInterface {
 
-    public XMLTranslator() {
+    MainInterface delegate;
 
+    public XMLTranslator(MainInterface delegate) {
+        this.delegate = delegate;
     }
 
-    public static void main(String[] args) throws TransformerConfigurationException, TransformerException {
+    @Override
+    public void translateXml() {
 
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -54,13 +62,19 @@ public class XMLTranslator {
 
             // Output to console for testing
             StreamResult result = new StreamResult(System.out);
-            System.out.println("Result: " + result);
             transformer.transform(source, result);
 
-            System.out.println("File saved!");
+            OutputStream xmlResult = result.getOutputStream();
+
+            delegate.didProduceXml(null, SerializationUtils.serialize((Serializable) xmlResult));
 
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (TransformerException ex) {
+            Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
