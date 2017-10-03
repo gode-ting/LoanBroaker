@@ -37,5 +37,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
             System.out.println("Failed with exception: " + ex.getLocalizedMessage());
         }
     }
+    
+    public static void main(String[] args) throws Exception {
+        new Main();
+    }
 
 }
