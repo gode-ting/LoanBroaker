@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, ProducerDelegate {
 
-    
     private QueueConsumer consumer;
     private CreditScoreService service;
     private Producer producer;
