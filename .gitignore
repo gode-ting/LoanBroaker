@@ -1,4 +1,3 @@
-/Packages/GetCreditScore/target/
 .DS_Store
 # Compiled class file
 *.class
@@ -25,6 +24,7 @@ hs_err_pid*
 /Packages/GetBanks/target/
 
 **/node_modules
-/Packages/RecipientList/target/
-/Packages/RuleBase/target/
+/Packages/*/target
+# /Packages/RecipientList/target/
+# /Packages/RuleBase/target/
 /Packages/Client/nbproject/private/
