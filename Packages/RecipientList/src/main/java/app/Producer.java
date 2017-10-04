@@ -19,12 +19,13 @@ public class Producer extends EndPoint {
         this.delegate = delegate;
     }
 
-    public void sendMessage(Serializable object) {
+    public void sendMessage(Serializable object, String binding) {
+        System.out.println("Message sent to translator: " + binding);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    channel.basicPublish("", endPointName, null, SerializationUtils.serialize(object));
+                    channel.basicPublish("LoanBroker9.getRecipients_out", binding, null, SerializationUtils.serialize(object));
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
