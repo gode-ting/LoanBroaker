@@ -4,6 +4,7 @@ import interfaces.MainInterface;
 import interfaces.XMLTranslatorInterface;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -23,21 +24,20 @@ import org.w3c.dom.Element;
 
 public class XMLTranslator implements XMLTranslatorInterface {
 
-
     public XMLTranslator() {
 
     }
 
     @Override
-    public OutputStream translateXml(HashMap application) {
-        OutputStream xmlResult = null;
+    public String translateXml(HashMap application) {
+        String xmlResult = null;
         try {
             String ssn = (String) application.get("ssn");
             String creditScore = (String) application.get("creditScore");
             String loanAmount = (String) application.get("loanAmount");
             String loanDuration = (String) application.get("loanDuration");
             System.out.println("Ssn: " + ssn + " - credit score: " + creditScore + " - loan amount: " + loanAmount + " - loan duration: " + loanDuration);
-            
+
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -67,14 +67,15 @@ public class XMLTranslator implements XMLTranslatorInterface {
             DOMSource source = new DOMSource(doc);
 
             // Output to console for testing
-            StreamResult result = new StreamResult(System.out);
+            StringWriter stringWriter = new StringWriter();
+            StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
-            
-            xmlResult = result.getOutputStream();
+            System.out.println("String writer: " + stringWriter.toString());
+            xmlResult = stringWriter.toString();
 
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) { 
+        } catch (TransformerException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         }
         return xmlResult;

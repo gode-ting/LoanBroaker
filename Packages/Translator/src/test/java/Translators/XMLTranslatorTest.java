@@ -1,6 +1,7 @@
 package Translators;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
@@ -33,9 +34,10 @@ public class XMLTranslatorTest {
         //XMLStreamWriter writer = new JsonXMLOutputFactory().createXMLStreamWriter(sw);
         
         // Hard coded string
-        String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><LoanRequest><ssn>xxxxxxx-xxxx</ssn><creditScore>500</creditScore><loanAmount>1000.0</loanAmount><xxxx-xx-xx>Wed Oct 04 10:15:49 CEST 2017</xxxx-xx-xx></LoanRequest>";
-        OutputStream actualResult = xmlTranslator.translateXml(application);
-        System.out.println("actual result: " + actualResult.toString());
+        String expectedResult = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><LoanRequest><ssn>xxxxxxx-xxxx</ssn><creditScore>500</creditScore><loanAmount>1000.0</loanAmount><xxxx-xx-xx>Wed Oct 04 11:16:05 CEST 2017</xxxx-xx-xx></LoanRequest>";
+        String actualResult = xmlTranslator.translateXml(application);
+        System.out.println("Expected: " + expectedResult);
+        System.out.println("Actual: " + actualResult);
         assertThat(actualResult,is(expectedResult));
     }
 }
