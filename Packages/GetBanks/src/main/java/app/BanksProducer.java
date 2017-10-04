@@ -1,4 +1,4 @@
-package com.getbanks;
+package app;
 
 import java.util.HashMap;
 

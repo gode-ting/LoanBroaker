@@ -30,6 +30,7 @@ public class GetBanksService implements Runnable {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                
                     try { // Call Web Service Operation
                         app.rulebase.GetBankWebServices service = new app.rulebase.GetBankWebServices();
                         app.rulebase.CreditScoreWebService port = service.getCreditScoreWebServicePort();

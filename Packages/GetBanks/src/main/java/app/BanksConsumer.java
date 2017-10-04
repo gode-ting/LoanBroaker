@@ -1,4 +1,4 @@
-package com.getbanks;
+package app;
 
 import com.rabbitmq.client.QueueingConsumer;
 import java.io.IOException;
