@@ -4,7 +4,9 @@ import interfaces.MainInterface;
 import interfaces.XMLTranslatorInterface;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -22,16 +24,19 @@ import org.w3c.dom.Element;
 
 public class XMLTranslator implements XMLTranslatorInterface {
 
-    MainInterface delegate;
+    public XMLTranslator() {
 
-    public XMLTranslator(MainInterface delegate) {
-        this.delegate = delegate;
     }
 
     @Override
-    public void translateXml() {
-
+    public String translateXml(HashMap application) {
+        String xmlResult = null;
         try {
+            String ssn = (String) application.get("ssn");
+            String creditScore = (String) application.get("creditScore");
+            String loanAmount = (String) application.get("loanAmount");
+            String loanDuration = (String) application.get("loanDuration");
+
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -39,42 +44,38 @@ public class XMLTranslator implements XMLTranslatorInterface {
             Element loanRequest = doc.createElement("LoanRequest");
             doc.appendChild(loanRequest);
 
-            Element ssn = doc.createElement("ssn");
-            ssn.appendChild(doc.createTextNode("xxxxxxxx-xxxx"));
-            loanRequest.appendChild(ssn);
+            Element ssnEle = doc.createElement("ssn");
+            ssnEle.appendChild(doc.createTextNode(ssn));
+            loanRequest.appendChild(ssnEle);
 
-            Element creditScore = doc.createElement("creditScore");
-            creditScore.appendChild(doc.createTextNode("Credit score"));
-            loanRequest.appendChild(creditScore);
+            Element creditScoreEle = doc.createElement("creditScore");
+            creditScoreEle.appendChild(doc.createTextNode(creditScore));
+            loanRequest.appendChild(creditScoreEle);
 
-            Element loanAmount = doc.createElement("loanAmount");
-            loanAmount.appendChild(doc.createTextNode("1000.0"));
-            loanRequest.appendChild(loanAmount);
+            Element loanAmountEle = doc.createElement("loanAmount");
+            loanAmountEle.appendChild(doc.createTextNode(loanAmount));
+            loanRequest.appendChild(loanAmountEle);
 
-            Element loanDuration = doc.createElement("loanDuration");
-            Date date = new Date();
-            loanDuration.appendChild(doc.createTextNode(date.toString()));
-            loanRequest.appendChild(loanAmount);
+            Element loanDurationEle = doc.createElement("loanDuration");
+            loanDurationEle.appendChild(doc.createTextNode(loanDuration));
+            loanRequest.appendChild(loanDurationEle);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
 
             // Output to console for testing
-            StreamResult result = new StreamResult(System.out);
+            StringWriter stringWriter = new StringWriter();
+            StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
 
-            OutputStream xmlResult = result.getOutputStream();
-
-            delegate.didProduceXml(null, SerializationUtils.serialize((Serializable) xmlResult));
+            xmlResult = stringWriter.toString();
 
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerConfigurationException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TransformerException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return xmlResult;
     }
-
 }
