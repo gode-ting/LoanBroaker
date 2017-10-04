@@ -31,9 +31,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
         try {
             System.out.println("hey");
             //start consuming messages. Auto acknowledge messages.
-
             
-
 //        Consumer consumer = new DefaultConsumer(channel) {
 //            @Override
 //            public void handleDelivery(String consumerTag, Envelope envelope,
