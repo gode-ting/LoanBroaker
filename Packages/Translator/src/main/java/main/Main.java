@@ -1,22 +1,29 @@
 package main;
 
+import Translators.XMLTranslator;
 import app.Producer;
 import app.QueueConsumer;
 import interfaces.ConsumerDelegate;
 import interfaces.MainInterface;
 import interfaces.ProducerDelegate;
+import interfaces.XMLTranslatorInterface;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
+import org.apache.commons.lang.SerializationUtils;
 
 public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
 
     private QueueConsumer consumer;
     private Producer producer;
+    private XMLTranslatorInterface xmlTranslator;
 
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getRecipients_out", this);
         producer = new Producer("cphbusiness.bankXML", this);
+        xmlTranslator = new XMLTranslator();
 
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();
@@ -25,6 +32,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
         if (ex == null) {
+            OutputStream xml = xmlTranslator.translateXml(application);
+            String replyTo = "LoanBroker9.banks_out";
+            producer.sendMessage(SerializationUtils.serialize((Serializable) xml), replyTo);
         } else {
             System.out.println("Failed with exception: " + ex.getLocalizedMessage());
         }
@@ -48,14 +58,4 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
         new Main();
     }
 
-    @Override
-    public void didProduceXml(IOException ex, byte[] data) {
-        if (ex == null) {
-            System.out.println("success");
-            System.out.println(data);
-            producer.sendMessage(data);
-        } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
-        }
-    }
 }

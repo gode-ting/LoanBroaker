@@ -1,6 +1,9 @@
 
 package interfaces;
 
+import java.io.OutputStream;
+import java.util.HashMap;
+
 public interface XMLTranslatorInterface {
-    void translateXml();
+    OutputStream translateXml(HashMap application);
 }
