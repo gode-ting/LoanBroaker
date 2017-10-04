@@ -2,7 +2,7 @@
 package app;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
-import connection.EndPoint;
+import connection.EndPointProducer;
 import interfaces.ProducerDelegate;
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
 
-public class Producer extends EndPoint {
+public class Producer extends EndPointProducer {
 
     private ProducerDelegate delegate;
 

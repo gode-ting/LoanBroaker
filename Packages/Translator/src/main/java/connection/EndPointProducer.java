@@ -1,4 +1,3 @@
-
 package connection;
 
 import com.rabbitmq.client.ConnectionFactory;
@@ -6,7 +5,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
-public abstract class EndPoint {
+public abstract class EndPointProducer {
     
  protected final String HOST = "datdb.cphbusiness.dk";
     protected final String USERNAME = "student";
@@ -17,7 +16,7 @@ public abstract class EndPoint {
     protected Connection connection;
     protected String endPointName;
 	
-    public EndPoint(String endPointName, String keyBind) throws IOException, TimeoutException{
+    public EndPointProducer(String endPointName) throws IOException, TimeoutException{
          this.endPointName = endPointName;
 		
          //Create a connection factory
@@ -36,11 +35,7 @@ public abstract class EndPoint {
 	    
          //declaring a queue for this channel. If queue does not exist,
          //it will be created on the server.
-//         channel.queueDeclare(endpointName, false, false, false, null);
-         
-        channel.exchangeDeclare(endPointName, TYPE);
-        String queueName = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName, endPointName, keyBind);
+         channel.queueDeclare(endPointName, false, false, false, null);
     }
 	
 	

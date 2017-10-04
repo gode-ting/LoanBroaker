@@ -21,7 +21,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     private XMLTranslatorInterface xmlTranslator;
 
     public Main() throws Exception {
-        consumer = new QueueConsumer("LoanBroker9.getRecipients_out", this);
+        consumer = new QueueConsumer("LoanBroker9.getRecipients_out", "bank-lån-and-spar", this);
         producer = new Producer("cphbusiness.bankXML", this);
         xmlTranslator = new XMLTranslator();
 
@@ -32,6 +32,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
         if (ex == null) {
+            System.out.println("translator did consume - " + application);
             OutputStream xml = xmlTranslator.translateXml(application);
             String replyTo = "LoanBroker9.banks_out";
             producer.sendMessage(SerializationUtils.serialize((Serializable) xml), replyTo);
@@ -43,7 +44,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
         if (ex == null) {
-            System.out.println("success");
+            System.out.println("translator did send message to bank - success");
         } else {
             System.out.println("Failed with exception: " + ex.getLocalizedMessage());
         }
