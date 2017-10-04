@@ -36,7 +36,6 @@ public class XMLTranslator implements XMLTranslatorInterface {
             String creditScore = (String) application.get("creditScore");
             String loanAmount = (String) application.get("loanAmount");
             String loanDuration = (String) application.get("loanDuration");
-            System.out.println("Ssn: " + ssn + " - credit score: " + creditScore + " - loan amount: " + loanAmount + " - loan duration: " + loanDuration);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -57,9 +56,8 @@ public class XMLTranslator implements XMLTranslatorInterface {
             loanAmountEle.appendChild(doc.createTextNode(loanAmount));
             loanRequest.appendChild(loanAmountEle);
 
-            Element loanDurationEle = doc.createElement(loanDuration);
-            Date date = new Date();
-            loanDurationEle.appendChild(doc.createTextNode(date.toString()));
+            Element loanDurationEle = doc.createElement("loanDuration");
+            loanDurationEle.appendChild(doc.createTextNode(loanDuration));
             loanRequest.appendChild(loanDurationEle);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -70,7 +68,7 @@ public class XMLTranslator implements XMLTranslatorInterface {
             StringWriter stringWriter = new StringWriter();
             StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
-            System.out.println("String writer: " + stringWriter.toString());
+
             xmlResult = stringWriter.toString();
 
         } catch (ParserConfigurationException ex) {
