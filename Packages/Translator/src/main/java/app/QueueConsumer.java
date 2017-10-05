@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
 
-public class QueueConsumer extends EndPoint implements Runnable, Consumer {
+public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.client.Consumer {
 
     private ConsumerDelegate delegate;
     
@@ -29,19 +29,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
     @Override
     public void run() {
         try {
-            System.out.println("hey");
-            //start consuming messages. Auto acknowledge messages.
-            
-//        Consumer consumer = new DefaultConsumer(channel) {
-//            @Override
-//            public void handleDelivery(String consumerTag, Envelope envelope,
-//                    AMQP.BasicProperties properties, byte[] body) throws IOException {
-//                String message = new String(body, "UTF-8");
-//                System.out.println(" [x] Received '" + envelope.getRoutingKey() + "':'" + message + "'");
-//            }
-//        };
-
-            channel.basicConsume(endPointName, true, this);
+            channel.basicConsume(queueName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
             delegate.didConsumeMessageWithOptionalException(null, ex);
         }
@@ -65,7 +53,6 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer {
      * @param body
      * @throws java.io.IOException
      */
-    @Override
     public void handleDelivery(String consumerTag, Envelope env,
             AMQP.BasicProperties props, byte[] body) throws IOException {
 
