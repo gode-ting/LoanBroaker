@@ -48,6 +48,8 @@ public class Dummy {
             
             HashMap message = new HashMap();
             message.put("ssn", "123456-7890");
+            message.put("loanAmount", "10000.0");
+            message.put("loanDuration", "1973-01-01 01:00:00.0 CET");
             
             channel.basicPublish("", endPointName, null, SerializationUtils.serialize(message));
             System.out.println("message sent");
