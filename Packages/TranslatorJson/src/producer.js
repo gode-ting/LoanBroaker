@@ -1,7 +1,7 @@
 import rabbitmq from '../config/rabbitmq.js';
-// import offlineQueue from './offlineQueue.js';
+import offlineQueue from './offlineQueue.js';
 
-export default function (ampqConn, message) {
+export default function (ampqConn) {
 	let producerQueue = rabbitmq.queues.producer;
 	let replyTo = rabbitmq.queues.consumer;
 
@@ -11,12 +11,18 @@ export default function (ampqConn, message) {
 			console.error('[AMPQ] connection error - closing; ', err);
 		}
 		ch.assertQueue(producerQueue);
-		ch.publish('', producerQueue, Buffer.from(message), {
-			replyTo: replyTo
-		});
+		// let queue = offlineQueue.getOfflineQueue();
+		while (true) {
+			let nextElement = offlineQueue.shiftOfflineQueue();
+			if (!nextElement) return;
+			console.log('Next element (', typeof nextElement,  nextElement);
+			ch.publish('', producerQueue, Buffer.from(nextElement.content), {
+				replyTo: replyTo
+			});
+		}
 	});
-	setTimeout(() => {
-		ampqConn.close();
-		console.log('Conn closed');
-	}, 500);
+	// setTimeout(() => {
+	// 	ampqConn.close();
+	// 	console.log('Conn closed');
+	// }, 500);
 }

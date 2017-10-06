@@ -4,7 +4,11 @@ let offlineQueue = [];
 module.exports = {
 	QueueElement,
 	pushToOfflineQueue,
-	getOfflineQueue
+	getOfflineQueue,
+	shiftOfflineQueue
+}
+function shiftOfflineQueue () {
+	return offlineQueue.shift();
 }
 
 function getOfflineQueue () {
@@ -13,12 +17,9 @@ function getOfflineQueue () {
 
 function pushToOfflineQueue (element) {
 	offlineQueue.push(element);
+	return true;
 }
 
 function QueueElement (content) {
 	this.content = content;
-}
-
-function createOfflineQueue () {
-	return [];
 }

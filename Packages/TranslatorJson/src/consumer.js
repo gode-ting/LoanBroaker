@@ -1,5 +1,7 @@
 import rabbitmq from '../config/rabbitmq.js';
 import producer from './producer.js';
+import testMessage from './TestMessage.js';
+import offlineQueue from './offlineQueue.js';
 
 export default function (ampqConn) {
 	let consumeQueue = rabbitmq.queues.consumer;

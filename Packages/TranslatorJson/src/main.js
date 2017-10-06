@@ -33,5 +33,6 @@ export function main() {
 		console.log('AMPQ connected');
 
 		consumer(conn);
+		producer(conn);
 	});
 }
