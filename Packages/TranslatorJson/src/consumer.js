@@ -1,15 +1,16 @@
-import closeOnError from './closeOnError.js';
+import rabbitmq from '../config/rabbitmq.js';
+import producer from './producer.js';
 
 export default function (ampqConn) {
-	// console.log(ampqConn);
+	let consumeQueue = rabbitmq.queues.consumer;
 
 	ampqConn.createChannel((err, ch) => {
-		if (closeOnError(err, ampqConn)) {
-			return;
-		}
-		ch.on('close', () => {
-			console.log('[AMPQ] channel closed');
-		});
-		ch.prefetch(10);
+		ch.assertQueue(consumeQueue, {durable: false});
+		console.log('Waiting for messages in consumer');
+
+		ch.consume(consumeQueue, (message) => {
+			console.log('Received: ', message.content.toString());
+			producer(ampqConn, message);
+		}, {noAck: true});
 	});
 }
