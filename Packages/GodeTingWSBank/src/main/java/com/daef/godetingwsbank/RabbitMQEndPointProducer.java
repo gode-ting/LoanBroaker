@@ -56,14 +56,6 @@ public class RabbitMQEndPointProducer {
          //it will be created on the server.
          channel.exchangeDeclare(endPointName, "fanout");
          
-         //SENDING INTEREST RATES FURIOUSLY
-         for (int i = 0; i < 10; i++) {
-			channel.basicPublish(endPointName, "", null, message.getBytes());
-			System.out.println(" [x] Sent '" + message + "'");
-		}
-
-		channel.close();
-		connection.close();
     }
 	
 	
