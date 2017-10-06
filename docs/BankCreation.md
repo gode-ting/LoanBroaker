@@ -29,3 +29,4 @@ The corresponding response will look like this:
 ```
 The bank puts reply on the queue which is specified as reply-to in the header.
 
+## Implementation
