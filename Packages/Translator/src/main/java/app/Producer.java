@@ -20,7 +20,7 @@ public class Producer extends EndPointProducer {
         this.delegate = delegate;
     }
 
-    public void sendMessage(Serializable object, String replyTo) {
+    public void sendMessage(String object, String replyTo) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -30,7 +30,7 @@ public class Producer extends EndPointProducer {
                             .replyTo(replyTo)
                             .build();
 
-                    channel.basicPublish("", endPointName, props, SerializationUtils.serialize(object));
+                    channel.basicPublish("", endPointName, props, object.getBytes());
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);

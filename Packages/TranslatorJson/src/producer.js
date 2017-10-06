@@ -2,7 +2,7 @@
 import amqp from 'amqplib/callback_api';
 import rabbitmq from '../config/rabbitmq.js';
 
-export default function (req, res) {
+export default function (ampqConn) {
 	let host = rabbitmq.connection.host;
 	let username = rabbitmq.connection.username;
 	let password = rabbitmq.connection.password;
@@ -17,7 +17,7 @@ export default function (req, res) {
 
 	let message = JSON.stringify({ ssn: ssn, creditScore, creditScore, loanAmount: loanAmount, loanDuration: loanDuration });
 
-	amqp.connect(`amqp://${username}:${password}@${host}:`, (err, conn) => {
+	amqp.connect(`amqp://${username}:${password}@${host}`, (err, conn) => {
 		if (err) {
 			console.error(err);
 		}

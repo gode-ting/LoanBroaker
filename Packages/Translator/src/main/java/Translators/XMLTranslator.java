@@ -30,13 +30,19 @@ public class XMLTranslator implements XMLTranslatorInterface {
 
     @Override
     public String translateXml(HashMap application) {
+        System.out.println("hallo?");
         String xmlResult = null;
         try {
             String ssn = (String) application.get("ssn");
-            String creditScore = (String) application.get("creditScore");
+            String creditScore = ((int) application.get("creditScore")) + "";
             String loanAmount = (String) application.get("loanAmount");
             String loanDuration = (String) application.get("loanDuration");
-
+            
+            System.out.println("ssn: " + ssn);
+            System.out.println("creditScore: " + creditScore);
+            System.out.println("loanAmount: " + loanAmount);
+            System.out.println("loanDuration: " + loanDuration);
+            
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -68,14 +74,16 @@ public class XMLTranslator implements XMLTranslatorInterface {
             StringWriter stringWriter = new StringWriter();
             StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
-
+            
             xmlResult = stringWriter.toString();
-
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TransformerException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e){
+            e.printStackTrace();
         }
+        System.out.println("slut?");
         return xmlResult;
     }
 }

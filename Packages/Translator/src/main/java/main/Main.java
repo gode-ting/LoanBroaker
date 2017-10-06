@@ -1,5 +1,6 @@
 package main;
 
+import Translators.XMLTranslator;
 import app.Producer;
 import app.QueueConsumer;
 import com.rabbitmq.client.AMQP;
@@ -26,9 +27,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
 private static final String EXCHANGE_NAME = "LoanBroker9.getRecipients_out";
     public Main() throws Exception {
         consumer = new QueueConsumer(EXCHANGE_NAME, "bank-lån-and-spar", this);
-//        producer = new Producer("cphbusiness.bankXML", this);
-//        xmlTranslator = new XMLTranslator();
-//
+        producer = new Producer("cphbusiness.bankXML", this);
+        xmlTranslator = new XMLTranslator();
+
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();
 
@@ -40,8 +41,9 @@ private static final String EXCHANGE_NAME = "LoanBroker9.getRecipients_out";
         if (ex == null) {
             System.out.println("translator did consume - " + application);
             String xml = xmlTranslator.translateXml(application);
+            System.out.println("this is xml: " + xml);
             String replyTo = "LoanBroker9.banks_out";
-            producer.sendMessage(SerializationUtils.serialize(xml), replyTo);
+            producer.sendMessage(xml, replyTo);
         } else {
             System.out.println("Failed with exception: " + ex.getLocalizedMessage());
         }

@@ -16,40 +16,21 @@ public abstract class EndPoint {
     protected Channel channel;
     protected Connection connection;
     protected String endPointName;
+    protected String queueName;
 
     public EndPoint(String endPointName, String keyBind) throws IOException, TimeoutException {
         this.endPointName = endPointName;
-
-        //Create a connection factory
-//         ConnectionFactory factory = new ConnectionFactory();
-//	    
-//         //hostname of your rabbitmq server
-//         factory.setHost(HOST);
-//         factory.setUsername(USERNAME);
-//         factory.setPassword(PASSWORD);
-//		
-//         //getting a connection
-//         connection = factory.newConnection();
-//	    
-//         //creating a channel
-//         channel = connection.createChannel();
-        //declaring a queue for this channel. If queue does not exist,
-        //it will be created on the server.
-//         channel.queueDeclare(endpointName, false, false, false, null);
+        
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("datdb.cphbusiness.dk");
         factory.setUsername("student");
         factory.setPassword("cph");
-        Connection connection = factory.newConnection();
+        connection = factory.newConnection();
         channel = connection.createChannel();
 
         channel.exchangeDeclare(endPointName, "direct");
-        String queueName = channel.queueDeclare().getQueue();
+        queueName = channel.queueDeclare().getQueue();
         channel.queueBind(queueName, endPointName, "bank-lån-and-spar");
-
-//        channel.exchangeDeclare("LoanBroker9.getRecipients_out", "direct");
-//        String queueName = channel.queueDeclare().getQueue();
-//        channel.queueBind(queueName, "LoanBroker9.getRecipients_out", "bank-lån-and-spar");
     }
 
     /**

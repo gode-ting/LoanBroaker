@@ -1,5 +1,6 @@
 package connection;
 
+import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
@@ -18,7 +19,6 @@ public abstract class EndPointProducer {
 	
     public EndPointProducer(String endPointName) throws IOException, TimeoutException{
          this.endPointName = endPointName;
-		
          //Create a connection factory
          ConnectionFactory factory = new ConnectionFactory();
 	    
@@ -35,7 +35,8 @@ public abstract class EndPointProducer {
 	    
          //declaring a queue for this channel. If queue does not exist,
          //it will be created on the server.
-         channel.queueDeclare(endPointName, false, false, false, null);
+        channel.exchangeDeclare(endPointName, "fanout");
+        //channelqueueDeclare(endPointName, false, false, false, null);
     }
 	
 	
