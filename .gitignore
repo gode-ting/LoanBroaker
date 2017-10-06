@@ -28,3 +28,4 @@ hs_err_pid*
 # /Packages/RecipientList/target/
 # /Packages/RuleBase/target/
 /Packages/Client/nbproject/private/
+/Packages/TranslatorJson/nbproject/private/
