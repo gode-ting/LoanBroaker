@@ -22,14 +22,14 @@ public class RabbitMQEndPointProducer {
     protected final String HOST = "datdb.cphbusiness.dk";
     protected final String USERNAME = "student";
     protected final String PASSWORD = "cph";
-    protected final String TYPE = "direct";
+    protected final String TYPE = "fanout";
     
     protected Channel channel;
     protected Connection connection;
     protected String endPointName;
 
     
-    //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA DIRECT
+    //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA FANOUT
 	
     public RabbitMQEndPointProducer(String endPointName) throws IOException, TimeoutException{
          this.endPointName = endPointName;
@@ -50,17 +50,14 @@ public class RabbitMQEndPointProducer {
 	    
          //declaring an exchange for this channel. If exchange does not exist,
          //it will be created on the server.
-         channel.exchangeDeclare(endPointName, "fanout");
+            channel.exchangeDeclare(endPointName, "fanout");
          
          //SENDING INTEREST RATES FURIOUSLY
-         for (int i = 0; i < 10; i++) {
-             //PUBLISH SOMETHING USEFUL
-			//channel.basicPublish(endPointName, "", null, message.getBytes());
-			//System.out.println(" [x] Sent '" + message + "'");
-		}
-
-		channel.close();
-		connection.close();
+         String queueName = channel.queueDeclare().getQueue();
+         channel.queueBind(queueName, endPointName, "");
+         
+		
+         
     }
 	
 	
