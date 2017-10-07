@@ -2,12 +2,14 @@
 
 **Table of contents:**
 
-* [Commands](#commands)
+* [Development](#development)
 * [Communicating with the Translator](#communicating-with-the-translator)
 
 Made with node.js
 
-## Commands
+## Development
+
+### Commands
 
 `npm install` or `npm i` install all necescary dependencies.
 
