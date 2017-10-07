@@ -6,12 +6,15 @@ let ajv = Ajv({
 
 let schemas = require('../config/schemas.json');
 let bankSchema = schemas.$bankSchema;
+let rules = require('./rules/bankSchemaProperties.js');
 
 describe('../config/schemas.json', () => {
-	let validate;
+	let validateProperties;
+	let validateLoanAmount;
 
 	before(() => {
-		validate = ajv.compile(bankSchema.properties);
+		validateProperties = ajv.compile(bankSchema.properties);
+		validateLoanAmount = ajv.compile(bankSchema.properties.loanAmount)
 	});
 
 	describe('$bankSchema', () => {
@@ -24,42 +27,15 @@ describe('../config/schemas.json', () => {
 		});
 	});
 
-	describe('$bankSchema', () => {
-		it('should validate schema against test json-objects', () => {
-			// env.addSchema('bankSchema', bankSchema);
-			let testSchemaOne = {
-				ssn: "",
-				creditScore: "",
-				loanAmount: 100.1,
-				loanDuration: "1992-28-04"
-			}
-			let testSchemaTwo = {
-				creditScore: "",
-				loanAmount: 100.1,
-				loanDuration: "1992-28-04"
-			}
+	rules.forEach((rule) => {
+		describe(`$bankSchema.properties`, () => {
+			it('should validate properties-schema against test json-objects', () => {
+				let expected = rule.output;
 
-			let actualOne = validate(testSchemaOne);
-			let actualTwo = validate(testSchemaTwo)
+				let actual = validateProperties(rule.input);
 
-			expect(actualOne).to.eql(true);
-			expect(actualTwo).to.eql(false);
+				expect(actual).to.eql(expected);
+			});
 		});
 	});
-
-	// describe('$bankSchema', () => {
-	// 	it('should return true when validated against schema and has correct structure', () => {
-
-	// 	});
-	// });
-	// describe('$bankSchema', () => {
-	// 	it('should return true when validated against schema and has correct structure', () => {
-
-	// 	});
-	// });
-	// describe('$bankSchema', () => {
-	// 	it('should return true when validated against schema and has correct structure', () => {
-
-	// 	});
-	// });
 });
