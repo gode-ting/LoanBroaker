@@ -22,18 +22,14 @@ public class RabbitMQEndPointProducer {
     protected final String HOST = "datdb.cphbusiness.dk";
     protected final String USERNAME = "student";
     protected final String PASSWORD = "cph";
-    protected final String TYPE = "fanout";
+    protected final String TYPE = "direct";
     
     protected Channel channel;
     protected Connection connection;
     protected String endPointName;
+
     
- 
-    
-    
-    
-    
-    //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA FANOUT
+    //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA DIRECT
 	
     public RabbitMQEndPointProducer(String endPointName) throws IOException, TimeoutException{
          this.endPointName = endPointName;

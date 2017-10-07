@@ -14,39 +14,40 @@ import java.util.HashMap;
  */
 public class LoanCalculator {
 
+    private float maxInterest = 15.0f;    
+    private float minInterest = 2.0f;
+    private int maxCreditScore = 800;
+    
     public LoanCalculator() {
     }
-    
-    
-    
-    
+ 
     public HashMap getInterestRate (String ssn, float loanAmount, int loanDuration, int creditScore) {
+       
         HashMap interestRateResults = new HashMap<String, ArrayList>();
         
-        int interestRate = calculateInterestRate(ssn,loanAmount,loanDuration,creditScore);
-       
-        
+        float interestRate = calculateInterestRate(ssn,loanAmount,loanDuration,creditScore);
+ 
         interestRateResults.put("interestRate", interestRate);
-        interestRateResults.put(ssn, ssn);
+        interestRateResults.put("ssn", ssn);
         
         return interestRateResults;
     } 
     
-    //WARNING THIS IS A VERY BASIC CALCULATOR
-    public int calculateInterestRate(String ssn, float loanAmount, int loanDuration, int creditScore){
+    //Based on 2 grænseværdier, hvis du har en høj creditscore får den en lavere og omvendt.
+    public float calculateInterestRate(String ssn, float loanAmount, int loanDuration, int creditScore){
         
-        int interestRate = 0;
+        float interestRate = 0.0f;
        
-        interestRate = (int) (loanDuration + (creditScore * 0.1) + loanAmount);
-        
-        
-        
-         //Unlucky draw
-        if (ssn.endsWith("2")) 
-        {
-        interestRate =(int) + 0.3;
-        }
-        
+        interestRate =  maxInterest - (maxInterest * (maxCreditScore - creditScore) / maxCreditScore);
+        System.out.println(maxInterest);
+        System.out.println(maxCreditScore);
+        System.out.println(creditScore);
+        System.out.println(interestRate);
         return interestRate;
+    }
+    
+    public static void main(String[] args) {
+        LoanCalculator loan = new LoanCalculator();
+        System.out.println(loan.getInterestRate("12345678", 1000, 2, 400));
     }
 }
