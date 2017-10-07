@@ -6,6 +6,8 @@ import connection.EndPointProducer;
 import interfaces.ProducerDelegate;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +27,13 @@ public class Producer extends EndPointProducer {
             @Override
             public void run() {
                 try {
+                    
+                    String type = "xml";
+                    Map headers = new HashMap();
+                    headers.put("type", type);
                     BasicProperties props = new BasicProperties
                             .Builder()
+                            .headers(headers)
                             .replyTo(replyTo)
                             .build();
 
