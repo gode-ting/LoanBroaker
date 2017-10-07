@@ -9,5 +9,5 @@ Use case:
 3. We must route each response through a custom message translator to transform them into a common format.
 
 
-
+![alt text](https://github.com/gode-ting/LoanBroaker/blob/master/docs/normalizer.PNG "Normalizer")
 

@@ -28,7 +28,7 @@ describe('../config/schemas.json', () => {
 	});
 
 	rules.forEach((rule) => {
-		describe(`$bankSchema.properties`, () => {
+		describe.skip(`$bankSchema.properties`, () => {
 			it('should validate properties-schema against test json-objects', () => {
 				let expected = rule.output;
 
