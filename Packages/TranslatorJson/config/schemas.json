@@ -1,7 +1,7 @@
 {
 	"$bankSchema": {
-		"$schema": "http://json-schema.org/draft-04/schema#",
-		"title": "TranslatorJson",
+		"$schema": "",
+		"title": "Bank schema",
 		"description": "A loan object",
 		"type": "object",
 		"properties": {
@@ -17,11 +17,11 @@
 			},
 			"loanAmount": {
 				"description": "requested loan amount",
-				"type": "integer"
+				"type": "number"
 			},
 			"loanDuration": {
 				"description": "requested loan duration",
-				"type": "date"
+				"type": "string"
 			},
 			"required": ["ssn", "creditScore", "loanAmount", "loanDuration"]
 		}

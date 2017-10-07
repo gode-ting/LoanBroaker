@@ -10,6 +10,8 @@ Made with node.js
 
 `npm run start` start in production mode.
 
+`npm run test` run all tests.
+
 ## Structure
 
 ### config
@@ -44,7 +46,7 @@ Responsible for producing/publishing messages. Will publish message received by 
 
 Just a constructor for testing purposes.
 
-```
+```javascript
 // Example usage:
 import testMessage from './TestMessage.js';
 console.log(testMessage);
