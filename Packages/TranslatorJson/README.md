@@ -1,5 +1,10 @@
 # TranslatorJson
 
+**Table of contents:**
+
+(Commands)[]
+(Communicating with the translator)[]
+
 Made with node.js
 
 ## Commands
@@ -51,3 +56,8 @@ Just a constructor for testing purposes.
 import testMessage from './TestMessage.js';
 console.log(testMessage);
 ```
+
+---
+
+## Communicating with the Translator
+
