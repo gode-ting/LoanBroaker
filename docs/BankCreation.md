@@ -85,6 +85,14 @@ Here is how it works:
 A queue binds to the exchange with a routing key K
 When a new message with routing key R arrives at the direct exchange, the exchange routes it to the queue if K = R
 
+Use cases:
+
+* Direct (near real-time) messages to individual players in an MMO game
+* Delivering notifications to specific geographic locations (for example, points of sale)
+* Distributing tasks between multiple instances of the same application all having the same function, for example, image processors
+* Passing data between workflow steps, each having an identifier (also consider using headers exchange)
+* Delivering notifications to individual software services in the network
+
 So if both producer and consumer is using same routing key, a direct exchange will happen.
 
 **Fanout Exchange**
@@ -94,6 +102,18 @@ So if both producer and consumer is using same routing key, a direct exchange wi
 A use cases for a fanout exchange could be a sport news site. (distributing score updates to mobile clients in near real-time)
 
 
-TO BE CONTI..
+*So which one to use in our case?*
+
+After we have determined the most appropriate banks to contact from the Rule Base web service we must send a request 
+to each selected bank (ssn, credit score, loan amount, loan duration).
+
+Each request is unique and therefore should not have any interest in any other responses than its own.
+
+If it connects to a fanout exchange it gets all other responses. 
+
+If it connects to a direct exchange it gets a responses matching the request. 
+
+Therefore, it makes sense if we try direct exchange. 
+
 
 
