@@ -24,9 +24,11 @@ public abstract class EndPoint {
     protected Channel channel;
     protected Connection connection;
     protected String endPointName;
+    protected String aggregator;
 	
-    public EndPoint(String endpointName) throws IOException, TimeoutException{
+    public EndPoint(String endpointName, String aggregator) throws IOException, TimeoutException{
          this.endPointName = endpointName;
+         this.aggregator = aggregator;
 		
          //Create a connection factory
          ConnectionFactory factory = new ConnectionFactory();

@@ -29,7 +29,7 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getCreditScore_out", this);
         service = new GetBanksService(this);
-        producer = new Producer("LoanBroker9.getBanks_out", this);
+        producer = new Producer("LoanBroker9.getBanks_out","LoanBroker9.aggregator_in", this);
         
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();  

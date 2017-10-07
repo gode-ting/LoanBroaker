@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Service;
+package app;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import connection.EndPoint;
 import interfaces.ConsumerDelegate;
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -24,11 +26,10 @@ import org.apache.commons.lang.SerializationUtils;
  */
 public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.client.Consumer {
 
-    
     private ConsumerDelegate delegate;
-    
+
     public QueueConsumer(String endPointName, ConsumerDelegate delegate) throws IOException, TimeoutException {
-        super(endPointName, null);
+        super(endPointName);
         this.delegate = delegate;
     }
 
@@ -44,6 +45,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
 
     /**
      * Called when consumer is registered.
+     *
      * @param consumerTag
      */
     @Override
@@ -57,11 +59,23 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
         System.out.println("hallo1");
-        HashMap application = (HashMap) SerializationUtils.deserialize(body);
-        delegate.didConsumeMessageWithOptionalException(application, null);
+        try {
+            String json = (String) SerializationUtils.deserialize(body);
+            ObjectMapper mapper = new ObjectMapper();
+            HashMap message = mapper.readValue(json, new TypeReference<HashMap>() {});
+            delegate.didConsumeMessageWithOptionalException(message, null);
+
+        } catch (Exception e) {
+            try {
+                HashMap message = (HashMap) SerializationUtils.deserialize(body);
+                delegate.didConsumeMessageWithOptionalException(message, null);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
-    public void handleCancel(String consumerTag) { 
+    public void handleCancel(String consumerTag) {
     }
 
     public void handleCancelOk(String consumerTag) {
@@ -76,7 +90,5 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     public void accept(Object t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
 }
