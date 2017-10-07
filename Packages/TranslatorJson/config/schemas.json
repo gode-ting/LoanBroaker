@@ -1,0 +1,29 @@
+{
+	"$bankSchema": {
+		"$schema": "",
+		"title": "Bank schema",
+		"description": "A loan object",
+		"type": "object",
+		"properties": {
+			"type": "object",
+			"maxProperties": 4,
+			"ssn": {
+				"description": "social security number. Consist of 8 numbers",
+				"type": "string"
+			},
+			"creditScore": {
+				"description": "credit score calculated by a calcualtor",
+				"type": "string"
+			},
+			"loanAmount": {
+				"description": "requested loan amount",
+				"type": "number"
+			},
+			"loanDuration": {
+				"description": "requested loan duration",
+				"type": "string"
+			},
+			"required": ["ssn", "creditScore", "loanAmount", "loanDuration"]
+		}
+	}
+}
