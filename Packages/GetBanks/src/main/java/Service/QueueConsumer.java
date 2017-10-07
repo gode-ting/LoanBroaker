@@ -13,6 +13,7 @@ import com.rabbitmq.client.ShutdownSignalException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
@@ -26,7 +27,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     
     private ConsumerDelegate delegate;
     
-    public QueueConsumer(String endPointName, ConsumerDelegate delegate) throws IOException {
+    public QueueConsumer(String endPointName, ConsumerDelegate delegate) throws IOException, TimeoutException {
         super(endPointName);
         this.delegate = delegate;
     }

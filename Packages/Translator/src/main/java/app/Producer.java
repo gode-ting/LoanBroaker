@@ -30,7 +30,7 @@ public class Producer extends EndPointProducer {
                             .replyTo(replyTo)
                             .build();
 
-                    channel.basicPublish("", endPointName, props, object.getBytes());
+                    channel.basicPublish(endPointName, "", props, object.getBytes());
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
