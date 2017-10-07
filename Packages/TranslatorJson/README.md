@@ -2,8 +2,8 @@
 
 **Table of contents:**
 
-(Commands)[]
-(Communicating with the translator)[]
+* [Commands](#commands)
+* [Communicating with the Translator](#communicating-with-the-translator)
 
 Made with node.js
 
@@ -56,8 +56,6 @@ Just a constructor for testing purposes.
 import testMessage from './TestMessage.js';
 console.log(testMessage);
 ```
-
----
 
 ## Communicating with the Translator
 
