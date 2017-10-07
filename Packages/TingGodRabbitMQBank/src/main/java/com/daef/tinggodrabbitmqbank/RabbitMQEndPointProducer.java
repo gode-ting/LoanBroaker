@@ -22,7 +22,7 @@ public class RabbitMQEndPointProducer {
     protected final String HOST = "datdb.cphbusiness.dk";
     protected final String USERNAME = "student";
     protected final String PASSWORD = "cph";
-    protected  final String TYPE = "fanout";
+    protected final String TYPE = "fanout";
     
     protected Channel channel;
     protected Connection connection;
