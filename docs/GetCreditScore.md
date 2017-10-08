@@ -60,4 +60,18 @@ Last we have a method for closing the channel and connection:
 *Although it is not necessary as it happens implicitly any way.*
 
 
+**Consumer:**
+
+Our consumer is pushed messages from RabbitMQ, so unlike the producer which publishes a single message, we'll keep it running to listen for messages 
+
+
+
+
+**Producer:**
+
+
+
+
+**CreditScoreService:**
+
 
