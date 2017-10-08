@@ -57,7 +57,7 @@ Last we have a method for closing the channel and connection:
          this.connection.close();
      }
 ```
-*Although it is necessary as it happens implicitly any way.*
+*Although it is not necessary as it happens implicitly any way.*
 
 
 
