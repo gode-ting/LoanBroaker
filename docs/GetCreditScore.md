@@ -64,6 +64,46 @@ Last we have a method for closing the channel and connection:
 
 Our consumer is pushed messages from RabbitMQ, so unlike the producer which publishes a single message, we'll keep it running to listen for messages 
 
+We have created a consumer for this purpose
+
+```java
+public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.client.Consumer
+
+```
+
+Customer class extends Endpoint as explained earlier. The class also implements *com.rabbitmq.client.Consumer*
+
+It allows us to override methods from *com.rabbitmq.client.Consumer*
+
+One of them is: 
+```java
+public void handleDelivery(String consumerTag, Envelope env,
+            BasicProperties props, byte[] body)
+```
+This method is called when a new message is available for consumption.
+
+In our case we *deserialize* the message content into a HashMap.
+
+```java
+HashMap application = (HashMap) SerializationUtils.deserialize(body);
+delegate.didConsumeMessageWithOptionalException(application, null);
+```
+*ConsumerDelegate* is an interface consisting of one method,
+```java
+ public void didConsumeMessageWithOptionalException(HashMap application, IOException ex);
+```
+
+In the method we handling content consumed from the message. 
+
+```java
+
+@Override
+    public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
+        if      (ex == null) { service.getCreditScore(application); } 
+        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); } 
+    }
+```
+Then we use the HashMap as parameter calling Credit Bureau web service. 
 
 
 
