@@ -7,9 +7,11 @@ import interfaces.ConsumerDelegate;
 import interfaces.ProducerDelegate;
 import interfaces.ReciepientListServiceDelegate;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
-public class Main implements ConsumerDelegate, ProducerDelegate, ReciepientListServiceDelegate {
+public class Main implements ConsumerDelegate, ProducerDelegate {
 
     private QueueConsumer consumer;
     private Producer producer;
@@ -18,7 +20,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, ReciepientListS
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getBanks_out", this);
         producer = new Producer("LoanBroker9.getRecipients_out", this);
-        service = new ReciepientListService(this);
+        service = new ReciepientListService();
 
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();
@@ -27,9 +29,12 @@ public class Main implements ConsumerDelegate, ProducerDelegate, ReciepientListS
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
         if (ex == null) {
-            service.DistributeLoan(application);
+            JSONObject applicationJson = service.DistributeLoan(application);       
+            for (HashMap bank : (ArrayList<HashMap>)application.get("banks")) {    
+                producer.sendMessage(applicationJson, bank, (String)bank.get("bankId"));        
+            } 
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage());
         }
     }
 
@@ -38,18 +43,11 @@ public class Main implements ConsumerDelegate, ProducerDelegate, ReciepientListS
         if (ex == null) {
             System.out.println("success");
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("{didProduceMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage());
         }
     }
     
-    @Override
-    public void didReciepientListServiceWithOptionalException(HashMap application, String binding, Exception ex) {
-        if (ex == null) {
-            producer.sendMessage(application,binding);
-        } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
-        }
-    }
+    
     
     public static void main(String[] args) throws Exception {
         new Main();

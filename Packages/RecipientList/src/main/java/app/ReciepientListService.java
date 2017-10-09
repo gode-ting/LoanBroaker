@@ -6,9 +6,11 @@
 package app;
 
 import interfaces.ReciepientListServiceDelegate;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.json.Json;
+import javax.json.JsonObject;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -16,24 +18,19 @@ import java.util.HashMap;
  */
 public class ReciepientListService {
 
-    ReciepientListServiceDelegate delegate;
-
-    public ReciepientListService(ReciepientListServiceDelegate delegate) {
-        this.delegate = delegate;
+    public ReciepientListService() {
     }
 
-    public void DistributeLoan(HashMap applicationAndBanks) {
-        try {
-            HashMap application = (HashMap) applicationAndBanks.get("application");
-            ArrayList<HashMap> banks = (ArrayList<HashMap>) applicationAndBanks.get("banks");
-            System.out.println(applicationAndBanks.toString());
-            for (int i = 0; i < banks.size(); i++) {
-                HashMap currBank = banks.get(i);
-                delegate.didReciepientListServiceWithOptionalException(application, (String)currBank.get("bankId"), null);
-            }
+    public JSONObject DistributeLoan(HashMap applicationAndBanks) {
+        HashMap application = (HashMap) applicationAndBanks.get("application");
+        ArrayList<HashMap> banks = (ArrayList<HashMap>) applicationAndBanks.get("banks");
 
-        } catch (Exception e) {
-            delegate.didReciepientListServiceWithOptionalException(null, null, e);
-        }
+        JSONObject response = new JSONObject();
+        response.put("ssn", (String) application.get("ssn"));
+        response.put("creditScore", (int) application.get("creditScore"));
+        response.put("loanAmount", (String) application.get("loanAmount"));
+        response.put("loanDuration", (String) application.get("loanDuration"));
+
+        return response;
     }
 }

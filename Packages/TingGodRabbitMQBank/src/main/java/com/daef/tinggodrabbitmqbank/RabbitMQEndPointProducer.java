@@ -50,7 +50,7 @@ public class RabbitMQEndPointProducer {
 	    
          //declaring an exchange for this channel. If exchange does not exist,
          //it will be created on the server.
-            channel.exchangeDeclare(endPointName, "fanout");
+         channel.exchangeDeclare(endPointName, "fanout");
          
          //SENDING INTEREST RATES FURIOUSLY
          String queueName = channel.queueDeclare().getQueue();

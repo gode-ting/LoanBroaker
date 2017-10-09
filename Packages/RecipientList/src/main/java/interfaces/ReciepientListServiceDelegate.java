@@ -6,12 +6,16 @@
 package interfaces;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author Frederik
  */
 public interface ReciepientListServiceDelegate {
-    public void didReciepientListServiceWithOptionalException(HashMap application,String binding ,Exception ex);
+    public void didReciepientListServiceWithOptionalException(JSONObject application, ArrayList<HashMap> banks ,Exception ex);
 }
