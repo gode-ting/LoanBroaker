@@ -30,7 +30,8 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
         if (ex == null) {
             JSONObject applicationJson = service.DistributeLoan(application);       
-            for (HashMap bank : (ArrayList<HashMap>)application.get("banks")) {    
+            for (HashMap bank : (ArrayList<HashMap>)application.get("banks")) {  
+                bank.put("exhange", "cphbusiness.JSONBank");
                 producer.sendMessage(applicationJson, bank, (String)bank.get("bankId"));        
             } 
         } else {

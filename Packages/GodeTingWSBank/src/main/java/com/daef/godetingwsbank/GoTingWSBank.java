@@ -28,8 +28,8 @@ public class GoTingWSBank {
         
        HashMap bankResults = cal.getInterestRate(ssn, loanAmount, LoanDuration, creditScore);
        
-       Producer producer = new Producer();
-       producer.sendMessage();
+//       Producer producer = new Producer();
+//       producer.sendMessage();
        
        return SerializationUtils.serialize((Serializable) bankResults);
     }
