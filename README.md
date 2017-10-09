@@ -24,4 +24,14 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 
 ## References
 
-Original project [description](https://github.com/datsoftlyngby/soft2017fall-system-integration-teaching-material/blob/master/assignments/LoanBrokerProject.pdf). 
+Original project [description](https://github.com/datsoftlyngby/soft2017fall-system-integration-teaching-material/blob/master/assignments/LoanBrokerProject.pdf).
+
+## Run the project
+
+1. Run GetCreditScore (Main)
+2. Run GetBanks (Main)
+3. Run RecipientList (Main)
+4. Run Translator (Main)
+5. Run Nomalizer (Main)
+6. Run TingGodRabbitMQBank (Main)
+7. Run GetCreditScore (Dummy)
