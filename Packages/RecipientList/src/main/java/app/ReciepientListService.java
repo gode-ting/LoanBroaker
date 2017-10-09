@@ -5,11 +5,8 @@
  */
 package app;
 
-import interfaces.ReciepientListServiceDelegate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.json.Json;
-import javax.json.JsonObject;
 import org.json.simple.JSONObject;
 
 /**

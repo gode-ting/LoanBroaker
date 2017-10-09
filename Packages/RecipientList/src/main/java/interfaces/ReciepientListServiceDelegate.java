@@ -5,11 +5,8 @@
  */
 package interfaces;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import org.json.simple.JSONObject;
 
 /**
