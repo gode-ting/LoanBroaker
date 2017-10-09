@@ -30,7 +30,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     }
 
     @Override
-    public void didConsumeMessageWithOptionalException(JSONObject application, IOException ex) {
+    public void didConsumeMessageWithOptionalException(JSONObject application, Exception ex) {
         if (ex == null) {
             System.out.println("translator did consume - " + application);
             String xml = xmlTranslator.translateXml(application);

@@ -1,23 +1,15 @@
 package com.daef.tinggodrabbitmqbank;
 
 import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 
 import interfaces.ConsumerDelegate;
 
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
-import interfaces.ProducerDelegate;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.lang.SerializationUtils;
 
-public class QueueConsumer extends RabbitMQEndPointProducer implements Runnable, com.rabbitmq.client.Consumer {
+public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable, com.rabbitmq.client.Consumer {
 
     private ConsumerDelegate delegate;
     
@@ -29,9 +21,12 @@ public class QueueConsumer extends RabbitMQEndPointProducer implements Runnable,
 
     @Override
     public void run() {
+        System.out.println("inside run");
         try {
+            System.out.println("consume");
             channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
+            System.out.println("EX:" + ex.getLocalizedMessage());
             // delegate.didConsumeMessageWithOptionalException(null, ex);
         }
     }
@@ -41,7 +36,7 @@ public class QueueConsumer extends RabbitMQEndPointProducer implements Runnable,
      *
      * @param consumerTag
      */
-    @Override
+
     public void handleConsumeOk(String consumerTag) {
         System.out.println("Consumer " + consumerTag + " registered");
     }
@@ -56,7 +51,8 @@ public class QueueConsumer extends RabbitMQEndPointProducer implements Runnable,
      */
     public void handleDelivery(String consumerTag, Envelope env,
             AMQP.BasicProperties props, byte[] body) throws IOException {
-
+        System.out.println("hej");
+        System.out.println("HEADER _________ " + props.getReplyTo());
         String type = props.getHeaders().get("type").toString();
 
         delegate.didConsumeMessageWithOptionalException(body,type, null);

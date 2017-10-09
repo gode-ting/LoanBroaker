@@ -27,13 +27,14 @@ public class XMLTranslator implements XMLTranslatorInterface {
         System.out.println("hallo?");
         String xmlResult = null;
         try {
+            System.out.println("MOBMO: " + application);
             String ssn = (String) application.get("ssn");
-            String creditScore = ((int) application.get("creditScore")) + "";
+            long creditScore = (long) application.get("creditScore");
             String loanAmount = (String) application.get("loanAmount");
             String loanDuration = (String) application.get("loanDuration");
             
             System.out.println("ssn: " + ssn);
-            System.out.println("creditScore: " + creditScore);
+            System.out.println("cr editScore: " + creditScore);
             System.out.println("loanAmount: " + loanAmount);
             System.out.println("loanDuration: " + loanDuration);
             
@@ -49,7 +50,7 @@ public class XMLTranslator implements XMLTranslatorInterface {
             loanRequest.appendChild(ssnEle);
 
             Element creditScoreEle = doc.createElement("creditScore");
-            creditScoreEle.appendChild(doc.createTextNode(creditScore));
+            creditScoreEle.appendChild(doc.createTextNode(creditScore + ""));
             loanRequest.appendChild(creditScoreEle);
 
             Element loanAmountEle = doc.createElement("loanAmount");

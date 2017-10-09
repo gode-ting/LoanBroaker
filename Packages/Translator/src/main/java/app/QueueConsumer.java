@@ -14,8 +14,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.client.Consumer {
 
@@ -58,31 +62,20 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     public void handleDelivery(String consumerTag, Envelope env,
             AMQP.BasicProperties props, byte[] body) throws IOException {
 
-        String message = new String(body);
-        System.out.println(" [x] Received '" + env.getRoutingKey() + "':'" + message + "'");
-
-        
-        
-        
-        
-        System.out.println("hallo1");
-        
-
-        JSONReader r = new JSONReader();
-        System.out.println("COMOOOOM: " + r.read(message));
-
-        Gson gson = new GsonBuilder().create();
-
-        System.out.println("Test1 - " + gson.toJson(message));
-
-        JsonElement messageJson = gson.toJsonTree(message);
-        
-        System.out.println("weeeeiiiii: " + messageJson);
-        System.out.println("nexrtos: " + messageJson.getAsJsonObject());
-
-        JSONObject applicationJson = (JSONObject) SerializationUtils.deserialize(body);
-        System.out.println("Happyness: " + applicationJson);
-//        delegate.didConsumeMessageWithOptionalException(application, null);
+        try {
+            String message = new String(body);
+            System.out.println(" [x] Received '" + env.getRoutingKey() + "':'" + message + "'");
+            
+            System.out.println("BEFORE JSON");
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(message);
+            System.out.println("JSOOOOOOOON - " + json);
+            
+            delegate.didConsumeMessageWithOptionalException(json, null);
+        } catch (ParseException ex) {
+            delegate.didConsumeMessageWithOptionalException(null, ex);
+            Logger.getLogger(QueueConsumer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void handleCancel(String consumerTag) {
