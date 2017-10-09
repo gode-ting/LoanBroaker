@@ -25,7 +25,7 @@ import org.xml.sax.InputSource;
  * @author emilgras
  */
 public class Normalizer {
-    
+
     public Normalizer() {
 
     }
@@ -39,9 +39,7 @@ public class Normalizer {
                     String xml = new String(body, "UTF-8");
                     XmlMapper xmlMapper = new XmlMapper();
                     LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
-
                     ObjectMapper objectMapper = new ObjectMapper();
-
                     String json = objectMapper.writeValueAsString(response);
                     return json;
 
@@ -50,7 +48,21 @@ public class Normalizer {
                 }
             }
 
-            case "json":
+            case "json": {
+                try {
+                    String json = new String(body, "UTF-8");
+                    ObjectMapper mapper = new ObjectMapper();
+                    LoanResponse response = mapper.readValue(json, LoanResponse.class);
+                    String responseJson = mapper.writeValueAsString(response);
+                    return responseJson;
+                    
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(Normalizer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                Logger.getLogger(Normalizer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+            
 
         }
         return "";
