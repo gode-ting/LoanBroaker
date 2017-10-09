@@ -2,7 +2,7 @@ export default {
 	producer: {
 		type: 'fanout',
 		// exchange: 'cphbusiness.bankJSON',
-		exchange: 'LoanBroker9.TingGodRabbitMQBank',
+		exchange: 'cphbusiness.bankJSON'/*'LoanBroker9.TingGodRabbitMQBank'*/,
 		replyTo: 'LoanBroker9.banks_out'
 	},
 	consumer: {

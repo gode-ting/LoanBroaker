@@ -1,6 +1,7 @@
 import rabbitmq from '../config/rabbitmq.js';
 
 export default function (ampqConn, message) {
+
 	let replyTo = rabbitmq.producer.replyTo;
 
 	ampqConn.createChannel((err, ch) => {
@@ -18,8 +19,14 @@ export default function (ampqConn, message) {
 		});
 
 		console.log('Exchange: ', exchange);
+		message.creditScore = undefined
+		message.rki = false
 
-		ch.publish(exchange, '', Buffer.from(message.content.toString()), {
+		var newMessage = {'ssn':1605789787, 'loanAmount': 10.0, 'loanDuration': 360, 'rki':false};
+
+		console.log('hej fra emil', message.toString())
+		console.log('hej igen du', new Buffer(message.toString()))
+		ch.publish(exchange, '', Buffer.from(newMessage.toString()), {
 			headers: headers,
 			replyTo: replyTo
 		});
