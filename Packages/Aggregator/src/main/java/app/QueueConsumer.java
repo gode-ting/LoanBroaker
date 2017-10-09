@@ -65,7 +65,6 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             delegate.didConsumeMessageWithOptionalException(message, null);
 
         } catch (Exception e) {
-            e.printStackTrace();
             try {
                 HashMap message = (HashMap) SerializationUtils.deserialize(body);
                 delegate.didConsumeMessageWithOptionalException(message, null);
