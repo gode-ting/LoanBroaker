@@ -1,25 +1,29 @@
 import rabbitmq from '../config/rabbitmq.js';
 import offlineQueue from './offlineQueue.js';
+import javaTranslator from './javaTranslator.js';
 
-export default function (ampqConn) {
+export default function (ampqConn, message) {
 	let producerQueue = rabbitmq.queues.producer;
-	let replyTo = rabbitmq.queues.consumer;
+	let replyTo = rabbitmq.producer.replyTo;
 
 	ampqConn.createChannel((err, ch) => {
 		if (err) {
 			ampqConn.close();
 			console.error('[AMPQ] connection error - closing; ', err);
 		}
-		ch.assertQueue(producerQueue);
-		// let queue = offlineQueue.getOfflineQueue();
-		while (true) {
-			let nextElement = offlineQueue.shiftOfflineQueue();
-			if (!nextElement) return;
-			console.log('Next element (', typeof nextElement,  nextElement);
-			ch.publish('', producerQueue, Buffer.from(nextElement.content), {
-				replyTo: replyTo
-			});
-		}
+
+		let type = 'fanout';
+		let exchange = rabbitmq.producer.exchange;
+		let headers = {type: 'json'};
+
+		ch.assertExchange(exchange, type, {
+			durable: false
+		});
+
+		ch.publish(exchange, '', Buffer.from(message.content.toString()), {
+			headers: headers,
+			replyTo: replyTo
+		});
 	});
 	// setTimeout(() => {
 	// 	ampqConn.close();

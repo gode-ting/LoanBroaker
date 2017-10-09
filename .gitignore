@@ -25,6 +25,8 @@ hs_err_pid*
 /Packages/GetBanks/target/
 
 **/node_modules
+Packages/*/.settings
+Packages/*/.classpath
 /Packages/*/target
 # /Packages/RecipientList/target/
 # /Packages/RuleBase/target/
