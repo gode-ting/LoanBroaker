@@ -58,7 +58,6 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
         try {
             String json = (String) SerializationUtils.deserialize(body);
             ObjectMapper mapper = new ObjectMapper();
@@ -66,6 +65,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             delegate.didConsumeMessageWithOptionalException(message, null);
 
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 HashMap message = (HashMap) SerializationUtils.deserialize(body);
                 delegate.didConsumeMessageWithOptionalException(message, null);
