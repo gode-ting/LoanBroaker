@@ -3,13 +3,6 @@ package main;
 import Translators.XMLTranslator;
 import app.Producer;
 import app.QueueConsumer;
-import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
 import interfaces.ConsumerDelegate;
 import interfaces.MainInterface;
 import interfaces.ProducerDelegate;
@@ -17,14 +10,14 @@ import interfaces.XMLTranslatorInterface;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
-import org.apache.commons.lang.SerializationUtils;
 
 public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
 
     private QueueConsumer consumer;
     private Producer producer;
     private XMLTranslatorInterface xmlTranslator;
-private static final String EXCHANGE_NAME = "LoanBroker9.getRecipients_out";
+    private static final String EXCHANGE_NAME = "LoanBroker9.getRecipients_out";
+
     public Main() throws Exception {
         consumer = new QueueConsumer(EXCHANGE_NAME, "bank-lån-and-spar", this);
         producer = new Producer("cphbusiness.bankXML", this);
@@ -33,7 +26,6 @@ private static final String EXCHANGE_NAME = "LoanBroker9.getRecipients_out";
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();
 
-        
     }
 
     @Override
