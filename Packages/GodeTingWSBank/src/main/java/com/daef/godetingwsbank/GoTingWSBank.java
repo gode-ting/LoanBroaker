@@ -27,7 +27,10 @@ public class GoTingWSBank {
        LoanCalculator cal = new LoanCalculator();
         
        HashMap bankResults = cal.getInterestRate(ssn, loanAmount, LoanDuration, creditScore);
-        
+       
+       Producer producer = new Producer();
+       producer.sendMessage();
+       
        return SerializationUtils.serialize((Serializable) bankResults);
     }
 }

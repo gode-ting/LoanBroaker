@@ -10,6 +10,7 @@ import interfaces.XMLTranslatorInterface;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
 
@@ -29,7 +30,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
     }
 
     @Override
-    public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
+    public void didConsumeMessageWithOptionalException(JSONObject application, IOException ex) {
         if (ex == null) {
             System.out.println("translator did consume - " + application);
             String xml = xmlTranslator.translateXml(application);

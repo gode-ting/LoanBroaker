@@ -1,8 +1,8 @@
 
 package interfaces;
 
-import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 public interface XMLTranslatorInterface {
-    String translateXml(HashMap application);
+    String translateXml(JSONObject application);
 }

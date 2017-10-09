@@ -2,7 +2,6 @@ package Translators;
 
 import interfaces.XMLTranslatorInterface;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,6 +12,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -23,7 +23,7 @@ public class XMLTranslator implements XMLTranslatorInterface {
     }
 
     @Override
-    public String translateXml(HashMap application) {
+    public String translateXml(JSONObject application) {
         System.out.println("hallo?");
         String xmlResult = null;
         try {

@@ -32,7 +32,7 @@ public class QueueConsumer extends RabbitMQEndPointProducer implements Runnable,
         try {
             channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
-           // delegate.didConsumeMessageWithOptionalException(null, ex);
+            // delegate.didConsumeMessageWithOptionalException(null, ex);
         }
     }
 

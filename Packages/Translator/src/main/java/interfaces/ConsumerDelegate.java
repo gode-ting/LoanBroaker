@@ -2,8 +2,8 @@
 package interfaces;
 
 import java.io.IOException;
-import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 public interface ConsumerDelegate {
-    public void didConsumeMessageWithOptionalException(HashMap application, IOException ex);
+    public void didConsumeMessageWithOptionalException(JSONObject application, IOException ex);
 }
