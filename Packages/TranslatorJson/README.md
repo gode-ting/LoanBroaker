@@ -49,15 +49,42 @@ First intended as a "secure" queue if a message was not sent properly, but appar
 
 Responsible for producing/publishing messages. Will publish message received by the consumer to the database.
 
+### Test
+
+Holds all tests. Tests can be run with the `npm run test` command, which will run all tests in this folder that is named as `*.test.js`.
+
 #### TestMessage.js
 
 Just a constructor for testing purposes.
 
 ```javascript
 // Example usage:
-import testMessage from './TestMessage.js';
+import testMessage from '../test/TestMessage.js';
 console.log(testMessage);
 ```
 
 ## Communicating with the Translator
 
+### Consumer
+
+The translator listens to the **exchange** `LoanBroker9.getRecipients_out` and the **binding** `bank-jyske-bank`.
+
+```javascript
+consumer: {
+    type: "direct",
+    exchange: "LoanBroker9.getRecipients_out",
+    binding: "bank-jyske-bank"
+}
+```
+
+### Producer
+
+The consumer passes any received messages to the consumer, which sends it's messages to **exchange** `cphbusiness.bankJSON` with a replyTo header `LoanBroker9.banks_out`.
+
+```javascript
+producer: {
+    type: 'fanout',
+    exchange: 'cphbusiness.bankJSON',
+    replyTo: 'LoanBroker9.banks_out'
+},
+```

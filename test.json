@@ -1,0 +1,30 @@
+{
+	fields: {
+		consumerTag: 'amq.ctag-cv-f_mHCV4dIRSSOBW_YqA',
+		deliveryTag: 2,
+		redelivered: false,
+		exchange: 'LoanBroker9.getRecipients_out',
+		routingKey: 'bank-jyske-bank'
+	},
+	properties: {
+		contentType: undefined,
+		contentEncoding: undefined,
+		headers: {
+			minCreditScore: 200,
+			bankId: 'bank-jyske-bank',
+			bankName: 'Jyske Bank'
+		},
+		deliveryMode: undefined,
+		priority: undefined,
+		correlationId: undefined,
+		replyTo: undefined,
+		expiration: undefined,
+		messageId: undefined,
+		timestamp: undefined,
+		type: undefined,
+		userId: undefined,
+		appId: undefined,
+		clusterId: undefined
+	},
+	content: < Buffer 7 b 22 6 c 6 f 61 6e 44 75 72 61 74 69 6 f 6e 22 3 a 22 31 39 37 33 2 d 30 31 2 d 30 31 20 30 31 3 a 30 30 3 a 30 30 2e 30 20 43 45 54 22 2 c 22 63 72 65 64 69... >
+}

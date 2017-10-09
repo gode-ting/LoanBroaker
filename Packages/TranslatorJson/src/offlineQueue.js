@@ -6,7 +6,8 @@ module.exports = {
 	pushToOfflineQueue,
 	getOfflineQueue,
 	shiftOfflineQueue
-}
+};
+
 function shiftOfflineQueue () {
 	return offlineQueue.shift();
 }

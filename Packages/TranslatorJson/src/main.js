@@ -5,13 +5,12 @@ import amqp from 'amqplib/callback_api';
 import consumer from './consumer.js';
 import rabbitmqConfig from '../config/rabbitmq.js';
 
+// main function
 export function main() {
 
 	let host = rabbitmqConfig.connection.host;
 	let username = rabbitmqConfig.connection.username;
 	let password = rabbitmqConfig.connection.password;
-
-	let amqpConn = null;
 
 	let connection = `amqp://${username}:${password}@${host}`;
 
@@ -20,6 +19,7 @@ export function main() {
 	amqp.connect(connection, (err, conn) => {
 		if (err) {
 			console.error('[AMPQ]', err.message);
+
 			// Restart main if error on connection
 			return setTimeout(main(), 1000);
 		}
