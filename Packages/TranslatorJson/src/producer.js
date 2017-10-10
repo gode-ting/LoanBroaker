@@ -1,14 +1,14 @@
-import rabbitmq from '../config/rabbitmq.js';
-import translator from './translator';
+let rabbitmq = require('../config/rabbitmq.js');
+let translator = require('./translator');
 
-export default function (ampqConn, message) {
+(function (ampqConn, message) {
 
 	let replyTo = rabbitmq.producer.replyTo;
 
 	ampqConn.createChannel((err, ch) => {
 		if (err) {
 			ampqConn.close();
-			console.error('[AMPQ] connection error - closing; ', err);
+			console.error('[AMPQ] connection error (producer) - closing; ', err);
 		}
 
 		let type = rabbitmq.producer.type;
@@ -30,6 +30,6 @@ export default function (ampqConn, message) {
 			headers: headers,
 			replyTo: replyTo
 		});
-		console.log('Successfully sent message');
+		console.log('Successfully sent message from producer');
 	});
-}
+})();
