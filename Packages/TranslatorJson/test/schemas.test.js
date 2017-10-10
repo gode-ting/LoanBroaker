@@ -10,11 +10,11 @@ let rules = require('./rules/bankSchemaProperties.js');
 
 describe('../config/schemas.json', () => {
 	let validateProperties;
-	let validateLoanAmount;
+	// let validateLoanAmount;
 
 	before(() => {
 		validateProperties = ajv.compile(bankSchema.properties);
-		validateLoanAmount = ajv.compile(bankSchema.properties.loanAmount)
+		// validateLoanAmount = ajv.compile(bankSchema.properties.loanAmount);
 	});
 
 	describe('$bankSchema', () => {
@@ -28,7 +28,7 @@ describe('../config/schemas.json', () => {
 	});
 
 	rules.forEach((rule) => {
-		describe.skip(`$bankSchema.properties`, () => {
+		describe.skip('$bankSchema.properties', () => {
 			it('should validate properties-schema against test json-objects', () => {
 				let expected = rule.output;
 

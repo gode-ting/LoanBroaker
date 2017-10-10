@@ -19,7 +19,6 @@ export default function (ampqConn) {
 			ch.bindQueue(q.queue, exchange, binding);
 
 			ch.consume(q.queue, (message) => {
-				console.log('Message: ', message);
 				console.log(' [x] %s', message.content.toString());
 				// offlineQueue.pushToOfflineQueue(message);
 				producer(ampqConn, message);

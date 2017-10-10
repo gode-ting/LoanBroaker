@@ -30,7 +30,7 @@ describe('../src/offlineQueue.js', () => {
 			let expected = [
 				'test',
 				'test'
-			]
+			];
 
 			let actual = offlineQueue.getOfflineQueue();
 
