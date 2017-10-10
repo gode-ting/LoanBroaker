@@ -7,7 +7,7 @@ function getFormattedJson(jsonObject) {
 	let ssn = jsonObject.ssn || '';
 	let creditScore = jsonObject.creditScore || '';
 	let loanAmount = jsonObject.loanAmount || '';
-	let loanDuration = jsonObject.loanDuration || '';
+	let loanDuration = 365;
 
 	let formattedJson = {
 		ssn,
