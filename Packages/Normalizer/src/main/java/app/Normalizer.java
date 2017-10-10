@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.lang.SerializationUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -30,39 +31,29 @@ public class Normalizer {
 
     }
 
-    public String normalize(byte[] body, String type) {
-        System.out.println("111: " + type);
+    public String normalize(byte[] body, String type) throws UnsupportedEncodingException, IOException {
+        System.out.println("type in normalize methods: " + type);
         switch (type) {
             case "xml": {
+                   
+                String xml = new String(body);
+                XmlMapper xmlMapper = new XmlMapper();
+                LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(response);
+                return json;
 
-                try {
-                    String xml = new String(body, "UTF-8");
-                    XmlMapper xmlMapper = new XmlMapper();
-                    LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    String json = objectMapper.writeValueAsString(response);
-                    return json;
-
-                } catch (IOException ex) {
-                    Logger.getLogger(Normalizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
 
             case "json": {
-                try {
-                    String json = new String(body, "UTF-8");
-                    ObjectMapper mapper = new ObjectMapper();
-                    LoanResponse response = mapper.readValue(json, LoanResponse.class);
-                    String responseJson = mapper.writeValueAsString(response);
-                    return responseJson;
-                    
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(Normalizer.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                Logger.getLogger(Normalizer.class.getName()).log(Level.SEVERE, null, ex);
+
+                Object data = SerializationUtils.deserialize(body);
+                ObjectMapper mapper = new ObjectMapper();
+                LoanResponse response = mapper.readValue(data.toString(), LoanResponse.class);
+                String responseJson = mapper.writeValueAsString(response);
+                return responseJson;
+
             }
-            }
-            
 
         }
         return "";

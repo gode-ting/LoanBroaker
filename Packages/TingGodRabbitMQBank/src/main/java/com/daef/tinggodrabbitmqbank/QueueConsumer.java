@@ -22,7 +22,7 @@ public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable,
     @Override
     public void run() {
         try {
-            channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer)this);
+            channel.basicConsume(queueName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
             System.out.println("EX:" + ex.getLocalizedMessage());
             // delegate.didConsumeMessageWithOptionalException(null, ex);
@@ -52,8 +52,8 @@ public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable,
         System.out.println("hej");
         System.out.println("HEADER _________ " + props.getReplyTo());
         String type = props.getHeaders().get("type").toString();
-
-        delegate.didConsumeMessageWithOptionalException(body,type, null);
+        System.out.println("type: " + type);
+        delegate.didConsumeMessageWithOptionalException(body,props.getReplyTo(), null);
     }
 
     public void handleCancel(String consumerTag) {

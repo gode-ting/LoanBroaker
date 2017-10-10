@@ -36,7 +36,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     public void run() {
         try {
             //start consuming messages. Auto acknowledge messages.
-            channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer) this);
+            channel.basicConsume(queueName, true, (com.rabbitmq.client.Consumer) this);
         } catch (IOException ex) {
 //            delegate.didConsumeMessageWithOptionalException(null, ex);
         }

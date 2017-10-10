@@ -31,8 +31,8 @@ public class RabbitMQEndPointProducer {
     
     //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA FANOUT
 	
-    public RabbitMQEndPointProducer(String endPointName) throws IOException, TimeoutException{
-         this.endPointName = endPointName;
+    public RabbitMQEndPointProducer() throws IOException, TimeoutException{
+
 		
          //Create a connection factory
          ConnectionFactory factory = new ConnectionFactory();
@@ -50,11 +50,7 @@ public class RabbitMQEndPointProducer {
 	    
          //declaring an exchange for this channel. If exchange does not exist,
          //it will be created on the server.
-         channel.exchangeDeclare(endPointName, "fanout");
          
-         //SENDING INTEREST RATES FURIOUSLY
-         String queueName = channel.queueDeclare().getQueue();
-         channel.queueBind(queueName, endPointName, "");
          
 		
          

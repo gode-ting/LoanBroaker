@@ -12,6 +12,8 @@ import interfaces.ConsumerDelegate;
 import interfaces.ProducerDelegate;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,9 +36,15 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didConsumeMessageWithOptionalException(byte[] body, String type, Exception ex) {
+        System.out.println("didConsumeMessageWithOptionalException {Normalizer}");
         if (ex == null) {
-            String response = normalizer.normalize(body, type);
-            producer.sendMessage(response);
+            try {
+                String response = normalizer.normalize(body, type);
+                System.out.println("{normalizer} - normalized data - " + response);
+                producer.sendMessage(response);
+            } catch (IOException ex1) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } else {
             System.out.println("Exception: " + ex.getLocalizedMessage());
         }

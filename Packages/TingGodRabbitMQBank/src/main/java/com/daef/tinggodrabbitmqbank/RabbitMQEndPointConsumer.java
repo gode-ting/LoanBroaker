@@ -29,6 +29,7 @@ public class RabbitMQEndPointConsumer {
     protected Channel channel;
     protected Connection connection;
     protected String endPointName;
+    protected String queueName;
 
     //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA FANOUT
     public RabbitMQEndPointConsumer(String endPointName) throws IOException, TimeoutException {
@@ -50,8 +51,8 @@ public class RabbitMQEndPointConsumer {
 
         //declaring an exchange for this channel. If exchange does not exist,
         //it will be created on the server.
-        channel.exchangeDeclare(endPointName, "fanout");
-        String queueName = channel.queueDeclare().getQueue();
+        channel.exchangeDeclare(endPointName, TYPE);
+        queueName = channel.queueDeclare().getQueue();
         channel.queueBind(queueName, endPointName, "");
 
     }
