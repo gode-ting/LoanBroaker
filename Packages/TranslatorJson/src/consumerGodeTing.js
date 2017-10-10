@@ -1,5 +1,6 @@
 const rabbitmq = require('../config/rabbitmq.js');
-// const producer = require('./producer.js');
+const producer = require('./producerGodeTing');
+const randomstring = require('randomstring');
 
 module.exports.startConsumer = function (ampqConn) {
 	let exchange = rabbitmq.consumerGodeTing.exchange;
@@ -19,8 +20,9 @@ module.exports.startConsumer = function (ampqConn) {
 			ch.bindQueue(q.queue, exchange, binding);
 
 			ch.consume(q.queue, (message) => {
-				console.log('\nConsumerGodeTing:\n [x] %s', message.content.toString());
-				// producer(ampqConn, message);
+				let messageId = randomstring.generate(6);
+				console.log('\nConsumerGodeTing:\n [x] %s', message.content.toString(), ' - id: ', messageId);
+				producer.startProducer(ampqConn, message, messageId);
 			}, {
 				noAck: true
 			});

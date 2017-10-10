@@ -3,7 +3,9 @@ const rabbitmqConfig = require('../config/rabbitmq.js');
 
 const consumer = require('./consumer.js');
 
-(function () {
+startConnection();
+
+function startConnection() {
 	let host = rabbitmqConfig.connection.host;
 	let username = rabbitmqConfig.connection.username;
 	let password = rabbitmqConfig.connection.password;
@@ -15,7 +17,7 @@ const consumer = require('./consumer.js');
 			console.error('[AMPQ]', err.message);
 
 			// Restart main if error on connection
-			return setTimeout(connection(), 1000);
+			return setTimeout(startConnection(), 1000);
 		}
 		conn.on('error', (err) => {
 			if (err.message !== 'Conection closing') {
@@ -24,11 +26,11 @@ const consumer = require('./consumer.js');
 		});
 		conn.on('close', () => {
 			console.error('[AMPQ] reconnecting');
-			return setTimeout(connection(), 1000);
+			return setTimeout(startConnection(), 1000);
 		});
 
 		console.log('AMPQ connected - connection');
 
 		consumer.startConsumer(conn);
 	});
-})();
+}
