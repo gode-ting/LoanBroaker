@@ -3,16 +3,16 @@ let translator = require('./translator');
 
 module.exports.startProducer = function (ampqConn, message, messageId) {
 
-	let replyTo = rabbitmq.producer.replyTo;
+	let replyTo = rabbitmq.producerGodeTing.replyTo;
 
 	ampqConn.createChannel((err, ch) => {
 		if (err) {
 			ampqConn.close();
-			console.error('\nproducer\n[AMPQ] connection error (producer) - closing; ', err);
+			console.error('\nproducerGodeTing\n[AMPQ] connection error - closing; ', err);
 		}
 
-		let type = rabbitmq.producer.type;
-		let exchange = rabbitmq.producer.exchange;
+		let type = rabbitmq.producerGodeTing.type;
+		let exchange = rabbitmq.producerGodeTing.exchange;
 		let headers = {
 			type: 'json'
 		};
@@ -30,6 +30,6 @@ module.exports.startProducer = function (ampqConn, message, messageId) {
 			headers: headers,
 			replyTo: replyTo
 		});
-		console.log(` [+] Successfully sent message ${messageId} from producer`);
+		console.log(` [+] Successfully sent message ${messageId} from producerGodeTing`);
 	});
 };
