@@ -56,10 +56,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
-        System.out.println("props: " + props);
         System.out.println("headers: " + props.getHeaders());
-        System.out.println("header type: " + props.getHeaders().get("type").toString());
         
         String type = props.getHeaders().get("type").toString();
 //        System.out.println("type: " + type);
