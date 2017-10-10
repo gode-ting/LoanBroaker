@@ -40,9 +40,10 @@ public class Normalizer {
 
             case "json": {
 
-                Object data = SerializationUtils.deserialize(body);
+                String jsonString = new String(body, "UTF-8");
+                System.out.println("this is json: " + jsonString);
                 ObjectMapper mapper = new ObjectMapper();
-                LoanResponse response = mapper.readValue(data.toString(), LoanResponse.class);
+                LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
                 String responseJson = mapper.writeValueAsString(response);
                 return responseJson;
 

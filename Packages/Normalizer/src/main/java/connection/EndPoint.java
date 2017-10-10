@@ -29,8 +29,8 @@ public abstract class EndPoint {
     protected String endPointName;
     protected String queueName;
     
-    public EndPoint(String endpointName) throws IOException, TimeoutException{
-         this.endPointName = endpointName;
+    public EndPoint(String endPointName) throws IOException, TimeoutException{
+         this.endPointName = endPointName;
 		
          //Create a connection factory
          ConnectionFactory factory = new ConnectionFactory();
@@ -48,9 +48,11 @@ public abstract class EndPoint {
 	    
          //declaring a queue for this channel. If queue does not exist,
          //it will be created on the server.
-         channel.exchangeDeclare(endPointName, "fanout");
-         queueName = channel.queueDeclare().getQueue();
-         channel.queueBind(queueName, endPointName, "");
+         channel.queueDeclare(endPointName, false, false, false, null);
+         
+//         channel.exchangeDeclare(endPointName, "fanout");
+//         queueName = channel.queueDeclare().getQueue();
+//         channel.queueBind(queueName, endPointName, "");
     }
 	
 	
