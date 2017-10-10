@@ -21,9 +21,7 @@ public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable,
 
     @Override
     public void run() {
-        System.out.println("inside run");
         try {
-            System.out.println("consume");
             channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
             System.out.println("EX:" + ex.getLocalizedMessage());

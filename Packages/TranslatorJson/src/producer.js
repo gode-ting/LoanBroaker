@@ -20,7 +20,7 @@ export default function (ampqConn, message) {
 
 		//	Example of a message correctly formatted and ready to be send to cphbusiness.bankjson
 		//var newMessage = {'ssn':1605789787, 'creditScore':749, 'loanAmount': 10.0, 'loanDuration': 360};
-
+		let obj = JSON.parse(message.content.toString());
 		var formattedObject = {};
 		formattedObject.ssn = obj.ssn;
 		formattedObject.creditScore = obj.creditScore;

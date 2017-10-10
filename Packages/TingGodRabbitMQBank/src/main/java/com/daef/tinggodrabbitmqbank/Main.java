@@ -26,9 +26,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
     private LoanCalculator loanResponse;
 
     public Main() throws Exception {
-        System.out.println("yup1");
         consumer = new QueueConsumer("LoanBroker9.TingGodRabbitMQBank", this);
-        System.out.println("yup2");
         producer = new Producer("LoanBroker9.tinggodMQ", this);
         loanResponse = new LoanCalculator();
 
