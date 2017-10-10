@@ -7,19 +7,12 @@ package app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Properties;
 import org.apache.commons.lang.SerializationUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 /**
  *
@@ -27,8 +20,8 @@ import org.xml.sax.InputSource;
  */
 public class Normalizer {
 
-    public Normalizer() {
-
+    public Normalizer() throws FileNotFoundException, IOException {
+        
     }
 
     public String normalize(byte[] body, String type) throws UnsupportedEncodingException, IOException {
