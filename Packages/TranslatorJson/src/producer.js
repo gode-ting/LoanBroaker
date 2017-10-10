@@ -18,15 +18,16 @@ export default function (ampqConn, message) {
 			durable: false
 		});
 
-		console.log('Exchange: ', exchange);
-		message.creditScore = undefined
-		message.rki = false
+		//	Example of a message correctly formatted and ready to be send to cphbusiness.bankjson
+		//var newMessage = {'ssn':1605789787, 'creditScore':749, 'loanAmount': 10.0, 'loanDuration': 360};
 
-		var newMessage = {'ssn':1605789787, 'loanAmount': 10.0, 'loanDuration': 360, 'rki':false};
-
-		console.log('hej fra emil', message.toString())
-		console.log('hej igen du', new Buffer(message.toString()))
-		ch.publish(exchange, '', Buffer.from(newMessage.toString()), {
+		var formattedObject = {};
+		formattedObject.ssn = obj.ssn;
+		formattedObject.creditScore = obj.creditScore;
+		formattedObject.loanAmount = obj.loanAmount;
+		formattedObject.loanDuration = 360; // Dette skal der laves noget arbejde på. Skal laves om fra Date til antal dage
+		
+		ch.publish(exchange, '', Buffer.from(JSON.stringify(formattedObject)), {
 			headers: headers,
 			replyTo: replyTo
 		});
