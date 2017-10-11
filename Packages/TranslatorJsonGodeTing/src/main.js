@@ -31,7 +31,7 @@ export function main () {
 			return setTimeout(main(), 1000);
 		});
 
-		console.log('[AMPQ] connected - TranslatorJson');
+		console.log('[AMPQ] connected - TransonJsonGodeTing');
 
 		consumer(conn);
 	});

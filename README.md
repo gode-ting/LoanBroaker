@@ -9,6 +9,8 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 - [Important links](#important-links)
 - [Authors](#authors)
 - [References](#references)
+- [Banks](#banks)
+- [Translators](#translators)
 
 ## Important links
 
@@ -35,3 +37,25 @@ Original project [description](https://github.com/datsoftlyngby/soft2017fall-sys
 5. Run Nomalizer (Main)
 6. Run TingGodRabbitMQBank (Main)
 7. Run GetCreditScore (Dummy)
+
+## Banks
+
+List of bank id's:
+
+- `bank-lån-and-spar`
+- `bank-jyske-bank`
+- `bank-nordea`
+- `bank-danske-bank`
+
+## Translators.
+
+**Node translators:**
+
+- TranslatorJson
+- TranslatorJsonGodeTing
+
+In this dir run `npm install`.
+
+**Production:** in this dir, run `npm run start`. Will start two processes that each start their respective translator in production.
+
+**Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.

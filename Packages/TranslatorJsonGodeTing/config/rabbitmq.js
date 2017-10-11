@@ -2,11 +2,11 @@ module.exports = {
 	consumer: {
 		type: 'direct',
 		exchange: 'LoanBroker9.getRecipients_out',
-		binding: 'bank-jyske-bank'
+		binding: 'bank-nordea'
 	},
 	producer: {
 		type: 'fanout',
-		exchange: 'cphbusiness.bankJSON',
+		exchange: 'LoanBroker9.TingGodRabbitMQBank',
 		replyTo: 'LoanBroker9.banks_out'
 	},
 	connection: {
