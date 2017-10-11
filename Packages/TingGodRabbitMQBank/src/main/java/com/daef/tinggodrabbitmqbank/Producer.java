@@ -36,9 +36,7 @@ public class Producer extends RabbitMQEndPointProducer {
                 
                 try {
                     channel.exchangeDeclare(replyTo_exchange, "fanout");
-                    String queueName = channel.queueDeclare().getQueue();
-                    channel.queueBind(queueName, replyTo_exchange, "");
-                    channel.basicPublish(replyTo_exchange, "", props, SerializationUtils.serialize(response.toJSONString()));
+                    channel.basicPublish("", replyTo_exchange, props, SerializationUtils.serialize(response.toJSONString()));
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);

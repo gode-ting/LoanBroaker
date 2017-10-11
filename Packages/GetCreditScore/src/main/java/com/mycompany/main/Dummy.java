@@ -52,6 +52,9 @@ public class Dummy {
             message.put("loanDuration", "1973-01-01 01:00:00.0 CET");
             
             channel.basicPublish("", endPointName, null, SerializationUtils.serialize(message));
+            
+            channel.close();
+            connection.close();
             System.out.println("message sent");
         } catch (Exception e) {
             System.out.println("Error connecting to MQ Server. Message: " + e.getLocalizedMessage());

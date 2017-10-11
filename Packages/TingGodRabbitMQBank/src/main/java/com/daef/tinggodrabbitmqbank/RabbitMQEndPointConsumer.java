@@ -34,7 +34,7 @@ public class RabbitMQEndPointConsumer {
     //THIS ENDPOINTPRODUCER WILL EXCHANGE VIA FANOUT
     public RabbitMQEndPointConsumer(String endPointName) throws IOException, TimeoutException {
         this.endPointName = endPointName;
-
+        
         //Create a connection factory
         ConnectionFactory factory = new ConnectionFactory();
 
@@ -53,7 +53,7 @@ public class RabbitMQEndPointConsumer {
         //it will be created on the server.
         channel.exchangeDeclare(endPointName, TYPE);
         queueName = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName, endPointName, "");
+        channel.queueBind(queueName, endPointName, "bank-nordea");
 
     }
 
