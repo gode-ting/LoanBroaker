@@ -1,0 +1,16 @@
+{
+	"extends": "@debitoor/eslint-config-debitoor",
+	"parser": "babel-eslint",
+	"rules": {
+		"strict": 0
+	},
+	"env": {
+		"mocha": true,
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"modules": true
+		}
+	}
+}
