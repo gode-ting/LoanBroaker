@@ -1,8 +1,4 @@
-module.exports = {
-	getFormattedJson
-};
-
-function getFormattedJson(jsonObject) {
+export default function (jsonObject) {
 
 	let ssn = jsonObject.ssn || '';
 	let creditScore = jsonObject.creditScore || '';

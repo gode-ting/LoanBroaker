@@ -32,7 +32,7 @@ public class Dummy {
         
         String jsonMessage = gson.toJson(json);
 
-        String severity = "bank-nordea";
+        String severity = "bank-jyske-bank";
 
         channel.basicPublish(EXCHANGE_NAME, severity, null, jsonMessage.getBytes());
         System.out.println(" [x] Sent '" + severity + "':'" + jsonMessage + "'");

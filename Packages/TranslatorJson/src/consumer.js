@@ -1,8 +1,9 @@
-const rabbitmq = require('../config/rabbitmq.js');
-const producer = require('./producer.js');
-const randomstring = require('randomstring');
+import rabbitmq from '../config/rabbitmq.js';
+// import translator from './translator.js';
+import producer from './producer.js';
+import getTimeStamp from './timestamp.js';
 
-module.exports.startConsumer = function (ampqConn) {
+export default function (ampqConn) {
 	let exchange = rabbitmq.consumer.exchange;
 	let binding = rabbitmq.consumer.binding;
 
@@ -13,20 +14,23 @@ module.exports.startConsumer = function (ampqConn) {
 			durable: false
 		});
 
+		let timeStamp;
+
 		ch.assertQueue('', {
 			exclusive: true
 		}, (err, q) => {
-			console.log('\nConsumer:\n [*] Waiting for messages in %s. To exit press CTRL+C', q.queue);
+			timeStamp = getTimeStamp();
+			console.log(`\nConsumer ${timeStamp}:\n [*] Waiting for messages in %s. To exit press CTRL+C`, q.queue);
 			ch.bindQueue(q.queue, exchange, binding);
 
 			ch.consume(q.queue, (message) => {
-				let messageId = randomstring.generate(6);
-				console.log('\nConsumer:\n [x] %s', message.content.toString(), ' - id: ', messageId);
-				producer.startProducer(ampqConn, message, messageId);
+				timeStamp = getTimeStamp();
+				console.log(`\nConsumer ${timeStamp}:\n [x] %s`, message.content.toString());
+				producer(ampqConn, message);
 			}, {
 				noAck: true
 			});
 		});
 
 	});
-};
+}
