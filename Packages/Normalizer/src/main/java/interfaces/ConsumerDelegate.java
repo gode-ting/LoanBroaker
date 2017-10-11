@@ -5,10 +5,12 @@
  */
 package interfaces;
 
+import java.util.Map;
+
 /**
  *
  * @author emilgras
  */
 public interface ConsumerDelegate {
-    void didConsumeMessageWithOptionalException(byte[] body, String type, Exception ex);
+    void didConsumeMessageWithOptionalException(byte[] body, Map headers, Exception ex);
 }

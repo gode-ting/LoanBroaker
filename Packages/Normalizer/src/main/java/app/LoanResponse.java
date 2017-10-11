@@ -13,6 +13,17 @@ public class LoanResponse {
     
     private String ssn;
     private Double interestRate;
+    private String bankID;
+
+    public String getBankID() {
+        return bankID;
+    }
+
+    public void setBankID(String bankID) {
+        this.bankID = bankID;
+    }
+    
+    
 
     public String getSsn() {
         return ssn;

@@ -27,8 +27,10 @@ public class Producer extends EndPointProducer {
                 try {
                     
                     String type = "xml";
+                    String bankID = "bankXML";
                     Map headers = new HashMap();
                     headers.put("type", type);
+                    headers.put("bankID", bankID);
                     BasicProperties props = new BasicProperties
                             .Builder()
                             .headers(headers)

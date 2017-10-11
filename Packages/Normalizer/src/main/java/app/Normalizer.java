@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.lang.SerializationUtils;
 
@@ -24,7 +25,11 @@ public class Normalizer {
         
     }
 
-    public String normalize(byte[] body, String type) throws UnsupportedEncodingException, IOException {
+    public String normalize(byte[] body, Map headers) throws UnsupportedEncodingException, IOException {
+        System.out.println("1111");
+        String type = headers.get("type").toString();
+        System.out.println("2222");
+        String bankID = headers.get("bankID").toString();
         System.out.println("type in normalize methods: " + type);
         switch (type) {
             case "xml": {
@@ -32,6 +37,7 @@ public class Normalizer {
                 String xml = new String(body);
                 XmlMapper xmlMapper = new XmlMapper();
                 LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
+                response.setBankID(bankID);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(response);
                 return json;
@@ -44,6 +50,7 @@ public class Normalizer {
                 System.out.println("this is json: " + jsonString);
                 ObjectMapper mapper = new ObjectMapper();
                 LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
+                response.setBankID(bankID);
                 String responseJson = mapper.writeValueAsString(response);
                 return responseJson;
 

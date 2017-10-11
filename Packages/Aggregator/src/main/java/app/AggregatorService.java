@@ -37,16 +37,14 @@ public class AggregatorService {
                         if (((ArrayList) message.get("banks")).size() < 1) {
                             throw new Exception();
                         }
-                        unfinishedMessages.put((String)((HashMap)message.get("application")).get("ssn"),new messageCollection(((ArrayList) message.get("banks")).size(), (String)((HashMap)message.get("application")).get("ssn")));
+                        unfinishedMessages.put((String)((HashMap)message.get("application")).get("ssn"),new messageCollection(((ArrayList) message.get("banks")).size(), (String)((HashMap)message.get("application")).get("ssn"), (String)message.get("bankID")));
                     } else {
                         messageCollection mc = unfinishedMessages.get((String)message.get("ssn"));
-                        System.out.println("." + mc);
-                        System.out.println("." + mc.getMessages().size());
-                        System.out.println("." + message);
                         mc.getMessages().put("test" + mc.getMessages().size(), message);
                         System.out.println("---- New message from bank ----");
                         System.out.println("");
                         System.out.println("SSN: " + (String)message.get("ssn"));
+                        System.out.println("Bank id: " + (String)message.get("bankID"));
                         System.out.println("Message no. " + mc.getMessages().size() + "/" + mc.getSize());
                         System.out.println("");
                         if(mc.getSize() == mc.getMessages().size()){
@@ -70,14 +68,20 @@ public class AggregatorService {
     class messageCollection{
         int size;
         String ssn;
+        String bankID;
         HashMap messages;
 
-        public messageCollection(int size, String ssn) {
+        public messageCollection(int size, String ssn, String bankID) {
             this.size = size;
             this.ssn = ssn;
+            this.bankID = bankID;
             this.messages = new HashMap();
         }
 
+        public String getBankID(){
+            return bankID;
+        }
+        
         public int getSize() {
             return size;
         }

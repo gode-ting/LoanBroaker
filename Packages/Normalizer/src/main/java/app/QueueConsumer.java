@@ -11,7 +11,6 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -58,12 +57,14 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             BasicProperties props, byte[] body) throws IOException {
         System.out.println("headers: " + props.getHeaders());
         
-        String type = props.getHeaders().get("type").toString();
+        Map headers = props.getHeaders();
+        System.out.println("map: " + headers);
+        //String type = props.getHeaders().get("type").toString();
 //        System.out.println("type: " + type);
 //        String message = new String(body, "UTF-8");
 //        System.out.println("message: " + message);
 //        HashMap application = (HashMap) SerializationUtils.deserialize(body);
-        delegate.didConsumeMessageWithOptionalException(body, type, null);
+        delegate.didConsumeMessageWithOptionalException(body, headers, null);
     }
 
     public void handleCancel(String consumerTag) { 
