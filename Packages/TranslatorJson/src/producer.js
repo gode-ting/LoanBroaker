@@ -15,9 +15,11 @@ export default function (ampqConn, message) {
 		}
 
 		let type = rabbitmq.producer.type;
+		let bankID = rabbitmq.producer.bankID;
 		let exchange = rabbitmq.producer.exchange;
 		let headers = {
-			type: 'json'
+			type,
+			bankID
 		};
 
 		ch.assertExchange(exchange, type, {

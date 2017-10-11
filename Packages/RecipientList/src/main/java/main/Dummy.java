@@ -25,9 +25,9 @@ public class Dummy {
         
         Gson gson = new Gson();
         JSONObject json = new JSONObject();
-        json.put("ssn", "280492-xxxx");
-        json.put("creditScore", "750");
-        json.put("loanAmount", "1000.01");
+        json.put("ssn", 1200001111);
+        json.put("creditScore", 750);
+        json.put("loanAmount", 1000.01);
         json.put("loanDuration", "365");
         
         String jsonMessage = gson.toJson(json);

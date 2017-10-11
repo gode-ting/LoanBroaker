@@ -7,7 +7,9 @@ module.exports = {
 	producer: {
 		type: 'fanout',
 		exchange: 'cphbusiness.bankJSON',
-		replyTo: 'LoanBroker9.banks_out'
+		replyTo: 'LoanBroker9.banks_out',
+		bankID: 'bankJSON',
+		type: 'json'
 	},
 	connection: {
 		host: 'datdb.cphbusiness.dk',
