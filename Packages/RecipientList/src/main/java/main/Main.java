@@ -34,36 +34,26 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
         if (ex == null) {
             JSONObject applicationJson = service.DistributeLoan(application);
             System.out.println("banks: " + ((ArrayList<HashMap>) application.get("banks")).size());
-            int durationInYears = (int)applicationJson.get("loanDuration");
+            int durationInYears = (int) applicationJson.get("loanDuration");
             for (HashMap bank : (ArrayList<HashMap>) application.get("banks")) {
 
                 String bankId = (String) bank.get("bankId");
                 if (bankId.equals("bank-lån-and-spar")) { // XML (cphbusiness)
-
-                    
-                    
                     Instant instant = Instant.ofEpochSecond(durationInYears * 365 * 24 * 60 * 60);
                     Date myDate = Date.from(instant);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.S z");
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S z");
                     String formattedDate = formatter.format(myDate);
                     applicationJson.put("loanDuration", formattedDate);
-                    System.out.println("DAAAAAAAAATE BABY : " + formattedDate);
                     // duration format = 1972-01-01 01:00:00.0 CET
-
                 }
                 if (bankId.equals("bank-jyske-bank")) { // JSON (cphbusiness)
-                    System.out.println("herea");
-//                    bank.put("exhange", "cphbusiness.JSONBank");
-                    // duration format = days --> 360
-
-                    System.out.println("mama...");
                     int durationInDays = durationInYears * 360;
-                    
                     applicationJson.put("loanDuration", durationInDays);
-                    System.out.println("DAAAAAAAAATE BABY (in days) : " + durationInDays);
-                    
                 }
                 if (bankId.equals("bank-nordea")) {
+                    bank.put("bankID", "bank-nordea");
+                }
+                if (bankId.equals("bank-danske-bank")) {
                 }
 
                 System.out.println("*** sending ***");

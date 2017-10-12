@@ -29,15 +29,17 @@ public class Normalizer {
         System.out.println("1111");
         String type = headers.get("type").toString();
         System.out.println("2222");
-        String bankID = headers.get("bankID").toString();
+        System.out.println("Headerzzzzzzzzz - " + headers.toString());
+//        String bankID = headers.get("bankID").toString();
         System.out.println("type in normalize methods: " + type);
         switch (type) {
             case "xml": {
                    
                 String xml = new String(body);
+                System.out.println("incoming: " + xml);
                 XmlMapper xmlMapper = new XmlMapper();
                 LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
-                response.setBankID(bankID);
+//                response.setBankID(bankID);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(response);
                 return json;
@@ -46,11 +48,11 @@ public class Normalizer {
 
             case "json": {
 
-                String jsonString = new String(body, "UTF-8");
+                String jsonString = new String(body);
                 System.out.println("this is json: " + jsonString);
                 ObjectMapper mapper = new ObjectMapper();
                 LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
-                response.setBankID(bankID);
+//                response.setBankID(bankID);
                 String responseJson = mapper.writeValueAsString(response);
                 return responseJson;
 

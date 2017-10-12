@@ -15,7 +15,7 @@ export default function (ampqConn, message) {
 		}
 
 		let type = rabbitmq.producer.type;
-		let exhangeType = rabbitmq.producer.exchangeType;
+		let exchangeType = rabbitmq.producer.exchangeType;
 		let bankID = rabbitmq.producer.bankID;
 		let exchange = rabbitmq.producer.exchange;
 		let headers = {
@@ -23,7 +23,7 @@ export default function (ampqConn, message) {
 			bankID
 		};
 
-		ch.assertExchange(exchange, exhangeType, {
+		ch.assertExchange(exchange, exchangeType, {
 			durable: false
 		});
 

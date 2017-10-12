@@ -2,6 +2,9 @@ package Translators;
 
 import interfaces.XMLTranslatorInterface;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -32,12 +35,14 @@ public class XMLTranslator implements XMLTranslatorInterface {
             long creditScore = (long) application.get("creditScore");
             double loanAmount = (double) application.get("loanAmount");
             String loanDuration = (String) application.get("loanDuration");
+
             
+
             System.out.println("ssn: " + ssn);
             System.out.println("cr editScore: " + creditScore);
             System.out.println("loanAmount: " + loanAmount);
             System.out.println("loanDuration: " + loanDuration);
-            
+
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -69,13 +74,13 @@ public class XMLTranslator implements XMLTranslatorInterface {
             StringWriter stringWriter = new StringWriter();
             StreamResult result = new StreamResult(stringWriter);
             transformer.transform(source, result);
-            
+
             xmlResult = stringWriter.toString();
         } catch (ParserConfigurationException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (TransformerException ex) {
             Logger.getLogger(XMLTranslator.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("slut?");

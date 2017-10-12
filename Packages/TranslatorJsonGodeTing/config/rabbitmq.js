@@ -5,7 +5,7 @@ module.exports = {
 		binding: 'bank-nordea'
 	},
 	producer: {
-		exhangeType: 'fanout',
+		exchangeType: 'fanout',
 		exchange: 'LoanBroker9.TingGodRabbitMQBank',
 		replyTo: 'LoanBroker9.banks_out',
 		bankID: 'TingGodRabbitMQBank',

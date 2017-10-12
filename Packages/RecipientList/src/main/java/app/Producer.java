@@ -24,7 +24,7 @@ public class Producer extends EndPoint {
     }
 
     public void sendMessage(JSONObject json, HashMap header, String binding) {
-        System.out.println("Message sent to translator: " + binding + " with data: " + json);
+        System.out.println("Message sent to translator: " + binding + " with data: " + json + " and header: " + header.toString());
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -34,7 +34,7 @@ public class Producer extends EndPoint {
                             .headers(header)
                             .build();
             
-                    channel.basicPublish(endPointName, binding, props, gson.toJson(json).getBytes());
+                    channel.basicPublish(endPointName, binding, props, json.toJSONString().getBytes());
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);

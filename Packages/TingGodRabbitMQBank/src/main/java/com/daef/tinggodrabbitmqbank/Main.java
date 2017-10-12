@@ -43,9 +43,10 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
             try {
                 String json = new String(body);
                 ObjectMapper mapper = new ObjectMapper();
+                System.out.println("Before mapping");
                 LoanRequest loanRequest = mapper.readValue(json, LoanRequest.class);
                 
-                
+                System.out.println("After mapping");
                 JSONObject response = calculator.getInterestRate(
                         loanRequest.getSsn(), 
                         loanRequest.getCreditScore());

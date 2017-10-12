@@ -27,6 +27,7 @@ public class Producer extends RabbitMQEndPointProducer {
                 String type = "json";
                 Map headers = new HashMap();
                 headers.put("type", type);
+//                headers.put("bankID", "TingGodRabbitMQBank");
                 BasicProperties props = new BasicProperties.Builder()
                         .headers(headers)
                         .build();
