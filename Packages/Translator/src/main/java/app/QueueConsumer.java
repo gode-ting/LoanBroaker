@@ -69,7 +69,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             System.out.println("BEFORE JSON");
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(message);
-            System.out.println("JSOOOOOOOON - " + json);
+            System.out.println("JSOOOOOOOON FROM TRANSLATOR - " + json);
             
             delegate.didConsumeMessageWithOptionalException(json, null);
         } catch (ParseException ex) {

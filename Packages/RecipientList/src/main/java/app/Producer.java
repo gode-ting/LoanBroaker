@@ -24,7 +24,7 @@ public class Producer extends EndPoint {
     }
 
     public void sendMessage(JSONObject json, HashMap header, String binding) {
-        System.out.println("Message sent to translator: " + binding);
+        System.out.println("Message sent to translator: " + binding + " with data: " + json);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
