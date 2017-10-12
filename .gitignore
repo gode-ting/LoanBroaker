@@ -32,3 +32,4 @@ Packages/*/.classpath
 # /Packages/RuleBase/target/
 /Packages/Client/nbproject/private/
 /Packages/TranslatorJson/nbproject/private/
+/nbproject/private/

@@ -35,9 +35,12 @@ public class GetBanksService implements Runnable {
                         app.rulebase.GetBankWebServices service = new app.rulebase.GetBankWebServices();
                         app.rulebase.CreditScoreWebService port = service.getCreditScoreWebServicePort();
                         // TODO initialize WS operation arguments here
+                        System.out.println("getCreditScore1");
                         int creditScore = (int) application.get("creditScore");
+                        System.out.println("getCreditScore2: " + creditScore);
                         // TODO process result here
                         byte[] result = port.getBankRules(creditScore);
+                        System.out.println("getCreditScore3");
                         HashMap resultMap = (HashMap)SerializationUtils.deserialize(result);
                         resultMap.put("application", application);
                         

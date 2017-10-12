@@ -58,6 +58,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             BasicProperties props, byte[] body) throws IOException {
         System.out.println("hallo1");
         HashMap application = (HashMap) SerializationUtils.deserialize(body);
+        System.out.println("hallo2");
         delegate.didConsumeMessageWithOptionalException(application, null);
     }
 
