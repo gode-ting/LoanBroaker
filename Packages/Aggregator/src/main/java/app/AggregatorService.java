@@ -27,6 +27,7 @@ public class AggregatorService {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                System.out.println(message.toString());
                 try {
                     if (message.containsKey("banks")) {
                         System.out.println("---- New application added waiting queue----");

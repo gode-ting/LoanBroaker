@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package app;
+package Service;
 
 import connection.EndPoint;
 import interfaces.ConsumerDelegate;
@@ -11,6 +11,7 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -37,7 +38,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             //start consuming messages. Auto acknowledge messages.
             channel.basicConsume(endPointName, true, (com.rabbitmq.client.Consumer) this);
         } catch (IOException ex) {
-//            delegate.didConsumeMessageWithOptionalException(null, ex);
+            delegate.didConsumeMessageWithOptionalException(null, ex);
         }
     }
 
@@ -55,16 +56,9 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("headers: " + props.getHeaders());
-        
-        Map headers = props.getHeaders();
-        System.out.println("map: " + headers);
-        //String type = props.getHeaders().get("type").toString();
-//        System.out.println("type: " + type);
-//        String message = new String(body, "UTF-8");
-//        System.out.println("message: " + message);
-//        HashMap application = (HashMap) lSerializationUtils.deserialize(body);
-        delegate.didConsumeMessageWithOptionalException(body, headers, null);
+        System.out.println("hallo1");
+        HashMap application = (HashMap) SerializationUtils.deserialize(body);
+        delegate.didConsumeMessageWithOptionalException(application, null);
     }
 
     public void handleCancel(String consumerTag) { 
