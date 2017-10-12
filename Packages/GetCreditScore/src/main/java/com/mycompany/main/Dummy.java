@@ -10,6 +10,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import java.util.HashMap;
 import org.apache.commons.lang.SerializationUtils;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -46,12 +47,18 @@ public class Dummy {
             //it will be created on the server.
             channel.queueDeclare(endPointName, false, false, false, null);
             
+            JSONObject request = new JSONObject();
+            request.put("ssn", "123456-7890");
+            request.put("loanAmount", 10000.0);
+            request.put("loanDuration", 3);
+            
+            
             HashMap message = new HashMap();
             message.put("ssn", "123456-7890");
             message.put("loanAmount", "10000.0");
             message.put("loanDuration", "1973-01-01 01:00:00.0 CET");
             
-            channel.basicPublish("", endPointName, null, SerializationUtils.serialize(message));
+            channel.basicPublish("", endPointName, null, SerializationUtils.serialize(request));
             
             channel.close();
             connection.close();

@@ -5,7 +5,7 @@ module.exports = {
 		binding: 'bank-jyske-bank'
 	},
 	producer: {
-		type: 'fanout',
+		exchangeType: 'fanout',
 		exchange: 'cphbusiness.bankJSON',
 		replyTo: 'LoanBroker9.banks_out',
 		bankID: 'bankJSON',
