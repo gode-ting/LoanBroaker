@@ -17,6 +17,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.SerializationUtils;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -56,8 +57,16 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
-        HashMap application = (HashMap) SerializationUtils.deserialize(body);
+
+        JSONObject request = (JSONObject)SerializationUtils.deserialize(body);
+        System.out.println("{GetCreditScore} didConsumeJSONMessage: " + request);
+        HashMap<String, Object> application = new HashMap();
+        application.put("ssn", (String)request.get("ssn"));
+        application.put("loanAmount", (double)request.get("loanAmount"));
+        application.put("loanDuration", (int)request.get("loanDuration"));
+        
+        
+//        HashMap application = (HashMap) SerializationUtils.deserialize(body);
         delegate.didConsumeMessageWithOptionalException(application, null);
     }
 
