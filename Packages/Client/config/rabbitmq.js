@@ -9,6 +9,8 @@ module.exports = {
 		queue: 'LoanBroker9.getCreditScore_in'
 	},
 	consumer: {
-
+		type: '',
+		exchange: '',
+		binding: ''
 	}
 };

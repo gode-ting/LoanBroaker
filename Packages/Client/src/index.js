@@ -15,6 +15,7 @@ router.get('/', function (req, res, next) {
 			},
 			{ endpoint: '/loanResponse', method: 'GET', response: 'json' }
 		];
+
 	res.json(endpoints);
 });
 
@@ -38,7 +39,7 @@ router.post('/loanRequest', (req, res, next) => {
 		.then(() => {
 			let response = {
 				status: 'success',
-				received: {
+				sent: {
 					ssn,
 					loanAmount,
 					loanDuration
@@ -46,7 +47,7 @@ router.post('/loanRequest', (req, res, next) => {
 			};
 			return res.json({ response });
 		}, (err) => {
-			res.json({ err: err });
+			throw new Error(err);
 		});
 });
 

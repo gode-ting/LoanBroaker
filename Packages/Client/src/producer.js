@@ -16,7 +16,7 @@ function main(request) {
 					});
 					if (err) {
 						conn.close();
-						console.error(`\nproducer:\n[AMPQ] connection error (producer) - closing; ${err}`);
+						console.error(`\nproducer:\n[AMPQ] channel error (producer) - closing; ${err}`);
 						reject(err);
 					}
 
