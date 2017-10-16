@@ -11,7 +11,7 @@ export default function (ampqConn, message) {
 		timeStamp = getTimeStamp();
 		if (err) {
 			ampqConn.close();
-			console.error(`\nproducer ${timeStamp}:\n[AMPQ] connection error (producer) - closing; `, err);
+			console.error(`\nproducer ${timeStamp}:\n[AMPQ] connection error (producer) - closing; ${err}`);
 		}
 
 		let type = rabbitmq.producer.type;
