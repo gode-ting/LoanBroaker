@@ -23,10 +23,10 @@ public class ReciepientListService {
         ArrayList<HashMap> banks = (ArrayList<HashMap>) applicationAndBanks.get("banks");
 
         JSONObject response = new JSONObject();
-        response.put("ssn", (String) application.get("ssn"));
-        response.put("creditScore", (int) application.get("creditScore"));
-        response.put("loanAmount", (double) application.get("loanAmount"));
-        response.put("loanDuration", (int) application.get("loanDuration"));
+        response.put("ssn", application.get("ssn"));
+        response.put("creditScore", application.get("creditScore"));
+        response.put("loanAmount", application.get("loanAmount"));
+        response.put("loanDuration", application.get("loanDuration"));
 
         return response;
     }

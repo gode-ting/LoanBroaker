@@ -31,6 +31,8 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
+        try {
+            
         if (ex == null) {
             JSONObject applicationJson = service.DistributeLoan(application);
             System.out.println("banks: " + ((ArrayList<HashMap>) application.get("banks")).size());
@@ -62,6 +64,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
             }
         } else {
             System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage());
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
