@@ -12,7 +12,7 @@
 		"nodemon": "^1.12.1"
 	},
 	"scripts": {
-		"install-all": "npm install && npm install --prefix ./Packages/TranslatorJson && npm install --prefix ./Packages/TranslatorJsonGodeTing",
+		"install-all": "npm install && cd ./Packages/TranslatorJson && npm install && cd ../TranslatorJsonGodeTing && npm install",
 		"start": "concurrently --names \"Cphbusiness\",\"Gode ting  \" --prefix-colors cyan,yellow \"npm run startTranslatorJson\" \"npm run startTranslatorJsonGodeTing\"",
 		"startTranslatorJson": "node ./Packages/TranslatorJson",
 		"startTranslatorJsonGodeTing": "node ./Packages/TranslatorJsonGodeTing",
