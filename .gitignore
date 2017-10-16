@@ -25,6 +25,7 @@ hs_err_pid*
 /Packages/GetBanks/target/
 
 **/node_modules
+Packages/*/nbproject
 Packages/*/.settings
 Packages/*/.classpath
 /Packages/*/target
@@ -33,3 +34,4 @@ Packages/*/.classpath
 /Packages/Client/nbproject/private/
 /Packages/TranslatorJson/nbproject/private/
 /nbproject/private/
+/Packages/TranslatorJsonGodeTing/nbproject/private/
