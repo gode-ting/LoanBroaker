@@ -6,17 +6,15 @@
 		"doc": "docs"
 	},
 	"dependencies": {
-		"cluster": "^0.7.7",
-		"colors": "^1.1.2",
-		"concurrently": "^3.5.0",
+		"concurrently": "3.5.0",
 		"nodemon": "^1.12.1"
 	},
 	"scripts": {
 		"install-all": "npm install && cd ./Packages/TranslatorJson && npm install && cd ../TranslatorJsonGodeTing && npm install",
-		"start": "concurrently --names \"Cphbusiness\",\"Gode ting  \" --prefix-colors cyan,yellow \"npm run startTranslatorJson\" \"npm run startTranslatorJsonGodeTing\"",
+		"start": "concurrently --names \"Cphbusiness\",\"Gode ting  \" --prefix-colors cyan,green \"npm run startTranslatorJson\" \"npm run startTranslatorJsonGodeTing\"",
 		"startTranslatorJson": "node ./Packages/TranslatorJson",
 		"startTranslatorJsonGodeTing": "node ./Packages/TranslatorJsonGodeTing",
-		"dev": "concurrently --names \"Cphbusiness\",\"Gode ting  \" --prefix-colors cyan,yellow \"npm run devTranslatorJson\" \"npm run devTranslatorJsonGodeTing\"",
+		"dev": "concurrently --names \"Cphbusiness\",\"Gode ting  \" --prefix-colors \"cyan,green\" \"npm run devTranslatorJson\" \"npm run devTranslatorJsonGodeTing\"",
 		"devTranslatorJson": "nodemon ./Packages/TranslatorJson",
 		"devTranslatorJsonGodeTing": "nodemon ./Packages/TranslatorJsonGodeTing"
 	},
@@ -24,7 +22,7 @@
 		"type": "git",
 		"url": "git+https://github.com/gode-ting/LoanBroaker.git"
 	},
-	"author": "",
+	"author": "Gode ting",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/gode-ting/LoanBroaker/issues"

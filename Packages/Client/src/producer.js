@@ -7,6 +7,8 @@ module.exports = {
 
 function main(request) {
 	let messageSent = false;
+	let stringifyedRequest = JSON.stringify(request);
+
 	return new Promise((resolve, reject) => {
 		connection.getConnection()
 			.then((conn) => {
@@ -23,12 +25,26 @@ function main(request) {
 					let queue = rabbitmq.producer.queue;
 					let opts = {};
 
-					messageSent = ch.sendToQueue(queue, Buffer.from(JSON.stringify(request)), opts);
+					ch.assertQueue(queue, {
+						passive: false,
+						durable: false,
+						exclusive: false,
+						autoDelete: null
+					}, (err, q) => {
+						if (err) {
+							console.error(err);
+						}
+						console.log('queue: ', q);
+					});
+
+					messageSent = ch.sendToQueue(queue, Buffer.from(stringifyedRequest), opts);
+
 					setTimeout(() => {
 						if (messageSent) {
-							resolve(true);
+							console.log(` [x] successfully sent request ${stringifyedRequest} from producer.\nClosing channel and connection`);
 							ch.close();
 							conn.close();
+							resolve(true);
 						}
 					}, 500);
 				});

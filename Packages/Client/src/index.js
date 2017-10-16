@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let producer = require('./producer');
+let consumer = require('./consumer');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -52,7 +53,10 @@ router.post('/loanRequest', (req, res, next) => {
 });
 
 router.get('/loanResponse', (req, res, next) => {
-	res.json({ status: 'success' });
+	consumer.main()
+		.then((message) => {
+			res.json({ status: 'success', message: message });
+		});
 });
 
 module.exports = router;
