@@ -26,36 +26,61 @@ public class Normalizer {
     }
 
     public String normalize(byte[] body, Map headers) throws UnsupportedEncodingException, IOException {
-        System.out.println("1111");
         String type = headers.get("type").toString();
-        System.out.println("2222");
         System.out.println("Headerzzzzzzzzz - " + headers.toString());
-//        String bankID = headers.get("bankID").toString();
         System.out.println("type in normalize methods: " + type);
+        String bankID = headers.get("bankID").toString();
         switch (type) {
-            case "xml": {
+            case "bankXML": {
                    
                 String xml = new String(body);
                 System.out.println("incoming: " + xml);
                 XmlMapper xmlMapper = new XmlMapper();
                 LoanResponse response = xmlMapper.readValue(xml, LoanResponse.class);
-//                response.setBankID(bankID);
+                response.setBankID(bankID);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(response);
                 return json;
-
             }
 
-            case "json": {
+            case "bankJSON": {
 
                 String jsonString = new String(body);
-                System.out.println("this is json: " + jsonString);
+                System.out.println("bankJSON: " + jsonString);
+                System.out.println(SerializationUtils.deserialize(body));
                 ObjectMapper mapper = new ObjectMapper();
                 LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
-//                response.setBankID(bankID);
+                response.setBankID(bankID);
                 String responseJson = mapper.writeValueAsString(response);
                 return responseJson;
 
+            }
+            
+            case "TingGodRabbitMQBank": {
+
+                String jsonString = SerializationUtils.deserialize(body).toString();
+                System.out.println("TingGodRabbitMQBank: " + jsonString);
+                System.out.println(SerializationUtils.deserialize(body));
+                ObjectMapper mapper = new ObjectMapper();
+                LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
+                response.setBankID(bankID);
+                String responseJson = mapper.writeValueAsString(response);
+                return responseJson;
+
+            }
+            
+            case "SoapBank": {
+                
+                System.out.println("Normalizer - SoapBank");
+                String jsonString = SerializationUtils.deserialize(body).toString();
+                System.out.println(".SoapBank: " + jsonString);
+                System.out.println(SerializationUtils.deserialize(body));
+                ObjectMapper mapper = new ObjectMapper();
+                LoanResponse response = mapper.readValue(jsonString, LoanResponse.class);
+                response.setBankID(bankID);
+                String responseJson = mapper.writeValueAsString(response);
+                return responseJson;
+                
             }
 
         }

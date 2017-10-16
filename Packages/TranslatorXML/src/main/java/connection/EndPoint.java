@@ -30,7 +30,7 @@ public abstract class EndPoint {
 
         channel.exchangeDeclare(endPointName, "direct");
         queueName = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName, endPointName, "bank-lån-and-spar");
+        channel.queueBind(queueName, endPointName, keyBind);
     }
 
     /**

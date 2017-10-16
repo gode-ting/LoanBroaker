@@ -48,9 +48,9 @@ public class Service implements Runnable {
                     System.out.println(result);
                     System.out.println(SerializationUtils.deserialize(result));
                     
-                    delegate.didGetCreditScoreWithOptionalException(result, null);
+                    delegate.didGetInterestRateWithOptionalException(result, null);
                 } catch (Exception ex) {
-                    delegate.didGetCreditScoreWithOptionalException(null, ex);
+                    delegate.didGetInterestRateWithOptionalException(null, ex);
                 }
 
 //                    try { // Call Web Service Operation

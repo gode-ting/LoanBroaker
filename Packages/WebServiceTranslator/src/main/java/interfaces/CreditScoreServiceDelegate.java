@@ -12,5 +12,5 @@ import java.util.HashMap;
  * @author emilgras
  */
 public interface CreditScoreServiceDelegate {
-    public void didGetCreditScoreWithOptionalException(byte[] application, Exception ex);
+    public void didGetInterestRateWithOptionalException(byte[] application, Exception ex);
 }

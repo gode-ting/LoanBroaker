@@ -11,6 +11,7 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import org.apache.commons.lang.SerializationUtils;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -25,12 +26,7 @@ public class GoTingWSBank {
     @WebMethod(operationName = "LoanRequest")
     public byte[] LoanRequest(@WebParam(name = "ssn") String ssn, @WebParam(name = "creditScore") int creditScore, @WebParam(name = "loanAmount") float loanAmount, @WebParam(name = "LoanDuration") int LoanDuration) {
        LoanCalculator cal = new LoanCalculator();
-        
-       HashMap bankResults = cal.getInterestRate(ssn, loanAmount, LoanDuration, creditScore);
-       
-//       Producer producer = new Producer();
-//       producer.sendMessage();
-       
+       JSONObject bankResults = cal.getInterestRate(ssn, creditScore);
        return SerializationUtils.serialize(bankResults);
     }
 }

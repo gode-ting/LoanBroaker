@@ -43,10 +43,8 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
     }
     
     @Override
-    public void didGetCreditScoreWithOptionalException(byte[] application, Exception ex) {
-        if      (ex == null) { producer.sendMessage(application); 
-            
-        } 
+    public void didGetInterestRateWithOptionalException(byte[] application, Exception ex) {
+        if      (ex == null) { producer.sendMessage(application); } 
         else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
     }
     
