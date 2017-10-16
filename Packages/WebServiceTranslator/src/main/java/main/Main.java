@@ -16,6 +16,7 @@ import interfaces.ProducerDelegate;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 
 public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, ProducerDelegate {
@@ -29,7 +30,7 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getWebService_in", this);
         service = new Service(this);
-        producer = new Producer("LoanBroker9.getWebService_out", this);
+        producer = new Producer("LoanBroker9.banks_out", this);
         
         Thread consumerThread = new Thread(consumer);
         consumerThread.start();  
@@ -38,14 +39,16 @@ public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, Produ
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
-        if      (ex == null) { service.getCreditScore(application); } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); } 
+        if      (ex == null) { 
+            System.out.println("{didConsumeMessageWithOptionalException}");
+            service.getInterestRate(application); } 
+        else    { System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage()); } 
     }
     
     @Override
     public void didGetInterestRateWithOptionalException(byte[] application, Exception ex) {
         if      (ex == null) { producer.sendMessage(application); } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
+        else    { System.out.println("{didGetInterestRateWithOptionalException} Failed with exception: " + ex.getLocalizedMessage()); }
     }
     
     @Override

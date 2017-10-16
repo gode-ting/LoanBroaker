@@ -8,6 +8,7 @@ package Service;
 import interfaces.CreditScoreServiceDelegate;
 import java.util.HashMap;
 import org.apache.commons.lang.SerializationUtils;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Service implements Runnable {
 
     }
 
-    public void getCreditScore(HashMap application) {
+    public void getInterestRate(HashMap application) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -39,12 +40,12 @@ public class Service implements Runnable {
                     System.out.println("ssn: " + ssn);
                     int creditScore = (int)application.get("creditScore");
                     System.out.println("creditScore: " + creditScore);
-                    float loanAmount = (float)application.get("loanAmount");
+                    double loanAmount = (double)application.get("loanAmount");
                     System.out.println("loanAmount: " + loanAmount);
                     int loanDuration = (int)application.get("loanDuration");
                     System.out.println("loanDuration: " + loanDuration);
                     // TODO process result here
-                    byte[] result = port.loanRequest(ssn, creditScore, loanAmount, loanDuration);
+                    byte[] result = port.loanRequest(ssn, creditScore, (float) loanAmount, loanDuration);
                     System.out.println(result);
                     System.out.println(SerializationUtils.deserialize(result));
                     

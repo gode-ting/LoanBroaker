@@ -56,7 +56,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
                 if (bankId.equals("bank-danske-bank")) {
                 }
 
-                System.out.println("*** sending ***");
+                System.out.println("*** sending *** - key binding " + (String) bank.get("bankId"));
                 producer.sendMessage(applicationJson, bank, (String) bank.get("bankId"));
 
             }
