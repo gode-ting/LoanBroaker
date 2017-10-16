@@ -11,6 +11,7 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 - [References](#references)
 - [Banks](#banks)
 - [Translators](#translators)
+- [Notes](#notes)
 
 ## Important links
 
@@ -59,3 +60,16 @@ In this dir run `npm install`.
 **Production:** in this dir, run `npm run start`. Will start two processes that each start their respective translator in production.
 
 **Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.
+
+## Notes
+
+### HashMap vs. JSON
+
+Why did we choose to pass HashMap from process to process, and why did we regret it? 
+
+### Better namings
+
+Could we have named our proccesses better, and how would this possibly have helped us? 
+
+- Structure.
+- Which services need what?
