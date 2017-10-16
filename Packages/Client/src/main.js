@@ -30,7 +30,7 @@ export function main() {
 
 		// render the error page
 		res.status(err.status || 500);
-		res.json('error');
+		res.json({error: err.message});
 	});
 
 	let port = cnf.http.port;
