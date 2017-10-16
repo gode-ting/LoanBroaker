@@ -17,7 +17,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
     
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.aggregator_in", this);
-        producer = new Producer("LoanBroker9.test1", this);
+        producer = new Producer("LoanBroker9.aggregator_out", this);
         service = new AggregatorService(this);
         
         Thread consumerThread = new Thread(consumer);
@@ -45,6 +45,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
     @Override
     public void didAggregatorServiceWithOptionalException(HashMap message, Exception ex) {
         if (ex == null) {
+            System.out.println("Message Sent");
             producer.sendMessage(message);
         } else {
             System.out.println("Failed with exception: " + ex.getLocalizedMessage());
