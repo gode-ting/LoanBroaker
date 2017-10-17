@@ -1,34 +1,52 @@
 module.exports = {
 	createMap,
 	getMap,
+	getKey,
+	deleteKey,
 	addToMap,
 	getMapSize,
-	resetMap
+	resetMap,
+	mapHasKey
 };
 
 let messageMap = null;
 
-function createMap () {
+function createMap() {
 	messageMap = new Map();
 	return true;
 }
 
-function getMap () {
+function getMap() {
 	return messageMap;
 }
 
-function addToMap (key, value) {
-	if (messageMap.has(key)) {
-		return false;
-	}
-	messageMap.set(key, value);
-	return true;
+function getKey(key) {
+	return messageMap.get(key);
 }
 
-function getMapSize () {
+function deleteKey(key) {
+	return messageMap.delete(key);
+}
+
+function addToMap(key, value) {
+	console.log('Key to set: ', key);
+	if (mapHasKey(key)) {
+		console.log('Map already contains key ', key);
+		return false;
+	} else {
+		messageMap.set(key, value);
+		return true;
+	}
+}
+
+function getMapSize() {
 	return messageMap.size;
 }
 
 function resetMap() {
 	messageMap = null;
+}
+
+function mapHasKey(key) {
+	return messageMap.has(key);
 }

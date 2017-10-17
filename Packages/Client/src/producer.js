@@ -1,5 +1,6 @@
 let connection = require('./connection');
 let rabbitmq = require('../config/rabbitmq');
+let messageMap = require('./messageMap');
 
 module.exports = {
 	main
@@ -43,6 +44,10 @@ function main(request) {
 
 					setTimeout(() => {
 						if (messageSent) {
+							let key = request.ssn;
+							let value = request;
+							messageMap.addToMap(key, value);
+
 							console.log(` [+] successfully sent request ${stringifyedRequest} from producer.\nClosing channel and connection`);
 							ch.close();
 							conn.close();

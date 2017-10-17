@@ -37,3 +37,4 @@ Packages/*/.classpath
 /Packages/TranslatorJson/nbproject/private/
 /nbproject/private/
 /Packages/TranslatorJsonGodeTing/nbproject/private/
+.nyc_output

@@ -20,7 +20,7 @@ describe('../src/messageMap', () => {
 		});
 	});
 
-	describe('addToMap', () => {
+	describe('addToMap()', () => {
 		it('should add key and value pair to map if dont exist, else return false', () => {
 			let expectedInsert = true;
 			let expectedNotInsert = false;
@@ -33,6 +33,19 @@ describe('../src/messageMap', () => {
 
 			expect(actualInsert).to.eql(expectedInsert);
 			expect(actualNotInsert).to.eql(expectedNotInsert);
+		});
+	});
+
+	describe('getKey()', () => {
+		it('should return value for the key', () => {
+			let key = 'foo';
+
+			let expected = 'bar';
+
+			let actual = messageMap.getKey(key);
+			console.log(actual);
+
+			expect(actual).to.eql(expected);
 		});
 	});
 
@@ -59,6 +72,42 @@ describe('../src/messageMap', () => {
 		});
 	});
 
+	describe('mapHasKey()', () => {
+		it('should return if false if map dont contain key', () => {
+			let key = 'bar';
+
+			let expected = false;
+
+			let actual = messageMap.mapHasKey(key);
+
+			expect(actual).to.eql(expected);
+		});
+	});
+
+	describe('mapHasKey()', () => {
+		it('should return true if map already contains key', () => {
+			let key = 'foo';
+
+			let expected = true;
+
+			let actual = messageMap.mapHasKey(key);
+
+			expect(actual).to.eql(expected);
+		});
+	});
+
+	describe('deleteKey()', () => {
+		it('should delete key and return deleted value for key', () => {
+			let key = 'foo';
+
+			let expected = true;
+
+			let actual = messageMap.deleteKey(key);
+
+			expect(actual).to.eql(expected);
+		});
+	});
+
 	describe('resetMap()', () => {
 		it('should reset map to initial state (null)', () => {
 			messageMap.resetMap();
@@ -70,15 +119,4 @@ describe('../src/messageMap', () => {
 			expect(actual).to.eql(expected);
 		});
 	});
-
-	// describe('', () => {
-	// 	it('', () => {
-
-	// 	});
-	// });
-	// describe('', () => {
-	// 	it('', () => {
-
-	// 	});
-	// });
 });

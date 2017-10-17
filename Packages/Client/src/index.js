@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let producer = require('./producer');
 let consumer = require('./consumer');
+let messageMap = require('./messageMap');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -30,32 +31,39 @@ router.post('/loanRequest', (req, res, next) => {
 		throw new Error('Undefined value(s)');
 	}
 
-	let request = {
-		ssn,
-		loanAmount,
-		loanDuration
-	};
+	// Check if ssn already in map
+	if (messageMap.mapHasKey(ssn)) {
+		return res.json({ error: 'ssn already requested loans' });
+	} else {
+		let request = {
+			ssn,
+			loanAmount,
+			loanDuration
+		};
 
-	producer.main(request)
-		.then(() => {
-			let response = {
-				status: 'success',
-				sent: {
-					ssn,
-					loanAmount,
-					loanDuration
-				}
-			};
-			return res.json({ response });
-		}, (err) => {
-			throw new Error(err);
-		});
+		producer.main(request)
+			.then(() => {
+				let response = {
+					status: 'success',
+					sent: {
+						ssn,
+						loanAmount,
+						loanDuration
+					}
+				};
+				return res.json({ response });
+			}, (err) => {
+				throw new Error(err);
+			});
+	}
 });
 
 router.get('/loanResponse', (req, res, next) => {
 	consumer.main()
 		.then((message) => {
-			// console.log(JSON.parse(message.content));
+			let key = message.content.ssn;
+			messageMap.deleteKey(key);
+
 			res.json({ status: 'success', message: message.content.toString() });
 		});
 });

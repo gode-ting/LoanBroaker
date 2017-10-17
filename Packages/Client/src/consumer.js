@@ -13,7 +13,6 @@ module.exports.main = function () {
 						conn.close();
 						console.error(`\nConsumer:\n[AMPQ] channel error - closing; ${err}`);
 					}
-					console.log('consumer running');
 
 					let queue = rabbitmq.consumer.queue;
 

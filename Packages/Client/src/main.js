@@ -8,9 +8,8 @@ let messageMap = require('./messageMap');
 let index = require('./index.js');
 
 export function main() {
-	messageMap.createSet();
-	let messages = messageMap.getMap();
-	console.log('New set: ', messages);
+	// Initialize new message map
+	messageMap.createMap();
 
 	let app = express();
 
