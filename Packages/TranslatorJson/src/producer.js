@@ -34,6 +34,6 @@ export default function (ampqConn, message) {
 			headers: headers,
 			replyTo: replyTo
 		});
-		console.log(`\nproducer ${newtimeStamp}:\n [+] Successfully sent message`);
+		console.log(`\nproducer ${newtimeStamp}:\n [+] Successfully sent message ${JSON.stringify(formattedObject)}`);
 	});
 }

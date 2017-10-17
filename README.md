@@ -73,3 +73,9 @@ Could we have named our proccesses better, and how would this possibly have help
 
 - Structure.
 - Which services need what?
+
+### Bottle necks
+
+- If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
+
+- If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).

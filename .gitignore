@@ -24,6 +24,7 @@
 hs_err_pid*
 /Packages/GetBanks/target/
 
+**/coverage
 */nbproject
 **/node_modules
 Packages/*/nbproject

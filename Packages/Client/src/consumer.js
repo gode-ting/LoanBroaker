@@ -17,12 +17,25 @@ module.exports.main = function () {
 
 					let queue = rabbitmq.consumer.queue;
 
-					ch.assertQueue(queue, { durable: false });
+					ch.assertQueue(queue, { durable: false }, (err, queueOk) => {
+						if (err) {
+							console.error(err);
+							reject(err);
+						}
+						ch.prefetch(1);
 
-					ch.consume(queue, (message) => {
-						console.log(` [x] received ${message} in consumer`);
-						resolve(message);
-					}, { noAck: true });
+						ch.consume(queue, (message) => {
+							console.log(` [x] received ${message} in consumer`);
+							ch.close();
+							conn.close();
+							resolve(message);
+						}, {noAck: true}, (err, ok) => {
+							if (err) {
+								console.error(err);
+								reject(err);
+							}
+						});
+					});
 				});
 			});
 

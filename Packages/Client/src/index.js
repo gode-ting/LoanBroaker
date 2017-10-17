@@ -55,7 +55,8 @@ router.post('/loanRequest', (req, res, next) => {
 router.get('/loanResponse', (req, res, next) => {
 	consumer.main()
 		.then((message) => {
-			res.json({ status: 'success', message: message });
+			// console.log(JSON.parse(message.content));
+			res.json({ status: 'success', message: message.content.toString() });
 		});
 });
 

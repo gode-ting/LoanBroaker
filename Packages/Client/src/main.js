@@ -3,10 +3,15 @@ let express = require('express');
 let logger = require('morgan');
 let cnf = require('cnf');
 let bodyParser = require('body-parser');
+let messageMap = require('./messageMap');
 
 let index = require('./index.js');
 
 export function main() {
+	messageMap.createSet();
+	let messages = messageMap.getMap();
+	console.log('New set: ', messages);
+
 	let app = express();
 
 	app.use(logger('dev'));
