@@ -1,4 +1,4 @@
-export default function (jsonObject) {
+module.exports.getFormattedJson = function (jsonObject) {
 
 	let ssn = jsonObject.ssn || '';
 	let creditScore = jsonObject.creditScore || '';
@@ -13,4 +13,4 @@ export default function (jsonObject) {
 	};
 
 	return formattedJson;
-}
+};

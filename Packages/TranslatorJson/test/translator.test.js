@@ -53,7 +53,7 @@ describe('../src/transaltor.js', () => {
 				ssn: '',
 				creditScore: '',
 				loanAmount: '',
-				loanDuration: ''
+				loanDuration: 365
 			};
 
 			let actualJson = translator.getFormattedJson(testJson);

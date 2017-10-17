@@ -4,8 +4,10 @@ let rabbitmq = require('../config/rabbitmq');
 module.exports.main = function () {
 
 	return new Promise((resolve, reject) => {
+		console.log(' [x] consumer setting up connection');
 		connection.getConnection()
 			.then((conn) => {
+				console.log(' [-] consumer connected');
 				conn.createChannel((err, ch) => {
 					if (err) {
 						conn.close();

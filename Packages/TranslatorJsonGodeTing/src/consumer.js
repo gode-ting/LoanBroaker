@@ -20,12 +20,12 @@ export default function (ampqConn) {
 			exclusive: true
 		}, (err, q) => {
 			timeStamp = getTimeStamp();
-			console.log(`\nConsumer ${timeStamp}:\n [*] Waiting for messages in %s. To exit press CTRL+C`, q.queue);
+			console.log(`\nConsumer ${timeStamp}\n [*] Waiting for messages in ${q.queue}. To exit press CTRL+C`);
 			ch.bindQueue(q.queue, exchange, binding);
 
 			ch.consume(q.queue, (message) => {
 				timeStamp = getTimeStamp();
-				console.log(`\nConsumer ${timeStamp}:\n [x] %s`, message.content.toString());
+				console.log(`\nConsumer ${timeStamp}\n [x] consumed message ${message.content.toString()}`);
 				producer(ampqConn, message);
 			}, {
 				noAck: true

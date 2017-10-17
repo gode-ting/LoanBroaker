@@ -1,17 +1,17 @@
 import rabbitmq from '../config/rabbitmq.js';
 import translator from './translator.js';
-import getTimeStamp from './timestamp.js';
+import timestamp from './timestamp.js';
 
 export default function (ampqConn, message) {
 	let replyTo = rabbitmq.producer.replyTo;
 
 	ampqConn.createChannel((err, ch) => {
-		let timeStamp;
+		let newtimeStamp;
 
-		timeStamp = getTimeStamp();
+		newtimeStamp = timestamp.getTimeStamp();
 		if (err) {
 			ampqConn.close();
-			console.error(`\nproducer ${timeStamp}:\n[AMPQ] connection error (producer) - closing; ${err}`);
+			console.error(`\nproducer ${newtimeStamp}:\n[AMPQ] connection error (producer) - closing; ${err}`);
 		}
 
 		let type = rabbitmq.producer.type;
@@ -28,12 +28,12 @@ export default function (ampqConn, message) {
 		});
 
 		let jsonObject = JSON.parse(message.content.toString());
-		let formattedObject = translator(jsonObject);
+		let formattedObject = translator.getFormattedJson(jsonObject);
 
 		ch.publish(exchange, '', Buffer.from(JSON.stringify(formattedObject)), {
 			headers: headers,
 			replyTo: replyTo
 		});
-		console.log(`\nproducer ${timeStamp}:\n [+] Successfully sent message`);
+		console.log(`\nproducer ${newtimeStamp}:\n [+] Successfully sent message`);
 	});
 }

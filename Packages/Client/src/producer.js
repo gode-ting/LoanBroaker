@@ -10,8 +10,10 @@ function main(request) {
 	let stringifyedRequest = JSON.stringify(request);
 
 	return new Promise((resolve, reject) => {
+		console.log(' [x] producer setting up connection');
 		connection.getConnection()
 			.then((conn) => {
+				console.log(' [-] producer connected');
 				conn.createChannel((err, ch) => {
 					ch.on('close', () => {
 						console.info('[AMQP] channel closed');
@@ -34,14 +36,14 @@ function main(request) {
 						if (err) {
 							console.error(err);
 						}
-						console.log('queue: ', q);
 					});
 
+					console.log(` [-] sending message to ${queue}`);
 					messageSent = ch.sendToQueue(queue, Buffer.from(stringifyedRequest), opts);
 
 					setTimeout(() => {
 						if (messageSent) {
-							console.log(` [x] successfully sent request ${stringifyedRequest} from producer.\nClosing channel and connection`);
+							console.log(` [+] successfully sent request ${stringifyedRequest} from producer.\nClosing channel and connection`);
 							ch.close();
 							conn.close();
 							resolve(true);
