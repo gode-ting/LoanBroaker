@@ -58,14 +58,20 @@ router.post('/loanRequest', (req, res, next) => {
 	}
 });
 
-router.get('/loanResponse', (req, res, next) => {
-	consumer.main()
-		.then((message) => {
-			let key = message.content.ssn;
-			messageMap.deleteKey(key);
+router.get('/loanResponse/:ssn', (req, res, next) => {
+	let ssn = req.params.ssn;
 
-			res.json({ status: 'success', message: message.content.toString() });
-		});
+	if (ssn && messageMap.mapHasKey(ssn)) {
+		consumer.main()
+			.then((message) => {
+
+				messageMap.deleteKey(ssn);
+
+				res.json({ status: 'success', message: message.content.toString() });
+			});
+	} else {
+		res.json({error: 'No loan requests recored for the entered SSN. Please try again'});
+	}
 });
 
 module.exports = router;

@@ -29,7 +29,6 @@ function deleteKey(key) {
 }
 
 function addToMap(key, value) {
-	console.log('Key to set: ', key);
 	if (mapHasKey(key)) {
 		console.log('Map already contains key ', key);
 		return false;
