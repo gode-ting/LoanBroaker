@@ -108,9 +108,11 @@ public interface CreditScoreServiceDelegate {
 ```
 In that way we can create a mock credit bureau gateway implementation that does not actually
 connect to any message queue but rather invokes the specified delegate right inside our
+
 ```java
 public void getCreditScore(HashMap application) 
-```method.
+
+```
 
 This mock implementation should contain the same logic as the actual credit
 bureau so the remainder of the loan broker is completely unaware.
@@ -122,7 +124,7 @@ In our Json translator we have made a few tests regarding the business logic.
 
 We have to make sure that our system handles undefined values correctly.
 
-```javascript
+``` javascript
 
 it('should return a formatted json object, and handle undefined values', () => {
 			let testJson = {
