@@ -79,3 +79,89 @@ Could we have named our proccesses better, and how would this possibly have help
 - If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
 
 - If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).
+
+### How testable is our solution?
+
+Our solution and "loan broker" demonstrates how a simple application can be complex once it becomes distributed. 
+
+The increased complexity also means increased risk of defects
+
+Risk of defects are hard reproduce because they depend on specific temporal conditions.
+
+Therefore, *we have isolated the application from the messaging implementation by using interfaces and
+implementation classes.*
+
+*Why?* 
+Because testing a single application is much easier than testing multiple, distributed applications
+connected by messaging channels.
+single application allows us to trace through the complete
+execution path, we do not need a complex start-up procedure to fire up all components.
+
+##INSERT COOL EXAMPLES HERE 
+
+We have made an interface for handling Credit Score Service. 
+
+```java
+public interface CreditScoreServiceDelegate {
+    public void didGetCreditScoreWithOptionalException(HashMap application, Exception ex);
+}
+```
+In that way we can create a mock credit bureau gateway implementation that does not actually
+connect to any message queue but rather invokes the specified delegate right inside our
+```java
+public void getCreditScore(HashMap application) 
+```method.
+
+This mock implementation should contain the same logic as the actual credit
+bureau so the remainder of the loan broker is completely unaware.
+
+
+### We have made a few tests regarding testing the business logic with unit test cases.
+
+In our Json translator we have made a few tests regarding the business logic. 
+
+We have to make sure that our system handles undefined values correctly.
+
+```javascript
+
+it('should return a formatted json object, and handle undefined values', () => {
+			let testJson = {
+				creditScore: '750',
+				loanAmount: '1000.01',
+				loanDuration: '365'
+			};
+
+			let expectedJson = {
+				ssn: '',
+				creditScore: '750',
+				loanAmount: '1000.01',
+				loanDuration: '365'
+			};
+
+			let actualJson = translator.getFormattedJson(testJson);
+
+			expect(actualJson).to.eql(expectedJson);
+		});
+```
+
+In the example we use Javascript with Chai as assertion library.
+
+
+#### If we had more time
+
+1. Verify the Credit Bureau Operation
+
+The Loan Broker accesses this service to obtain credit scores for
+customers requesting a loan quote. 
+
+In order to verify the correct operation of the external Credit Bureau service we could send periodic Test Messages("heartbeat") to the service.
+
+Because the Credit Bureau service supports a Return Address it is easy to inject a Test Message without disturbing the existing message flow.
+
+We simply provide a dedicated reply channel for test messages and avoid the need for a separate test message separator.
+
+In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
+
+A Credit Bureau test message is very simple; the only field that is required is a social security
+number (SSN). 
+
