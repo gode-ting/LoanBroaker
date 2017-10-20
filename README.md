@@ -82,7 +82,7 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### How testable is our solution?
 
-Our solution and "loan broker" demonstrates how a simple application can be complex once it becomes distributed. 
+Our solution demonstrates how a simple application can be complex once it becomes distributed. 
 
 The increased complexity also means increased risk of defects
 
