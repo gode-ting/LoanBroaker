@@ -84,11 +84,13 @@ Below we will try to highlight some of the potential bottlenecks and highlight p
 
  If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
 
+
 - __Allow ONLY one application pr. user at a time.__
 
   When a quote has been sent by a user, we make sure the user cannot send another quote until the first quote has been 	      responded. This is done by storing the users `ssn`. Currently we store the users `ssn` in code inside the api which means that they will never really be persisted. If the server restarts all data are lost. 
 
   A good solution would be to actually persist the user data in a database like Redis (key-value store) and then match the `ssn` from the incoming to that data.
+  
   
 - __If ONE service breaks - EVERYTHING breaks.__
 
@@ -102,11 +104,13 @@ Below we will try to highlight some of the potential bottlenecks and highlight p
 
   A more clean solution would to let the initial Loan Requst handle all errors. So if anyone of the services raises an error the inital Loan Request will respond with an error message and an error code. 
   
+  
 - __Credit Bureau return a -1.__
   
   This is an extension from previous. But if Credit Bureau returns -1 on a users quote, the user is not able to get any loans. This is not handled. If this happends the user will never get anu messages about it. 
 
   A solution would of cause be to return with an error message from the initial loan request, saying something like. 'Sorry, you cannot loan any monay'.
+
 
 ### How testable is our solution?
 
