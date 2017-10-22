@@ -32,39 +32,16 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
         try {
-            
-        if (ex == null) {
-            JSONObject applicationJson = service.DistributeLoan(application);
-            System.out.println("banks: " + ((ArrayList<HashMap>) application.get("banks")).size());
-            int durationInYears = (int) applicationJson.get("loanDuration");
-            for (HashMap bank : (ArrayList<HashMap>) application.get("banks")) {
-
-                String bankId = (String) bank.get("bankId");
-                if (bankId.equals("bank-lån-and-spar")) { // XML (cphbusiness)
-                    Instant instant = Instant.ofEpochSecond(durationInYears * 365 * 24 * 60 * 60);
-                    Date myDate = Date.from(instant);
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S z");
-                    String formattedDate = formatter.format(myDate);
-                    applicationJson.put("loanDuration", formattedDate);
-                    // duration format = 1972-01-01 01:00:00.0 CET
+            if (ex == null) {
+                JSONObject applicationJson = service.DistributeLoan(application);
+                System.out.println("banks: " + ((ArrayList<HashMap>) application.get("banks")).size());
+                for (HashMap bank : (ArrayList<HashMap>) application.get("banks")) {
+                    System.out.println("*** sending *** - key binding " + (String) bank.get("bankId"));
+                    producer.sendMessage(applicationJson, bank, (String) bank.get("bankId"));
                 }
-                if (bankId.equals("bank-jyske-bank")) { // JSON (cphbusiness)
-                    int durationInDays = durationInYears * 360;
-                    applicationJson.put("loanDuration", durationInDays);
-                }
-                if (bankId.equals("bank-nordea")) {
-                    bank.put("bankID", "bank-nordea");
-                }
-                if (bankId.equals("bank-danske-bank")) {
-                }
-
-                System.out.println("*** sending *** - key binding " + (String) bank.get("bankId"));
-                producer.sendMessage(applicationJson, bank, (String) bank.get("bankId"));
-
+            } else {
+                System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage());
             }
-        } else {
-            System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage());
-        }
         } catch (Exception e) {
             e.printStackTrace();
         }

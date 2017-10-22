@@ -8,6 +8,7 @@ package app;
 import interfaces.AggregatorServiceDelegate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -85,7 +86,7 @@ public class AggregatorService {
             t = new timerThread(ssn,delegate,this);
         }
 
-        public HashMap getBestInterest() {
+        public String getBestInterest() {
             HashMap best = new HashMap();
             best.put("interestRate", 999.9d);
 
@@ -94,7 +95,12 @@ public class AggregatorService {
                     best = messages.get(i);
                 }
             }
-            return best;
+            JSONObject obj = new JSONObject();
+            obj.put("interestRate", best.get("interestRate"));
+            obj.put("bankID", best.get("bankID"));
+            obj.put("ssn", best.get("ssn"));
+            
+            return obj.toJSONString();
         }
 
         public int getSize() {

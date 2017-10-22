@@ -43,7 +43,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
     }
     
     @Override
-    public void didAggregatorServiceWithOptionalException(HashMap message, Exception ex) {
+    public void didAggregatorServiceWithOptionalException(String message, Exception ex) {
         if (ex == null) {
             System.out.println("Message Sent");
             producer.sendMessage(message);
