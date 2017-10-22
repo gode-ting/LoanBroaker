@@ -78,7 +78,8 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### Sequence diagram      
 
-TODO: image 
+![GitHub Logo](/Resources/sequence-digram.png)
+Format: ![Alt Text](url)
 
 __Short description__
 
