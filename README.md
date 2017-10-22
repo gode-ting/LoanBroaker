@@ -81,6 +81,7 @@ Since the LoanBroker system is only a prototype it might be error prone and cont
 Below we will try to highlight some of the potential bottlenecks and highlight possible enhancements to improve performance.
 
 - __Ssn (social security number) larger than 32-bit values causes error__ 
+
  If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
 
 - __Allow ONLY one application pr. user at a time.__
