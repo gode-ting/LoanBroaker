@@ -78,7 +78,7 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### Sequence diagram      
 
-![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg =200x100)
+![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
 
 __Short description__
 
