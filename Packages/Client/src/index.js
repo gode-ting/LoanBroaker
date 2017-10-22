@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
 					loanDuration: 'number'
 				}
 			},
-			{ endpoint: '/loanResponse', method: 'GET', response: 'json' }
+			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' }
 		];
 
 	res.json(endpoints);
