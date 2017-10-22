@@ -10,12 +10,12 @@ router.get('/', function (req, res, next) {
 		[
 			{
 				endpoint: '/loanRequest', method: 'POST', type: 'json', required: {
-					ssn: 'string',
-					loanAmount: 'number',
-					loanDuration: 'number'
+					ssn: { type: 'string', required: true, description: 'the ssn of the person making the request. Should be in the format xxxxxx-xxxx' },
+					loanAmount: {type: 'number', required: true, description: 'the amount to make a loan request for'},
+					loanDuration: {type: 'number', required: true, description: 'the duration for the loan in years'}
 				}
 			},
-			{ endpoint: '/loanResponse', method: 'GET', response: 'json' }
+			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' }
 		];
 
 	res.json(endpoints);
@@ -58,14 +58,20 @@ router.post('/loanRequest', (req, res, next) => {
 	}
 });
 
-router.get('/loanResponse', (req, res, next) => {
-	consumer.main()
-		.then((message) => {
-			let key = message.content.ssn;
-			messageMap.deleteKey(key);
+router.get('/loanResponse/:ssn', (req, res, next) => {
+	let ssn = req.params.ssn;
 
-			res.json({ status: 'success', message: message.content.toString() });
-		});
+	if (ssn && messageMap.mapHasKey(ssn)) {
+		consumer.main()
+			.then((message) => {
+
+				messageMap.deleteKey(ssn);
+
+				res.json({ status: 'success', message: message.content.toString() });
+			});
+	} else {
+		res.json({ error: 'No loan requests recored for the entered SSN. Please try again' });
+	}
 });
 
 module.exports = router;
