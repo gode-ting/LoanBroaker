@@ -5,6 +5,7 @@
  */
 package com.mycompany.main;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -45,8 +46,8 @@ public class Dummy {
 
             //declaring a queue for this channel. If queue does not exist,
             //it will be created on the server.
-            channel.queueDeclare(endPointName, false, false, false, null);
-            
+            AMQP.Queue.DeclareOk ok = channel.queueDeclare(endPointName, false, false, false, null);
+
             JSONObject request = new JSONObject();
             request.put("ssn", "123456-7890");
             request.put("loanAmount", 10000.0);

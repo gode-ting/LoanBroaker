@@ -42,6 +42,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
             try {
                 String json = new String(body);
+                System.out.println("MÆÆÆÆÆÆÆÆÆÆLK: "+ json);
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("Before mapping");
                 LoanRequest loanRequest = mapper.readValue(json, LoanRequest.class);
