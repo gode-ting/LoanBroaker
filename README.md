@@ -84,6 +84,30 @@ Below we will try to highlight some of the potential bottlenecks and highlight p
 
 - If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).
 
+- Allow ONLY one application pr. user at a time.
+
+  When a quote has been sent by a user, we make sure the user cannot send another quote until the first quote has been 	      responded. This is done by storing the users `ssn`. Currently we store the users `ssn` in code inside the api which means that they will never really be persisted. If the server restarts all data are lost. 
+
+  A good solution would be to actually persist the user data in a database like Redis (key-value store) and then match the `ssn` from the incoming to that data.
+  
+- If ONE service breaks - EVERYTHING breaks.
+
+  The LoanBroker is build with multiple micro services that may or may not be hosted by the same server. Furthermore, the LoanBroker makes multiple web requests to the Credit Bureau and the Rule Base. In everyone of these connections something potentially bad could happen, and if that happends the whole system i broken. This is because we haven't added any major error handling.
+
+  For instance, if GetBanks (the micro service) for some reason fails the whole chain stops. Nothing gets send out to the banks. The Client will never get his/her quote rate. 
+
+  A solution to this could be to have an excpetion micro service which has one responsibility and that is to receive and handle exceptions. From the previous example, if GetBanks raises an exception. It will contact the exception micro service. The service will then put a message to the Client output channel, saying that something went wrong. 
+
+  This would result in a lot of tangled connections. Every microservice inside LoanBroker would then have a connection to that exception service. That would look pretty bad. 
+
+  A more clean solution would to let the initial Loan Requst handle all errors. So if anyone of the services raises an error the inital Loan Request will respond with an error message and an error code. 
+  
+- Credit Bureau return a -1*
+  
+  This is an extension from previous. But if Credit Bureau returns -1 on a users quote, the user is not able to get any loans. This is not handled. If this happends the user will never get anu messages about it. 
+
+  A solution would of cause be to return with an error message from the initial loan request, saying something like. 'Sorry, you cannot loan any monay'.
+
 ### How testable is our solution?
 
 Our solution demonstrates how a simple application can be complex once it becomes distributed. 
