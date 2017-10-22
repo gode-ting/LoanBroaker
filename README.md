@@ -78,7 +78,7 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### Sequence diagram      
 
-![](Resources/sequence-diagram.png?raw=true)
+![Image alt text](Resources/sequence-diagram.png)
 
 __Short description__
 
