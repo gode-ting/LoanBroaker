@@ -76,6 +76,10 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### Bottle necks
 
+Since the LoanBroker system is only a prototype it might be error prone and contain bottlenecks that causes undesired and/or bad behavior. These bottlenecks excists due to the limited time frame the team had to develop the system, and because funtionality and a working system was weighted higher than error handling. In a real system going into production such bottlenecks would never be allowed. 
+
+Below we will try to highlight some of the potential bottlenecks and highlight possible enhancements to improve performance.
+
 - If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
 
 - If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).
