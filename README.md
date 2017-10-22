@@ -78,7 +78,7 @@ Could we have named our proccesses better, and how would this possibly have help
 
 ### Sequence diagram      
 
-TODO: image 
+![](Resources/sequence-diagram.png?raw=true)
 
 __Short description__
 
