@@ -45,3 +45,4 @@ Also, it's not possible to use the GET endpoint unless you've already made a req
 |--------------------|--------|----------------------------------------------------------------------|-----------|----------------------|
 | `/loanRequest`     | POST   | Posts a request to get the best loan of available providers          |           | *Success* or *error* |
 | `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`     | Json of the result   |
+| `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |           | json                 |
