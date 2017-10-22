@@ -80,17 +80,17 @@ Since the LoanBroker system is only a prototype it might be error prone and cont
 
 Below we will try to highlight some of the potential bottlenecks and highlight possible enhancements to improve performance.
 
-- If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
+- __If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).__
 
-- If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).
+- __If one service fails / throws an error, the other procceses/service will not know (mention how this could be handled).__
 
-- Allow ONLY one application pr. user at a time.
+- __Allow ONLY one application pr. user at a time.__
 
   When a quote has been sent by a user, we make sure the user cannot send another quote until the first quote has been 	      responded. This is done by storing the users `ssn`. Currently we store the users `ssn` in code inside the api which means that they will never really be persisted. If the server restarts all data are lost. 
 
   A good solution would be to actually persist the user data in a database like Redis (key-value store) and then match the `ssn` from the incoming to that data.
   
-- If ONE service breaks - EVERYTHING breaks.
+- __If ONE service breaks - EVERYTHING breaks.__
 
   The LoanBroker is build with multiple micro services that may or may not be hosted by the same server. Furthermore, the LoanBroker makes multiple web requests to the Credit Bureau and the Rule Base. In everyone of these connections something potentially bad could happen, and if that happends the whole system i broken. This is because we haven't added any major error handling.
 
@@ -102,7 +102,7 @@ Below we will try to highlight some of the potential bottlenecks and highlight p
 
   A more clean solution would to let the initial Loan Requst handle all errors. So if anyone of the services raises an error the inital Loan Request will respond with an error message and an error code. 
   
-- Credit Bureau return a -1*
+- __Credit Bureau return a -1.__
   
   This is an extension from previous. But if Credit Bureau returns -1 on a users quote, the user is not able to get any loans. This is not handled. If this happends the user will never get anu messages about it. 
 
