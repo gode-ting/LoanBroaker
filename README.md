@@ -74,6 +74,45 @@ Could we have named our proccesses better, and how would this possibly have help
 - Structure.
 - Which services need what?
 
+### Design class diagram 
+
+### Sequence diagram      
+
+TODO: image 
+
+__Short description__
+
+This sequence diagram shows how data flows between actors/services within the system. The LoanBroker system is shown as a single actor and works like a black box. To understand this diagram you therefor don't need to know how the LoanBroker works internally. Everything is handled asyncronously for optimal performance.  
+
+__Actors__
+
+* Consumer / Client
+
+* LoanBroker System (Black box)
+
+* Credit Bureau
+
+* Banks 1, 2, 3 & 4
+
+
+__Walk through__
+
+Let's take the diagram step by step, by explaing what happends along the way.
+
+1. (Client) requests a quote along with information like `ssn`, `amount`, `duration`.
+
+2. (LoanBroker) receives the quote. Then sends a request to (Credit Bureau) with `ssn` as parameter.
+
+3. (Credit Bureau) receives `ssn` and responds with a `creditScore`.
+
+4. (LoanBroker) receives `creditScore` and then sends the quote to all the banks. 
+
+5. (Banks 1, 2, 3 and 4) eventually sends a quote rate back to the (LoanBroker)
+
+6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
+
+
+
 ### Bottle necks
 
 Since the LoanBroker system is only a prototype it might be error prone and contain bottlenecks that causes undesired and/or bad behavior. These bottlenecks excists due to the limited time frame the team had to develop the system, and because funtionality and a working system was weighted higher than error handling. In a real system going into production such bottlenecks would never be allowed. 
