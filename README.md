@@ -92,6 +92,18 @@ When all the interestRates are there, the aggregator finds the best result and s
 ## Diagrams
 
 ### Design class diagram
+![Design class diagram](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/loanBrokerCD.jpg)
+
+we have made all our processes with this design. some of them have slight changes.
+
+we have a producer and a consumer which both extends the abstract class endpoint so they can consume or produce to a queue/exhange.
+
+we also have a service which does what ever the process is suppose to do, this could for an example be retrieving the creditScore, or translating a message.
+
+the Service, QueueConsumer and the producer all have a delegate object. those delegates have one method, which they call when they are done with they respective jobs. such as consuming a message or producing a message.
+
+The main class implements all three delegates. it also have one service aswell as producer and a consumer. those three objects then uses a refrence to the same main object. and therefore call they delegate method on the same object.
+
 
 ### Sequence diagram
 
