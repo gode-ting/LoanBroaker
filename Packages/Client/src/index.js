@@ -70,7 +70,7 @@ router.get('/loanResponse/:ssn', (req, res, next) => {
 				res.json({ status: 'success', message: message.content.toString() });
 			});
 	} else {
-		res.json({ error: 'No loan requests recored for the entered SSN. Please try again' });
+		res.json({ error: 'No loan requests recorded for the entered SSN. Please try again' });
 	}
 });
 
