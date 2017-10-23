@@ -27,12 +27,60 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 ![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
 
 ### 2. The getCreditScore process
-
 ![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getCreditScore.PNG)
-the getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process
 
+The getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process.
 
-### xx. Use the rest service to get the response
+### 3. The getBanks process
+![getBanks output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getBanks.PNG)
+
+After recieving the message, the getBanks process goes to our ruleBase SOAP application and retrieves a list of the banks to which the application should be send, depending on the given creditScore. It then adds said list to the message and sends it to the recipientList process
+
+The getBanks process also sends the message to the aggregator.
+
+### 4. The recipientList process
+![recipientList output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/RecipientList.PNG)
+
+The recipientLis process loops for each element in the list of banks within the message, and for each loop it sends the application part of the message to all the translators matching the banks.
+
+### 5.1. The XML bank Translator process
+![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TranslatorXML.PNG)
+
+This translator translates the message to XML banks format. Then sends the message to the XML bank.
+
+### 5.2.1. The Soap bank translator process
+![Soap bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TranslatorSoap.PNG)
+
+This translator translates the message to soap banks format. Then sends the message to the getWebService process.
+
+### 5.2.2. The getWebService process
+![getWebService output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/GetWebService.PNG)
+
+The getWebService process recieves the message from the matching translator and retrieves the interestRate from the SOAP application and sends it with the SSN to the normalizer.
+
+### 5.3.1. Our JSONtranslator / CPHBusiness JSONtranslator
+![JSONtranslator / CPHBusiness JSONtranslator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/translator.PNG)
+
+This is the output of 2 process. One called "[Cphbusiness]" and one called "[Gode Ting]".
+these translators translates the message to a format our Bank understand and a format CPHBusines bank understand. Then sends the messages to the banks.
+
+### 5.3.2. Our JSON bank
+![Our JSON bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/TingGodRabbitMQBank.PNG)
+
+This process is our JSON bank. it recieves a message from its matching translator, and finds the interestRate that fits the creditScore. it then sends the message to the normalizer.
+
+### 6. The normalizer process
+![normalizer output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/Normalizer.PNG)
+
+The normalizer process recieves a message from any given bank at any given time, and "normalizes" the message to a format our aggregator knows. then sends the formatted message to the aggregator.
+
+### 7. The Aggregator process
+![Aggregator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/Aggregator.PNG)
+
+When the aggregator process recieves a message it checks from who it was send. If the message was from the getBanks process, it will prepare to recieves a message from each bank in the list of banks within the message (too know when it should find the best result, and send it). If the message was from the normalizer it adds it to the pool of interestRates.
+When all the interestRates are there, the aggregator finds the best result and sends it back to the client.
+
+### 8. Use the rest service to get the response
 
 ![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
 
