@@ -92,7 +92,7 @@ When all the interestRates are there, the aggregator finds the best result and s
 ## Diagrams
 
 ### Design class diagram
-![Design class diagram](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/loanBrokerCD.jpg)
+![Design class diagram](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/loanBrokerCD.png)
 
 we have made all our processes with this design. some of them have slight changes.
 
