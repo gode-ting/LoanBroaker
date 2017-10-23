@@ -39,12 +39,12 @@ After recieving the message, the getBanks process goes to our ruleBase SOAP appl
 The getBanks process also sends the message to the aggregator.
 
 ### 4. The recipientList process
-![recipientList output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/RecipientList.PNG)
+![recipientList output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/Recipientlist.PNG)
 
 The recipientLis process loops for each element in the list of banks within the message, and for each loop it sends the application part of the message to all the translators matching the banks.
 
 ### 5.1. The XML bank Translator process
-![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TranslatorXML.PNG)
+![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/translatorXML.PNG)
 
 This translator translates the message to XML banks format. Then sends the message to the XML bank.
 
@@ -59,13 +59,13 @@ This translator translates the message to soap banks format. Then sends the mess
 The getWebService process recieves the message from the matching translator and retrieves the interestRate from the SOAP application and sends it with the SSN to the normalizer.
 
 ### 5.3.1. Our JSONtranslator / CPHBusiness JSONtranslator
-![JSONtranslator / CPHBusiness JSONtranslator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/translator.PNG)
+![JSONtranslator / CPHBusiness JSONtranslator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/translator-json.PNG)
 
 This is the output of 2 process. One called "[Cphbusiness]" and one called "[Gode Ting]".
 these translators translates the message to a format our Bank understand and a format CPHBusines bank understand. Then sends the messages to the banks.
 
 ### 5.3.2. Our JSON bank
-![Our JSON bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/TingGodRabbitMQBank.PNG)
+![Our JSON bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TingGodRabbitMQBank.PNG)
 
 This process is our JSON bank. it recieves a message from its matching translator, and finds the interestRate that fits the creditScore. it then sends the message to the normalizer.
 
