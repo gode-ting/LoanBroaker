@@ -6,120 +6,50 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 
 **Table of contents.**
 
-- [Important links](#important-links)
+- [Screen dumps of process flow](#screen-dumps-of-process-flow)
+- [Diagrams](#diagrams)
+- [Bottle necks](#bottle-necks)
+- [How testable is our solution](#how-testable-is-our-solution)
+- [Client/Webservice](#clientwebservice)
+- [How to run the project](#how-to-run-the-project)
 - [Authors](#authors)
 - [References](#references)
 - [Banks](#banks)
 - [Translators](#translators)
-- [Client/Webservice](#clientwebservice)
-- [Flow of using the entire application](#flow-of-using-the-entire-application)
 
-## Important links
+## Screen dumps of process flow
 
-## Authors
+### 1. Use the rest service to post a request.
 
-[Frederik Larsen](https://github.com/lalelarsen)
+![rest POST post](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-post-postman.PNG)
 
-[Anders Bjergfelt](https://github.com/andersbjergfelt)
+![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
 
-[Emil Gräs](https://github.com/emilgras)
+### xx. Use the rest service to get the response
 
-[Daniel Hillmann](https://github.com/hilleer)
+![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
 
-## References
+![rest GET server](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
 
-Original project [description](https://github.com/datsoftlyngby/soft2017fall-system-integration-teaching-material/blob/master/assignments/LoanBrokerProject.pdf).
-
-## Run the project
-
-1. Run GetCreditScore (Main)
-2. Run GetBanks (Main)
-3. Run RecipientList (Main)
-4. Run Translator (Main)
-5. Run Nomalizer (Main)
-6. Run TingGodRabbitMQBank (Main)
-7. Run GetCreditScore (Dummy)
-
-## Banks
-
-List of bank id's:
-
-- `bank-lån-and-spar`
-- `bank-jyske-bank`
-- `bank-nordea`
-- `bank-danske-bank`
-
-## Translators.
-
-### Json translators
-
-Written as small node applications run thats consumer's and producer's asynchronously.
-
-##### How to use them.
-
-In a terminal `cd` in to their directory, and in this directory run `npm install`.
-
-**Production:** in this dir, run `npm run start`. Will start two processes that each start their respective translator in production.
-
-**Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.
-
-### Design class diagram 
-
-### Sequence diagram      
-
-![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
-
-__Short description__
-
-This sequence diagram shows how data flows between actors/services within the system. The LoanBroker system is shown as a single actor and works like a black box. To understand this diagram you therefor don't need to know how the LoanBroker works internally. Everything is handled asyncronously for optimal performance.  
-
-__Actors__
-
-* Consumer / Client
-
-* LoanBroker System (Black box)
-
-* Credit Bureau
-
-* Banks 1, 2, 3 & 4
+## Diagrams
 
 
-__Walk through__
-
-Let's take the diagram step by step, by explaing what happends along the way.
-
-1. (Client) requests a quote along with information like `ssn`, `amount`, `duration`.
-
-2. (LoanBroker) receives the quote. Then sends a request to (Credit Bureau) with `ssn` as parameter.
-
-3. (Credit Bureau) receives `ssn` and responds with a `creditScore`.
-
-4. (LoanBroker) receives `creditScore` and then sends the quote to all the banks. 
-
-5. (Banks 1, 2, 3 and 4) eventually sends a quote rate back to the (LoanBroker)
-
-6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
-
-
-
-### Bottle necks
+## Bottle necks
 
 Since the LoanBroker system is only a prototype it might be error prone and contain bottlenecks that causes undesired and/or bad behavior. These bottlenecks excists due to the limited time frame the team had to develop the system, and because funtionality and a working system was weighted higher than error handling. In a real system going into production such bottlenecks would never be allowed. 
 
 Below we will try to highlight some of the potential bottlenecks and highlight possible enhancements to improve performance.
 
-- __Ssn (social security number) larger than 32-bit values causes error__   
+- __Ssn (social security number) larger than 32-bit values causes error__
 
  If you're born later in the year/month so that your ssn becomes too large for a integer to be (bigger than 32-bit).
 
-
 - __Allow ONLY one application pr. user at a time.__
 
-  When a quote has been sent by a user, we make sure the user cannot send another quote until the first quote has been 	      responded. This is done by storing the users `ssn`. Currently we store the users `ssn` in code inside the api which means that they will never really be persisted. If the server restarts all data are lost. 
+  When a quote has been sent by a user, we make sure the user cannot send another quote until the first quote has been responded. This is done by storing the users `ssn`. Currently we store the users `ssn` in code inside the api which means that they will never really be persisted. If the server restarts all data are lost. 
 
   A good solution would be to actually persist the user data in a database like Redis (key-value store) and then match the `ssn` from the incoming to that data.
-  
-  
+
 - __If ONE service breaks - EVERYTHING breaks.__
 
   The LoanBroker is build with multiple micro services that may or may not be hosted by the same server. Furthermore, the LoanBroker makes multiple web requests to the Credit Bureau and the Rule Base. In everyone of these connections something potentially bad could happen, and if that happends the whole system i broken. This is because we haven't added any major error handling.
@@ -131,16 +61,13 @@ Below we will try to highlight some of the potential bottlenecks and highlight p
   This would result in a lot of tangled connections. Every microservice inside LoanBroker would then have a connection to that exception service. That would look pretty bad. 
 
   A more clean solution would to let the initial Loan Requst handle all errors. So if anyone of the services raises an error the inital Loan Request will respond with an error message and an error code. 
-  
-  
+
 - __Credit Bureau return a -1.__
-  
-  This is an extension from previous. But if Credit Bureau returns -1 on a users quote, the user is not able to get any loans. This is not handled. If this happends the user will never get anu messages about it. 
+This is an extension from previous. But if Credit Bureau returns -1 on a users quote, the user is not able to get any loans. This is not handled. If this happends the user will never get anu messages about it.
 
-  A solution would of cause be to return with an error message from the initial loan request, saying something like. 'Sorry, you cannot loan any monay'.
+A solution would of cause be to return with an error message from the initial loan request, saying something like. 'Sorry, you cannot loan any monay'.
 
-
-### How testable is our solution?
+## How testable is our solution
 
 Our solution demonstrates how a simple application can be complex once it becomes distributed. 
 
@@ -151,14 +78,13 @@ Risk of defects are hard reproduce because they depend on specific temporal cond
 Therefore, *we have isolated the application from the messaging implementation by using interfaces and
 implementation classes.*
 
-*Why?* 
+*Why?*
 
 Because testing a single application is much easier than testing multiple, distributed applications
 connected by messaging channels.
 
 Single application allows us to trace through the complete
 execution path, we do not need a complex start-up procedure to fire up all components.
-
 
 We have made an interface for handling Credit Score Service. 
 
@@ -180,7 +106,7 @@ bureau so the remainder of the loan broker is completely unaware.
 
 We have classes and interfaces handling producer and consumer.
 
-### Producer example: 
+### Producer example
 
 ```java
  public void sendMessage(Serializable object) {
@@ -199,9 +125,11 @@ We have classes and interfaces handling producer and consumer.
         t.run();
     }
 ```
+
 *How is this testable?*
 
 We create an object:
+
 ```java
 private ProducerDelegate delegate;
 ```
@@ -214,9 +142,9 @@ public interface ProducerDelegate {
 ```
 Basically we can create units handling different cases.
 
-We have done same thing regarding translators. 
+We have done same thing regarding translators.
 
-### Translator example:
+### Translator example
 
 ```java
 public interface XMLTranslatorInterface {
@@ -234,45 +162,26 @@ We have to make sure that our system handles undefined values correctly.
 ``` javascript
 
 it('should return a formatted json object, and handle undefined values', () => {
-			let testJson = {
-				creditScore: '750',
-				loanAmount: '1000.01',
-				loanDuration: '365'
-			};
+let testJson = {
+	creditScore: '750',
+	loanAmount: '1000.01',
+	loanDuration: '365'
+};
 
-			let expectedJson = {
-				ssn: '',
-				creditScore: '750',
-				loanAmount: '1000.01',
-				loanDuration: '365'
-			};
+let expectedJson = {
+	ssn: '',
+	creditScore: '750',
+	loanAmount: '1000.01',
+	loanDuration: '365'
+};
 
-			let actualJson = translator.getFormattedJson(testJson);
+let actualJson = translator.getFormattedJson(testJson);
 
-			expect(actualJson).to.eql(expectedJson);
-		});
+expect(actualJson).to.eql(expectedJson);
+});
 ```
 
 In the example we use Javascript with Chai as assertion library.
-
-
-#### If we had more time
-
-1. Verify the Credit Bureau Operation
-
-The Loan Broker accesses this service to obtain credit scores for
-customers requesting a loan quote. 
-
-In order to verify the correct operation of the external Credit Bureau service we could send periodic Test Messages("heartbeat") to the service.
-
-Because the Credit Bureau service supports a Return Address it is easy to inject a Test Message without disturbing the existing message flow.
-
-We simply provide a dedicated reply channel for test messages and avoid the need for a separate test message separator.
-
-In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
-
-A Credit Bureau test message is very simple; the only field that is required is a social security
-number (SSN). 
 
 ## Client/webservice
 
@@ -321,7 +230,7 @@ Also, it's not possible to use the GET endpoint unless you've already made a req
 | `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`     | Json of the result   |
 | `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |           | json                 |
 
-#### What could have been done different on the client
+#### What could have been done different/improved on the client
 
 We have implemented an offline map of ssn's that be requested loans for, to allow users only to request loans once before they can do it again. In a real-world project this should have been done differently, as the list will reset every time the servers restarts.
 
@@ -329,16 +238,113 @@ Also, the response to the user should have probably have been delivered differen
 
 also, obviously there should have been an actual user interface, and not just some rest endpints - those would be a bit hard to non-programmer users.
 
-## Flow of using the entire application
+## If we had more time
 
-### 1. Use the rest service to post a request.
+1. Verify the Credit Bureau Operation
 
-![rest POST post](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-post-postman.PNG)
+The Loan Broker accesses this service to obtain credit scores for
+customers requesting a loan quote.
 
-![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
+In order to verify the correct operation of the external Credit Bureau service we could send periodic Test Messages("heartbeat") to the service.
 
-### xx. Use the rest service to get the response
+Because the Credit Bureau service supports a Return Address it is easy to inject a Test Message without disturbing the existing message flow.
 
-![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
+We simply provide a dedicated reply channel for test messages and avoid the need for a separate test message separator.
 
-![rest GET server](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
+In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
+
+A Credit Bureau test message is very simple; the only field that is required is a social security
+number (SSN).
+
+## Authors
+
+[Frederik Larsen](https://github.com/lalelarsen)
+
+[Anders Bjergfelt](https://github.com/andersbjergfelt)
+
+[Emil Gräs](https://github.com/emilgras)
+
+[Daniel Hillmann](https://github.com/hilleer)
+
+## References
+
+Original project [description](https://github.com/datsoftlyngby/soft2017fall-system-integration-teaching-material/blob/master/assignments/LoanBrokerProject.pdf).
+
+## How to run the project
+
+This is a list of all nessescary proccesses:
+
+1. Run client (node)
+2. Run GetCreditScore (Main)
+3. Run GetBanks (Main)
+4. Run RecipientList (Main)
+5. Run Translator Soap (Main)
+6. Run Translator XML (Main)
+7. Run Translator JSON (node)
+8. Run translator JSON GodeTing (node)
+9. Run Nomalizer (Main)
+10. Run TingGodRabbitMQBank (Main)
+
+## Banks
+
+List of bank id's:
+
+- `bank-lån-and-spar`
+- `bank-jyske-bank`
+- `bank-nordea`
+- `bank-danske-bank`
+
+## Translators.
+
+### Json translators
+
+Written as small node applications run thats consumer's and producer's asynchronously.
+
+#### How to use them.
+
+In a terminal `cd` in to their directory, and in this directory run `npm install`.
+
+**Production:** in this dir, run `npm run start`. Will start two processes that each start their respective translator in production.
+
+**Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.
+
+### Design class diagram
+
+### Sequence diagram
+
+![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
+
+__Short description__
+
+This sequence diagram shows how data flows between actors/services within the system. The LoanBroker system is shown as a single actor and works like a black box. To understand this diagram you therefor don't need to know how the LoanBroker works internally. Everything is handled asyncronously for optimal performance.  
+
+__Actors__
+
+* Consumer / Client
+
+* LoanBroker System (Black box)
+
+* Credit Bureau
+
+* Banks 1, 2, 3 & 4
+
+
+__Walk through__
+
+Let's take the diagram step by step, by explaing what happends along the way.
+
+1. (Client) requests a quote along with information like `ssn`, `amount`, `duration`.
+
+2. (LoanBroker) receives the quote. Then sends a request to (Credit Bureau) with `ssn` as parameter.
+
+3. (Credit Bureau) receives `ssn` and responds with a `creditScore`.
+
+4. (LoanBroker) receives `creditScore` and then sends the quote to all the banks. 
+
+5. (Banks 1, 2, 3 and 4) eventually sends a quote rate back to the (LoanBroker)
+
+6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
+
+
+
+
