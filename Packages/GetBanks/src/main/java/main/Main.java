@@ -5,8 +5,6 @@
  */
 package main;
 
-
-
 import Service.GetBanksService;
 import Service.Producer;
 import Service.QueueConsumer;
@@ -17,52 +15,53 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-
 public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, ProducerDelegate {
 
-    
     private QueueConsumer consumer;
     private GetBanksService service;
     private Producer producer;
-    
-    
+
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getCreditScore_out", this);
         service = new GetBanksService(this);
-        producer = new Producer("LoanBroker9.getBanks_out","LoanBroker9.aggregator_in", this);
-        
+        producer = new Producer("LoanBroker9.getBanks_out", "LoanBroker9.aggregator_in", this);
+
         Thread consumerThread = new Thread(consumer);
-        consumerThread.start();  
+        consumerThread.start();
     }
-    
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
-        if      (ex == null) { service.getCreditScore(application); } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); } 
+        System.out.println("\n{GetBanks} -- didConsumeMessageWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: " + application.toString());
+            service.getCreditScore(application);
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
+
     @Override
     public void didGetCreditScoreWithOptionalException(HashMap application, Exception ex) {
-        if      (ex == null) { producer.sendMessage(application); 
-            
-        } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
+        System.out.println("\n{GetBanks} -- didGetCreditScoreWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: " + application.toString());
+            producer.sendMessage(application);
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
+
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
-        if      (ex == null) { System.out.println("success"); } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
+        System.out.println("\n{GetBanks} -- didProduceMessageWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: success");
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * @param args
      * @throws SQLException

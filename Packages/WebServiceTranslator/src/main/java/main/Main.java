@@ -5,8 +5,6 @@
  */
 package main;
 
-
-
 import Service.Service;
 import Service.Producer;
 import Service.QueueConsumer;
@@ -18,52 +16,53 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import org.json.simple.JSONObject;
 
-
 public class Main implements ConsumerDelegate, CreditScoreServiceDelegate, ProducerDelegate {
 
-    
     private QueueConsumer consumer;
     private Service service;
     private Producer producer;
-    
-    
+
     public Main() throws Exception {
         consumer = new QueueConsumer("LoanBroker9.getWebService_in", this);
         service = new Service(this);
         producer = new Producer("LoanBroker9.banks_out", this);
-        
+
         Thread consumerThread = new Thread(consumer);
-        consumerThread.start();  
+        consumerThread.start();
     }
-    
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
-        if      (ex == null) { 
-            System.out.println("{didConsumeMessageWithOptionalException}");
-            service.getInterestRate(application); } 
-        else    { System.out.println("{didConsumeMessageWithOptionalException} Failed with exception: " + ex.getLocalizedMessage()); } 
+        System.out.println("\n{GetWebService} -- didConsumeMessageWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: " + application.toString());
+            service.getInterestRate(application);
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
+
     @Override
     public void didGetInterestRateWithOptionalException(byte[] application, Exception ex) {
-        if      (ex == null) { producer.sendMessage(application); } 
-        else    { System.out.println("{didGetInterestRateWithOptionalException} Failed with exception: " + ex.getLocalizedMessage()); }
+        System.out.println("\n{GetWebService} -- didGetInterestRateWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: " + application.toString());
+            producer.sendMessage(application);
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
+
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
-        if      (ex == null) { System.out.println("success"); } 
-        else    { System.out.println("Failed with exception: " + ex.getLocalizedMessage()); }
+        System.out.println("\n{GetWebService} -- didProduceMessageWithOptionalException");
+        if (ex == null) {
+            System.out.println("Message: success");
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * @param args
      * @throws SQLException

@@ -37,27 +37,19 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didConsumeMessageWithOptionalException(byte[] body, String replyTo, IOException ex) {
-        System.out.println("didConsumeMessageWithOptionalException {Message Bank}");
+        System.out.println("\n{TingGodRabbitMQBank} -- didConsumeMessageWithOptionalException");
         if (ex == null) {
 
             try {
                 String json = new String(body);
-                System.out.println("MÆÆÆÆÆÆÆÆÆÆLK: "+ json);
                 ObjectMapper mapper = new ObjectMapper();
-                System.out.println("Before mapping");
                 LoanRequest loanRequest = mapper.readValue(json, LoanRequest.class);
-                
-                System.out.println("After mapping");
+
                 JSONObject response = calculator.getInterestRate(
                         loanRequest.getSsn(), 
                         loanRequest.getCreditScore());
                 
-                System.out.println("response - " + response);
-                System.out.println("response - " + response.toJSONString());
-                
-                System.out.println("calculated interestRate - " + response.get("interestRate"));
-                
-                
+                System.out.println("Message: " + response.toJSONString());
                 producer.sendMessage(response, replyTo);
 
             } catch (UnsupportedEncodingException ex1) {
@@ -72,8 +64,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
+        System.out.println("\n{TingGodRabbitMQBank} -- didConsumeMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("Did send message to normalizer with success :-)");
+            System.out.println("Message: success");
         } else {
             System.out.println("Exception: " + ex.getLocalizedMessage());
         }

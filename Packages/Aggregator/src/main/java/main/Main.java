@@ -26,29 +26,33 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
+        System.out.println("\n{Aggregator} -- didProduceMessageWithOptionalException");
         if (ex == null) {
+            System.out.println("Message: " + application.toString());
             service.Aggregate(application);
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("Exception: " + ex.getLocalizedMessage());
         }
     }
 
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
+        System.out.println("\n{Aggregator} -- didProduceMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("success");
+            System.out.println("Message: success");
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("Exception: " + ex.getLocalizedMessage());
         }
     }
     
     @Override
     public void didAggregatorServiceWithOptionalException(HashMap message, Exception ex) {
+        System.out.println("\n{Aggregator} -- didAggregatorServiceWithOptionalException");
         if (ex == null) {
-            System.out.println("Message Sent");
+            System.out.println("Message: " + message.toString());
             producer.sendMessage(message);
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("Exception: " + ex.getLocalizedMessage());
         }
     }
     

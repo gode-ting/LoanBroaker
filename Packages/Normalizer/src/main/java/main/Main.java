@@ -37,11 +37,11 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didConsumeMessageWithOptionalException(byte[] body, Map headers, Exception ex) {
-        System.out.println("didConsumeMessageWithOptionalException {Normalizer}");
-        if (ex == null) {
+        System.out.println("\n{Normalizer} -- didConsumeMessageWithOptionalException");
+        if (ex == null) {      
             try {
                 String response = normalizer.normalize(body, headers);
-                System.out.println("{normalizer} - normalized data - " + response);
+                System.out.println("Message: " + response);
                 producer.sendMessage(response);
             } catch (IOException ex1) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
@@ -53,10 +53,12 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didProduceMessageWithOptionalException(Exception ex) {
+        System.out.println("\n{Normalizer} -- didProduceMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("Did send message to aggregator with success :-)"); }
-        else {
-            System.out.println("Exception: " + ex.getLocalizedMessage()); }
+            System.out.println("Message: success");
+        } else {
+            System.out.println("Exception: " + ex.getLocalizedMessage());
+        }
     }
 
     /**
