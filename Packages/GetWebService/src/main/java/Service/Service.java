@@ -27,7 +27,7 @@ public class Service implements Runnable {
 
     }
 
-    public void getInterestRate(HashMap application) {
+    public void getInterestRate(final HashMap application) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {

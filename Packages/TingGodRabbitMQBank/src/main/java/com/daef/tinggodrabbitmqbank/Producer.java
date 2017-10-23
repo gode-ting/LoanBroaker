@@ -20,7 +20,7 @@ public class Producer extends RabbitMQEndPointProducer {
         this.delegate = delegate;
     }
 
-    public void sendMessage(JSONObject response, String replyTo_exchange) {
+    public void sendMessage(final JSONObject response, final String replyTo_exchange) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {

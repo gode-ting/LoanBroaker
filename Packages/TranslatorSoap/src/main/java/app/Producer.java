@@ -20,7 +20,7 @@ public class Producer extends EndPointProducer {
         this.delegate = delegate;
     }
 
-    public void sendMessage(String object, String replyTo) {
+    public void sendMessage(final String object, final String replyTo) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {

@@ -30,7 +30,7 @@ public class Producer extends EndPoint {
         this.delegate = delegate;
     }
 
-    public void sendMessage(byte[] object) {
+    public void sendMessage(final byte[] object) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
