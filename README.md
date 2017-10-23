@@ -331,7 +331,7 @@ also, obviously there should have been an actual user interface, and not just so
 
 ## Flow of using the entire application
 
-1. Use the rest service to post a request.
+### 1. Use the rest service to post a request.
 
 ![rest POST post](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-post-postman.PNG)
 
