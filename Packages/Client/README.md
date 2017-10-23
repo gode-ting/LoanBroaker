@@ -1,7 +1,5 @@
 # Client
 
-**Table of contents:**
-
 - [Endpoints](#endpoints)
 - [How to](#how-to)
 
