@@ -27,10 +27,8 @@ public class XMLTranslator implements XMLTranslatorInterface {
 
     @Override
     public String translateXml(JSONObject application) {
-        System.out.println("hallo?");
         String xmlResult = null;
         try {
-            System.out.println("MOBMO: " + application);
             String ssn = (String) application.get("ssn");
             long creditScore = (long) application.get("creditScore");
             double loanAmount = (double) application.get("loanAmount");
@@ -41,12 +39,6 @@ public class XMLTranslator implements XMLTranslatorInterface {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S z");
             String formattedDate = formatter.format(myDate);
             
-
-            System.out.println("ssn: " + ssn);
-            System.out.println("cr editScore: " + creditScore);
-            System.out.println("loanAmount: " + loanAmount);
-            System.out.println("loanDuration: " + formattedDate);
-
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -87,7 +79,6 @@ public class XMLTranslator implements XMLTranslatorInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("slut?");
         return xmlResult;
     }
 }
