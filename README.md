@@ -65,23 +65,23 @@ The getWebService process recieves the message from the matching translator and 
 This is the output of 2 process. One called "[Cphbusiness]" and one called "[Gode Ting]".
 these translators translates the message to a format our Bank understand and a format CPHBusines bank understand. Then sends the messages to the banks.
 
-### 5.5 Our JSON bank
+### 6. Our JSON bank
 ![Our JSON bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TingGodRabbitMQBank.PNG)
 
 This process is our JSON bank. it recieves a message from its matching translator, and finds the interestRate that fits the creditScore. it then sends the message to the normalizer.
 
-### 6. The normalizer process
+### 7. The normalizer process
 ![normalizer output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/Normalizer.PNG)
 
 The normalizer process recieves a message from any given bank at any given time, and "normalizes" the message to a format our aggregator knows. then sends the formatted message to the aggregator.
 
-### 7. The Aggregator process
+### 8. The Aggregator process
 ![Aggregator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/Aggregator.PNG)
 
 When the aggregator process recieves a message it checks from who it was send. If the message was from the getBanks process, it will prepare to recieves a message from each bank in the list of banks within the message (too know when it should find the best result, and send it). If the message was from the normalizer it adds it to the pool of interestRates.
 When all the interestRates are there, the aggregator finds the best result and sends it back to the client.
 
-### 8. Use the rest service to get the response
+### 9. Use the rest service to get the response
 
 ![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
 
