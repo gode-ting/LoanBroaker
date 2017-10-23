@@ -295,9 +295,6 @@ number (SSN).
 
 ## Client/webservice
 
-- [Endpoints](#endpoints)
-- [How to](#how-to)
-
 ### Endpoints
 
 #### `/ - GET`
