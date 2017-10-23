@@ -203,7 +203,6 @@ In our Json translator we have made a few tests regarding the business logic.
 We have to make sure that our system handles undefined values correctly.
 
 ``` javascript
-
 it('should return a formatted json object, and handle undefined values', () => {
 let testJson = {
 	creditScore: '750',
@@ -225,6 +224,24 @@ expect(actualJson).to.eql(expectedJson);
 ```
 
 In the example we use Javascript with Chai as assertion library.
+
+### If we had more time
+
+1. Verify the Credit Bureau Operation
+
+The Loan Broker accesses this service to obtain credit scores for
+customers requesting a loan quote.
+
+In order to verify the correct operation of the external Credit Bureau service we could send periodic Test Messages("heartbeat") to the service.
+
+Because the Credit Bureau service supports a Return Address it is easy to inject a Test Message without disturbing the existing message flow.
+
+We simply provide a dedicated reply channel for test messages and avoid the need for a separate test message separator.
+
+In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
+
+A Credit Bureau test message is very simple; the only field that is required is a social security
+number (SSN).
 
 ## Client/webservice
 
@@ -280,24 +297,6 @@ We have implemented an offline map of ssn's that be requested loans for, to allo
 Also, the response to the user should have probably have been delivered differently. It's a bit hard to wait for an answer in the browser, as it has to keep loading untill it receives any messages. Our solution was to make a get-request to an endpoint with the ssn, to retrieve the best provider. A proper solution could have been to send an e-mail to the user with the best loan provider(s).
 
 also, obviously there should have been an actual user interface, and not just some rest endpints - those would be a bit hard to non-programmer users.
-
-## If we had more time
-
-1. Verify the Credit Bureau Operation
-
-The Loan Broker accesses this service to obtain credit scores for
-customers requesting a loan quote.
-
-In order to verify the correct operation of the external Credit Bureau service we could send periodic Test Messages("heartbeat") to the service.
-
-Because the Credit Bureau service supports a Return Address it is easy to inject a Test Message without disturbing the existing message flow.
-
-We simply provide a dedicated reply channel for test messages and avoid the need for a separate test message separator.
-
-In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
-
-A Credit Bureau test message is very simple; the only field that is required is a social security
-number (SSN).
 
 ## Authors
 
