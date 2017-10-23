@@ -11,11 +11,12 @@ router.get('/', function (req, res, next) {
 			{
 				endpoint: '/loanRequest', method: 'POST', type: 'json', required: {
 					ssn: { type: 'string', required: true, description: 'the ssn of the person making the request. Should be in the format xxxxxx-xxxx' },
-					loanAmount: {type: 'number', required: true, description: 'the amount to make a loan request for'},
-					loanDuration: {type: 'number', required: true, description: 'the duration for the loan in years'}
+					loanAmount: { type: 'number', required: true, description: 'the amount to make a loan request for' },
+					loanDuration: { type: 'number', required: true, description: 'the duration for the loan in years' }
 				}
 			},
-			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' }
+			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' },
+			{ endpoint: '/', method: 'GET', response: 'json' }
 		];
 
 	res.json(endpoints);
