@@ -339,7 +339,7 @@ also, obviously there should have been an actual user interface, and not just so
 ![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
 
 ### 2. The getCreditScore process
-![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen-dumps/getCreditScore.PNG)
+![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getCreditScore.PNG)
 the getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process
 
 ### xx. Use the rest service to get the response
