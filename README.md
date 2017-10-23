@@ -339,6 +339,6 @@ also, obviously there should have been an actual user interface, and not just so
 
 ### xx. Use the rest service to get the response
 
-![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server.PNG)
+![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
 
 ![rest GET server](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
