@@ -25,6 +25,12 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 
 ![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
 
+### 2. The getCreditScore process
+
+![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getCreditScore.PNG)
+the getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process
+
+
 ### xx. Use the rest service to get the response
 
 ![rest GET client](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response-server1.PNG)
@@ -33,6 +39,41 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 
 ## Diagrams
 
+### Design class diagram
+
+### Sequence diagram
+
+![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
+
+__Short description__
+
+This sequence diagram shows how data flows between actors/services within the system. The LoanBroker system is shown as a single actor and works like a black box. To understand this diagram you therefor don't need to know how the LoanBroker works internally. Everything is handled asyncronously for optimal performance.
+
+__Actors__
+
+* Consumer / Client
+
+* LoanBroker System (Black box)
+
+* Credit Bureau
+
+* Banks 1, 2, 3 & 4
+
+__Walk through__
+
+Let's take the diagram step by step, by explaing what happends along the way.
+
+1. (Client) requests a quote along with information like `ssn`, `amount`, `duration`.
+
+2. (LoanBroker) receives the quote. Then sends a request to (Credit Bureau) with `ssn` as parameter.
+
+3. (Credit Bureau) receives `ssn` and responds with a `creditScore`.
+
+4. (LoanBroker) receives `creditScore` and then sends the quote to all the banks. 
+
+5. (Banks 1, 2, 3 and 4) eventually sends a quote rate back to the (LoanBroker)
+
+6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
 
 ## Bottle necks
 
@@ -310,49 +351,3 @@ In a terminal `cd` in to their directory, and in this directory run `npm install
 
 **Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.
 
-### Design class diagram
-
-### Sequence diagram
-
-![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
-
-__Short description__
-
-This sequence diagram shows how data flows between actors/services within the system. The LoanBroker system is shown as a single actor and works like a black box. To understand this diagram you therefor don't need to know how the LoanBroker works internally. Everything is handled asyncronously for optimal performance.  
-
-__Actors__
-
-* Consumer / Client
-
-* LoanBroker System (Black box)
-
-* Credit Bureau
-
-* Banks 1, 2, 3 & 4
-
-
-__Walk through__
-
-Let's take the diagram step by step, by explaing what happends along the way.
-
-1. (Client) requests a quote along with information like `ssn`, `amount`, `duration`.
-
-2. (LoanBroker) receives the quote. Then sends a request to (Credit Bureau) with `ssn` as parameter.
-
-3. (Credit Bureau) receives `ssn` and responds with a `creditScore`.
-
-4. (LoanBroker) receives `creditScore` and then sends the quote to all the banks. 
-
-5. (Banks 1, 2, 3 and 4) eventually sends a quote rate back to the (LoanBroker)
-
-6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
-
-
-### 2. The getCreditScore process
-![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getCreditScore.PNG)
-the getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process
-
-### xx. Use the rest service to get the response
-
-
-![rest GET server](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
