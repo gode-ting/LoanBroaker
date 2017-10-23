@@ -31,21 +31,23 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didConsumeMessageWithOptionalException(JSONObject application, Exception ex) {
+        System.out.println("\n{TranslatorSoap} -- didConsumeMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("translator did consume - " + application);
+            System.out.println("Message: " + application);
             
             producer.sendMessage(application.toJSONString(), "LoanBroker9.banks_out");
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("Exception: " + ex.getLocalizedMessage());
         }
     }
 
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
+        System.out.println("\n{TranslatorSoap} -- didProduceMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("translator did send message to bank - success");
+            System.out.println("Message: succes");
         } else {
-            System.out.println("Failed with exception: " + ex.getLocalizedMessage());
+            System.out.println("Exception: " + ex.getLocalizedMessage());
         }
     }
 

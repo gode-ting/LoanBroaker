@@ -37,8 +37,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
             if (ex == null) {
                 JSONObject applicationJson = service.DistributeLoan(application);
                 for (HashMap bank : (ArrayList<HashMap>) application.get("banks")) {
-                    System.out.println("Message seding to bank with key bidning: " + (String) bank.get("bankId"));
                     producer.sendMessage(applicationJson, bank, (String) bank.get("bankId"));
+                    System.out.println("Message sending to bank with key bidning: " + (String) bank.get("bankId"));
+                    System.out.println("Message: success");
                 }
             } else {
                 System.out.println("Exception: " + ex.getLocalizedMessage());
@@ -50,9 +51,9 @@ public class Main implements ConsumerDelegate, ProducerDelegate {
 
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
-        System.out.println("\n{RecipientList} -- didConsumeMessageWithOptionalException");
+        System.out.println("\n{RecipientList} -- didProduceMessageWithOptionalException");
         if (ex == null) {
-            System.out.println("Message: success");
+            
         } else {
             System.out.println("Exception: " + ex.getLocalizedMessage());
         }
