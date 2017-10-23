@@ -270,11 +270,13 @@ Should be sent as a body in the format:
 
 Will return loans registered for that ssn in JSON.
 
-### How to
+### How to run the client
 
 To run the client you need to have node installed.
 
 When node is installed, you should install all dependencies - this is done with the command `npm install`.
+
+### How to interact with the client
 
 The client is a REST service where you can post request for loan providers, and get a response to this. See [endpoints](#endpoints).
 
@@ -283,6 +285,8 @@ The client is a REST service where you can post request for loan providers, and 
 
 It's not possible to use the POST endpoint if you've already made one that you haven't yet reviewed by the GET endpoint.
 Also, it's not possible to use the GET endpoint unless you've already made a request by the POST endpoint.
+
+### Endpoints
 
 | Endpoint           | Method | Description                                                          | Paramters | Result               |
 |--------------------|--------|----------------------------------------------------------------------|-----------|----------------------|
