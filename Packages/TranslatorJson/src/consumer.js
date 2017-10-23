@@ -1,7 +1,6 @@
 import rabbitmq from '../config/rabbitmq.js';
-// import translator from './translator.js';
 import producer from './producer.js';
-import getTimeStamp from './timestamp.js';
+import timestamp from './timestamp.js';
 
 export default function (ampqConn) {
 	let exchange = rabbitmq.consumer.exchange;
@@ -14,18 +13,18 @@ export default function (ampqConn) {
 			durable: false
 		});
 
-		let timeStamp;
+		let newTimeStamp;
 
 		ch.assertQueue('', {
 			exclusive: true
 		}, (err, q) => {
-			timeStamp = getTimeStamp();
-			console.log(`\nConsumer ${timeStamp}:\n [*] Waiting for messages in %s. To exit press CTRL+C`, q.queue);
+			newTimeStamp = timestamp.getTimeStamp();
+			console.log(`\nConsumer ${newTimeStamp}\n [*] Waiting for messages in ${ q.queue}. To exit press CTRL+C`);
 			ch.bindQueue(q.queue, exchange, binding);
 
 			ch.consume(q.queue, (message) => {
-				timeStamp = getTimeStamp();
-				console.log(`\nConsumer ${timeStamp}:\n [x] %s`, message.content.toString());
+				newTimeStamp = timestamp.getTimeStamp();
+				console.log(`\nConsumer ${newTimeStamp}:\n [x] consumed message ${message.content.toString()}`);
 				producer(ampqConn, message);
 			}, {
 				noAck: true

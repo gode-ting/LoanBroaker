@@ -5,6 +5,8 @@
  */
 package com.mycompany.app;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.connection.EndPoint;
 import com.mycompany.interfaces.ConsumerDelegate;
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -57,17 +59,12 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-
-        JSONObject request = (JSONObject)SerializationUtils.deserialize(body);
-        System.out.println("{GetCreditScore} didConsumeJSONMessage: " + request);
-        HashMap<String, Object> application = new HashMap();
-        application.put("ssn", (String)request.get("ssn"));
-        application.put("loanAmount", (double)request.get("loanAmount"));
-        application.put("loanDuration", (int)request.get("loanDuration"));
         
-        
-//        HashMap application = (HashMap) SerializationUtils.deserialize(body);
-        delegate.didConsumeMessageWithOptionalException(application, null);
+            String jsonString = new String(body, "UTF-8");
+            ObjectMapper mapper = new ObjectMapper();
+            HashMap message = mapper.readValue(jsonString, new TypeReference<HashMap>() {});
+            
+        delegate.didConsumeMessageWithOptionalException(message, null);
     }
 
     public void handleCancel(String consumerTag) { 
@@ -80,6 +77,7 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
     }
 
     public void handleShutdownSignal(String consumerTag, ShutdownSignalException arg1) {
+        arg1.printStackTrace();
     }
 
     public void accept(Object t) {

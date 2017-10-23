@@ -24,7 +24,6 @@ public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable,
         try {
             channel.basicConsume(queueName, true, (com.rabbitmq.client.Consumer)this);
         } catch (IOException ex) {
-            System.out.println("EX:" + ex.getLocalizedMessage());
             // delegate.didConsumeMessageWithOptionalException(null, ex);
         }
     }
@@ -49,31 +48,23 @@ public class QueueConsumer extends RabbitMQEndPointConsumer implements Runnable,
      */
     public void handleDelivery(String consumerTag, Envelope env,
             AMQP.BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hej");
-        System.out.println("HEADER _________ " + props.getReplyTo());
         String type = props.getHeaders().get("type").toString();
-        System.out.println("type: " + type);
         delegate.didConsumeMessageWithOptionalException(body,props.getReplyTo(), null);
     }
 
     public void handleCancel(String consumerTag) {
-        System.out.println("444");
     }
 
     public void handleCancelOk(String consumerTag) {
-        System.out.println("333");
     }
 
     public void handleRecoverOk(String consumerTag) {
-        System.out.println("222");
     }
 
     public void handleShutdownSignal(String consumerTag, ShutdownSignalException arg1) {
-        System.out.println("111");
     }
 
     public void accept(Object t) {
-        System.out.println("000");
     }
 
 }

@@ -13,5 +13,5 @@ import java.util.HashMap;
  * @author Frederik
  */
 public interface AggregatorServiceDelegate {
-    public void didAggregatorServiceWithOptionalException(HashMap message, Exception ex);
+    public void didAggregatorServiceWithOptionalException(String message, Exception ex);
 }

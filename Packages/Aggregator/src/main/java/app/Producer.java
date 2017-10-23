@@ -18,12 +18,12 @@ public class Producer extends EndPoint {
         this.delegate = delegate;
     }
 
-    public void sendMessage(final Serializable object) {
+    public void sendMessage(final String object) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    channel.basicPublish("", endPointName, null, SerializationUtils.serialize(object));
+                    channel.basicPublish("", endPointName, null, object.getBytes());
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);

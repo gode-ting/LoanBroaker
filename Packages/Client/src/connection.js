@@ -30,8 +30,6 @@ function getConnection() {
 				console.info('[AMPQ] connection closed');
 			});
 
-			console.log('[AMPQ] connected');
-
 			resolve(conn);
 		});
 	});

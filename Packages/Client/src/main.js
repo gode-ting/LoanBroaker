@@ -3,15 +3,18 @@ let express = require('express');
 let logger = require('morgan');
 let cnf = require('cnf');
 let bodyParser = require('body-parser');
+let messageMap = require('./messageMap');
 
 let index = require('./index.js');
 
 export function main() {
+	// Initialize new message map to hold ssn's
+	messageMap.createMap();
+
 	let app = express();
 
 	app.use(logger('dev'));
-	app.use(bodyParser.json());
-	// app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json({type: 'application/json'}));
 
 	app.use('/', index);
 
@@ -30,7 +33,7 @@ export function main() {
 
 		// render the error page
 		res.status(err.status || 500);
-		res.json('error');
+		res.json({error: err.message});
 	});
 
 	let port = cnf.http.port;

@@ -24,6 +24,8 @@
 hs_err_pid*
 /Packages/GetBanks/target/
 
+**/coverage
+*/nbproject
 **/node_modules
 Packages/*/nbproject
 Packages/*/.settings
@@ -35,3 +37,4 @@ Packages/*/.classpath
 /Packages/TranslatorJson/nbproject/private/
 /nbproject/private/
 /Packages/TranslatorJsonGodeTing/nbproject/private/
+.nyc_output

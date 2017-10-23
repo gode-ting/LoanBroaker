@@ -55,15 +55,8 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("headers: " + props.getHeaders());
         
         Map headers = props.getHeaders();
-        System.out.println("map: " + headers);
-        //String type = props.getHeaders().get("type").toString();
-//        System.out.println("type: " + type);
-//        String message = new String(body, "UTF-8");
-//        System.out.println("message: " + message);
-//        HashMap application = (HashMap) lSerializationUtils.deserialize(body);
         delegate.didConsumeMessageWithOptionalException(body, headers, null);
     }
 

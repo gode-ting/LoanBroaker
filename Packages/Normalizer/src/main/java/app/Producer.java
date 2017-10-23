@@ -24,7 +24,7 @@ public class Producer extends EndPoint {
             @Override
             public void run() {
                 try {
-                    channel.basicPublish("", endPointName, null, SerializationUtils.serialize(message));
+                    channel.basicPublish("", endPointName, null, message.getBytes());
                     delegate.didProduceMessageWithOptionalException(null);
                 } catch (IOException ex) {
                     Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
