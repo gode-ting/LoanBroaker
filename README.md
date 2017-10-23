@@ -229,18 +229,18 @@ In order to verify the correct operation of the Credit Bureau service we need a 
 A Credit Bureau test message is very simple; the only field that is required is a social security
 number (SSN).
 
-## Client / Webservice
+## Client/Webservice
 
 - [Endpoints](#endpoints)
 - [How to](#how-to)
 
-## Endpoints
+### Endpoints
 
-### `/ - GET`
+#### `/ - GET`
 
 returns all available endpoints as JSON.
 
-### `/loanRequest - POST`
+#### `/loanRequest - POST`
 
 Should be sent as a body in the format:
 
@@ -252,11 +252,11 @@ Should be sent as a body in the format:
 `loanAmount`: the amount to loan. Should be a number.
 `loanDuration`: the duration for the loan in years. Should be a number. 
 
-### `/loanRequest/ssn - GET`
+#### `/loanRequest/ssn - GET`
 
 Will return loans registered for that ssn in JSON.
 
-## How to
+### How to
 
 To run the client you need to have node installed.
 
