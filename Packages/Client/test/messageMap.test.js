@@ -43,7 +43,6 @@ describe('../src/messageMap', () => {
 			let expected = 'bar';
 
 			let actual = messageMap.getKey(key);
-			console.log(actual);
 
 			expect(actual).to.eql(expected);
 		});

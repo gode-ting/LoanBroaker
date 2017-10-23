@@ -30,7 +30,6 @@ function deleteKey(key) {
 
 function addToMap(key, value) {
 	if (mapHasKey(key)) {
-		console.log('Map already contains key ', key);
 		return false;
 	} else {
 		messageMap.set(key, value);
