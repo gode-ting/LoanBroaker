@@ -27,6 +27,6 @@ public class GoTingWSBank {
     public byte[] LoanRequest(@WebParam(name = "ssn") String ssn, @WebParam(name = "creditScore") int creditScore, @WebParam(name = "loanAmount") float loanAmount, @WebParam(name = "LoanDuration") int LoanDuration) {
        LoanCalculator cal = new LoanCalculator();
        JSONObject bankResults = cal.getInterestRate(ssn, creditScore);
-       return SerializationUtils.serialize(bankResults);
+       return SerializationUtils.serialize(bankResults.toJSONString());
     }
 }

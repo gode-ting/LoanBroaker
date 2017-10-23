@@ -14,7 +14,7 @@ public class AllBanks {
         HashMap bankOne = new HashMap();
         bankOne.put("bankName", "Lån & Spar");
         bankOne.put("bankId", "bank-lån-and-spar");
-        bankOne.put("minCreditScore", 10);
+        bankOne.put("minCreditScore", 0);
         
         HashMap bankTwo = new HashMap();
         bankTwo.put("bankName", "Jyske Bank");
