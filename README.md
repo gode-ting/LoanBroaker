@@ -11,8 +11,7 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 - [References](#references)
 - [Banks](#banks)
 - [Translators](#translators)
-- [Diagrams](#diagrams)
-- [Client / webservice](#clientwebservice)
+- [Notes](#notes)
 
 ## Important links
 
@@ -49,11 +48,12 @@ List of bank id's:
 - `bank-nordea`
 - `bank-danske-bank`
 
-## Translators
+## Translators.
 
-### JSON translators
+**Node translators:**
 
-Written in small and simple node applications.
+- TranslatorJson
+- TranslatorJsonGodeTing
 
 In this dir run `npm install`.
 
@@ -61,13 +61,22 @@ In this dir run `npm install`.
 
 **Development:** In this dir, run `npm run dev`. Will start two proccesses that each start teir respective translator in development mode.
 
-They consist of asynchron consumer's and producer's that are connected to rabbitMQ messaging.
+## Notes
 
-## Diagrams
+### HashMap vs. JSON
 
-### Design class diagram
+Why did we choose to pass HashMap from process to process, and why did we regret it? 
 
-### Sequence diagram
+### Better namings
+
+Could we have named our proccesses better, and how would this possibly have helped us? 
+
+- Structure.
+- Which services need what?
+
+### Design class diagram 
+
+### Sequence diagram      
 
 ![Text](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/sequence-diagram.jpg)
 
@@ -154,12 +163,13 @@ Therefore, *we have isolated the application from the messaging implementation b
 implementation classes.*
 
 *Why?* 
+
 Because testing a single application is much easier than testing multiple, distributed applications
 connected by messaging channels.
-single application allows us to trace through the complete
+
+Single application allows us to trace through the complete
 execution path, we do not need a complex start-up procedure to fire up all components.
 
-##INSERT COOL EXAMPLES HERE 
 
 We have made an interface for handling Credit Score Service. 
 
@@ -179,6 +189,52 @@ public void getCreditScore(HashMap application)
 This mock implementation should contain the same logic as the actual credit
 bureau so the remainder of the loan broker is completely unaware.
 
+We have classes and interfaces handling producer and consumer.
+
+### Producer example: 
+
+```java
+ public void sendMessage(Serializable object) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    channel.basicPublish("", endPointName, null, SerializationUtils.serialize(object));
+                    delegate.didProduceMessageWithOptionalException(null);
+                } catch (IOException ex) {
+                    Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    delegate.didProduceMessageWithOptionalException(ex);
+                }
+            }
+        });
+        t.run();
+    }
+```
+*How is this testable?*
+
+We create an object:
+```java
+private ProducerDelegate delegate;
+```
+that is based on a interface: 
+
+```java
+public interface ProducerDelegate {
+    public void didProduceMessageWithOptionalException(IOException ex);
+}
+```
+Basically we can create units handling different cases.
+
+We have done same thing regarding translators. 
+
+### Translator example:
+
+```java
+public interface XMLTranslatorInterface {
+    String translateXml(JSONObject application);
+}
+
+```
 
 ### We have made a few tests regarding testing the business logic with unit test cases.
 
@@ -189,23 +245,23 @@ We have to make sure that our system handles undefined values correctly.
 ``` javascript
 
 it('should return a formatted json object, and handle undefined values', () => {
-	let testJson = {
-		creditScore: '750',
-		loanAmount: '1000.01',
-		loanDuration: '365'
-	};
+			let testJson = {
+				creditScore: '750',
+				loanAmount: '1000.01',
+				loanDuration: '365'
+			};
 
-	let expectedJson = {
-		ssn: '',
-		creditScore: '750',
-		loanAmount: '1000.01',
-		loanDuration: '365'
-	};
+			let expectedJson = {
+				ssn: '',
+				creditScore: '750',
+				loanAmount: '1000.01',
+				loanDuration: '365'
+			};
 
-	let actualJson = translator.getFormattedJson(testJson);
+			let actualJson = translator.getFormattedJson(testJson);
 
-	expect(actualJson).to.eql(expectedJson);
-});
+			expect(actualJson).to.eql(expectedJson);
+		});
 ```
 
 In the example we use Javascript with Chai as assertion library.
@@ -227,59 +283,5 @@ We simply provide a dedicated reply channel for test messages and avoid the need
 In order to verify the correct operation of the Credit Bureau service we need a Test Data Generator and a Test Data Verifier. The test data generator creates test data to be sent to the service under test. 
 
 A Credit Bureau test message is very simple; the only field that is required is a social security
-number (SSN).
+number (SSN). 
 
-## Client/Webservice
-
-- [Endpoints](#endpoints)
-- [How to](#how-to)
-
-### Endpoints
-
-#### `/ - GET`
-
-returns all available endpoints as JSON.
-
-#### `/loanRequest - POST`
-
-Should be sent as a body in the format:
-
-```json
-{"ssn": "280492-1111", "loanAmount": 1000, "loanDuration": 3}
-```
-
-`ssn`: the ssn of the person making the request. Should be a string.
-`loanAmount`: the amount to loan. Should be a number.
-`loanDuration`: the duration for the loan in years. Should be a number. 
-
-#### `/loanRequest/ssn - GET`
-
-Will return loans registered for that ssn in JSON.
-
-### How to
-
-To run the client you need to have node installed.
-
-When node is installed, you should install all dependencies - this is done with the command `npm install`.
-
-The client is a REST service where you can post request for loan providers, and get a response to this. See [endpoints](#endpoints).
-
-1. Post a request to the service. This is done by sending a POST to `/loanRequest` with a json body in the format `{"ssn": "180492-1111", "loanAmount": 1000.1, "loanDuration": 3}`.
-2. Get a response for the request you made before. This is done by sending a GET request to `/loanRequest/:ssn` where ssn is a parameter, and should be the ssn you used in the post.
-
-It's not possible to use the POST endpoint if you've already made one that you haven't yet reviewed by the GET endpoint.
-Also, it's not possible to use the GET endpoint unless you've already made a request by the POST endpoint.
-
-| Endpoint           | Method | Description                                                          | Paramters | Result               |
-|--------------------|--------|----------------------------------------------------------------------|-----------|----------------------|
-| `/loanRequest`     | POST   | Posts a request to get the best loan of available providers          |           | *Success* or *error* |
-| `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`     | Json of the result   |
-| `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |           | json                 |
-
-### What could have been done different on the client
-
-We have implemented an offline map of ssn's that be requested loans for, to allow users only to request loans once before they can do it again. In a real-world project this should have been done differently, as the list will reset every time the servers restarts.
-
-Also, the response to the user should have probably have been delivered differently. It's a bit hard to wait for an answer in the browser, as it has to keep loading untill it receives any messages. Our solution was to make a get-request to an endpoint with the ssn, to retrieve the best provider. A proper solution could have been to send an e-mail to the user with the best loan provider(s).
-
-also, obviously there should have been an actual user interface, and not just some rest endpints - those would be a bit hard to non-programmer users.
