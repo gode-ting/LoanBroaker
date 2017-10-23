@@ -44,6 +44,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, MainInterface {
 
     @Override
     public void didProduceMessageWithOptionalException(IOException ex) {
+        System.out.println("\n{TranslatorXML} -- didProduceMessageWithOptionalException");
         if (ex == null) {
             System.out.println("Message: success");
         } else {

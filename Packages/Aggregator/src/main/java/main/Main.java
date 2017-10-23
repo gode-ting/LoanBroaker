@@ -26,7 +26,7 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
 
     @Override
     public void didConsumeMessageWithOptionalException(HashMap application, IOException ex) {
-        System.out.println("\n{Aggregator} -- didProduceMessageWithOptionalException");
+        System.out.println("\n{Aggregator} -- didConsumeMessageWithOptionalException");
         if (ex == null) {
             System.out.println("Message: " + application.toString());
             service.Aggregate(application);

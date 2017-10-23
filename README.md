@@ -86,6 +86,8 @@ connected by messaging channels.
 Single application allows us to trace through the complete
 execution path, we do not need a complex start-up procedure to fire up all components.
 
+**Example:**
+
 We have made an interface for handling Credit Score Service. 
 
 ```java
@@ -133,14 +135,14 @@ We create an object:
 ```java
 private ProducerDelegate delegate;
 ```
-that is based on a interface: 
+that is based on this interface: 
 
 ```java
 public interface ProducerDelegate {
     public void didProduceMessageWithOptionalException(IOException ex);
 }
 ```
-Basically we can create units handling different cases.
+Basically we can create unit tests handling different cases.
 
 We have done same thing regarding translators.
 
@@ -346,5 +348,11 @@ Let's take the diagram step by step, by explaing what happends along the way.
 6. (LoanBroker) then sends the best offer back to the (Client) once all banks have sent their quote rates OR if the experation date has been passed.
 
 
+### 2. The getCreditScore process
+![getCreditScore output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/getCreditScore.PNG)
+the getCreditScore process recieves the message, then retrieves the creditScore for the given SSN and adds it to the message, then proceeds to send the message to the getBanks process
+
+### xx. Use the rest service to get the response
 
 
+![rest GET server](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
