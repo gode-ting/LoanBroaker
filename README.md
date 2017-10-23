@@ -159,6 +159,7 @@ connected by messaging channels.
 Single application allows us to trace through the complete
 execution path, we do not need a complex start-up procedure to fire up all components.
 
+**Example:**
 
 We have made an interface for handling Credit Score Service. 
 
@@ -205,14 +206,14 @@ We create an object:
 ```java
 private ProducerDelegate delegate;
 ```
-that is based on a interface: 
+that is based on this interface: 
 
 ```java
 public interface ProducerDelegate {
     public void didProduceMessageWithOptionalException(IOException ex);
 }
 ```
-Basically we can create units handling different cases.
+Basically we can create unit tests handling different cases.
 
 We have done same thing regarding translators. 
 
