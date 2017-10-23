@@ -49,23 +49,23 @@ The recipientLis process loops for each element in the list of banks within the 
 
 This translator translates the message to XML banks format. Then sends the message to the XML bank.
 
-### 5.2.1. The Soap bank translator process
+### 5.2 The Soap bank translator process
 ![Soap bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TranslatorSoap.PNG)
 
 This translator translates the message to soap banks format. Then sends the message to the getWebService process.
 
-### 5.2.2. The getWebService process
+### 5.3 The getWebService process
 ![getWebService output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/GetWebService.PNG)
 
 The getWebService process recieves the message from the matching translator and retrieves the interestRate from the SOAP application and sends it with the SSN to the normalizer.
 
-### 5.3.1. Our JSONtranslator / CPHBusiness JSONtranslator
+### 5.4 Our JSONtranslator / CPHBusiness JSONtranslator
 ![JSONtranslator / CPHBusiness JSONtranslator output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/translator-json.PNG)
 
 This is the output of 2 process. One called "[Cphbusiness]" and one called "[Gode Ting]".
 these translators translates the message to a format our Bank understand and a format CPHBusines bank understand. Then sends the messages to the banks.
 
-### 5.3.2. Our JSON bank
+### 5.5 Our JSON bank
 ![Our JSON bank output](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/Screen%20dumps/TingGodRabbitMQBank.PNG)
 
 This process is our JSON bank. it recieves a message from its matching translator, and finds the interestRate that fits the creditScore. it then sends the message to the normalizer.
