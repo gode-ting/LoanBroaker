@@ -1,7 +1,8 @@
 # LoanBroaker
 
-We use github issues and waffle to organise and structure our project. You can find our waffle board here: 
-[![Stories in Ready](https://badge.waffle.io/hilleer/LoanBroaker.png?label=ready&title=Ready)](http://waffle.io/hilleer/LoanBroaker)
+We use github issues and waffle to organise and structure our project. You can find our waffle board here:
+
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/gode-ting/LoanBroaker.svg?columns=all)](http://waffle.io/gode-ting/LoanBroaker)
 
 Repository for System integration Loan broker project on Cphbusiness, PBA in software development.
 
