@@ -29,7 +29,9 @@ router.post('/loanRequest', (req, res, next) => {
 
 	// If any of the values are undefined
 	if (!ssn || !loanAmount || !loanDuration) {
-		throw new Error('Undefined value(s)');
+		console.error('Undefined value(s)');
+		// throw new Error('Undefined value(s)');
+		return res.json({error: 'You provided undefined details! Either ssn, loan amount or loan duration was undefined'});
 	}
 
 	// Check if ssn already in map
