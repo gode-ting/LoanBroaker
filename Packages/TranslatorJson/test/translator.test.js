@@ -10,13 +10,13 @@ describe('../src/transaltor.js', () => {
 				loanDuration: '365',
 				creditScore: '750',
 				loanAmount: '1000.01',
-				ssn: '280492-xxxx',
+				ssn: '280492',
 				invalid1: 'random1',
 				invalid2: 'random2'
 			};
 
 			let expectedJson = {
-				ssn: '280492-xxxx',
+				ssn: 280492,
 				creditScore: '750',
 				loanAmount: '1000.01',
 				loanDuration: '365'

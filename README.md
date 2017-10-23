@@ -21,6 +21,8 @@ Repository for System integration Loan broker project on Cphbusiness, PBA in sof
 
 ## Screen dumps of process flow
 
+The following screen dumps shows the output for every microservice printed to the console. This can help to provide a nice overview of the flow. All processes/screen dumps are listed in sequential order meaning that the top services are executed first. So you you are able to actually trace the message around our system.
+
 ### 1. Use the rest service to post a request.
 
 ![rest POST post](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-post-postman.PNG)
@@ -274,6 +276,26 @@ expect(actualJson).to.eql(expectedJson);
 ```
 
 In the example we use Javascript with Chai as assertion library.
+
+### Test coverage
+
+We have used a test coverage tool called "nyc/istanbul" for our node based applications. The tool runs with the framework/npm package _mocha_, and shows how much of the code of the tested modules are covered by the tests. So it's not showing a total coverage of the tests of the entire processes, but just the files that we have added to the tests. This is intended, because we haven't had the possibility to use more tests than unit tests, so it only made sense to show the coverage for the unit testable helper functions.
+
+#### Client
+
+We are covering a 100% of the message map, which we use to store the SSN for users that have requested loan providers.
+
+![message map test coverage](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/message-map-test-coverage.PNG)
+
+#### TranslatorJson
+
+We are covering a 100% of our helper functions, which includes timestamp.js and translator.js.
+
+**timpestamp.js** is used to give a timestamp that we print to the console when we receive messages.
+
+**translator.js** is used to make sure we have all properties for the json object we will return, otherwise we will handle it properly.
+
+![translator json test coverage](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/)
 
 ### If we had more time
 
