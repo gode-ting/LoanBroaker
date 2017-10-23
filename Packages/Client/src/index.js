@@ -11,11 +11,12 @@ router.get('/', function (req, res, next) {
 			{
 				endpoint: '/loanRequest', method: 'POST', type: 'json', required: {
 					ssn: { type: 'string', required: true, description: 'the ssn of the person making the request. Should be in the format xxxxxx-xxxx' },
-					loanAmount: {type: 'number', required: true, description: 'the amount to make a loan request for'},
-					loanDuration: {type: 'number', required: true, description: 'the duration for the loan in years'}
+					loanAmount: { type: 'number', required: true, description: 'the amount to make a loan request for' },
+					loanDuration: { type: 'number', required: true, description: 'the duration for the loan in years' }
 				}
 			},
-			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' }
+			{ endpoint: '/loanResponse/ssn', format: 'xxxxxxx-xxxx', method: 'GET', response: 'json' },
+			{ endpoint: '/', method: 'GET', response: 'json' }
 		];
 
 	res.json(endpoints);
@@ -28,7 +29,9 @@ router.post('/loanRequest', (req, res, next) => {
 
 	// If any of the values are undefined
 	if (!ssn || !loanAmount || !loanDuration) {
-		throw new Error('Undefined value(s)');
+		console.error('Undefined value(s)');
+		// throw new Error('Undefined value(s)');
+		return res.json({error: 'You provided undefined details! Either ssn, loan amount or loan duration was undefined'});
 	}
 
 	// Check if ssn already in map
@@ -70,7 +73,7 @@ router.get('/loanResponse/:ssn', (req, res, next) => {
 				res.json({ status: 'success', message: message.content.toString() });
 			});
 	} else {
-		res.json({ error: 'No loan requests recored for the entered SSN. Please try again' });
+		res.json({ error: 'No loan requests recorded for the entered SSN. Please try again' });
 	}
 });
 

@@ -34,14 +34,18 @@ public class XMLTranslator implements XMLTranslatorInterface {
             String ssn = (String) application.get("ssn");
             long creditScore = (long) application.get("creditScore");
             double loanAmount = (double) application.get("loanAmount");
-            String loanDuration = (String) application.get("loanDuration");
+            long loanDuration = (long) application.get("loanDuration");
 
+            Instant instant = Instant.ofEpochSecond(loanDuration * 365 * 24 * 60 * 60);
+            Date myDate = Date.from(instant);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S z");
+            String formattedDate = formatter.format(myDate);
             
 
             System.out.println("ssn: " + ssn);
             System.out.println("cr editScore: " + creditScore);
             System.out.println("loanAmount: " + loanAmount);
-            System.out.println("loanDuration: " + loanDuration);
+            System.out.println("loanDuration: " + formattedDate);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -63,7 +67,7 @@ public class XMLTranslator implements XMLTranslatorInterface {
             loanRequest.appendChild(loanAmountEle);
 
             Element loanDurationEle = doc.createElement("loanDuration");
-            loanDurationEle.appendChild(doc.createTextNode(loanDuration));
+            loanDurationEle.appendChild(doc.createTextNode(formattedDate));
             loanRequest.appendChild(loanDurationEle);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();

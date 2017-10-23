@@ -8,14 +8,13 @@ let messageMap = require('./messageMap');
 let index = require('./index.js');
 
 export function main() {
-	// Initialize new message map
+	// Initialize new message map to hold ssn's
 	messageMap.createMap();
 
 	let app = express();
 
 	app.use(logger('dev'));
 	app.use(bodyParser.json({type: 'application/json'}));
-	// app.use(bodyParser.urlencoded({ extended: false }));
 
 	app.use('/', index);
 

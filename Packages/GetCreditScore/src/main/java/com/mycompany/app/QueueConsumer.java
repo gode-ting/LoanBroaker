@@ -64,6 +64,9 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             ObjectMapper mapper = new ObjectMapper();
             HashMap message = mapper.readValue(jsonString, new TypeReference<HashMap>() {});
             
+            System.out.println("keys: " + message.keySet().toString());
+            System.out.println("loanDuration");
+            
 //        JSONObject request = (JSONObject)SerializationUtils.deserialize(body);
 //        System.out.println("{GetCreditScore} didConsumeJSONMessage: " + request);
 //        HashMap<String, Object> application = new HashMap();

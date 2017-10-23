@@ -1,7 +1,5 @@
 # Client
 
-**Table of contents:**
-
 - [Endpoints](#endpoints)
 - [How to](#how-to)
 
@@ -46,3 +44,11 @@ Also, it's not possible to use the GET endpoint unless you've already made a req
 | `/loanRequest`     | POST   | Posts a request to get the best loan of available providers          |           | *Success* or *error* |
 | `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`     | Json of the result   |
 | `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |           | json                 |
+
+### What could have been done different on the client
+
+We have implemented an offline map of ssn's that be requested loans for, to allow users only to request loans once before they can do it again. In a real-world project this should have been done differently, as the list will reset every time the servers restarts.
+
+Also, the response to the user should have probably have been delivered differently. It's a bit hard to wait for an answer in the browser, as it has to keep loading untill it receives any messages. Our solution was to make a get-request to an endpoint with the ssn, to retrieve the best provider. A proper solution could have been to send an e-mail to the user with the best loan provider(s).
+
+also, obviously there should have been an actual user interface, and not just some rest endpints - those would be a bit hard to non-programmer users.

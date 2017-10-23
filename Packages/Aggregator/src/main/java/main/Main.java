@@ -46,7 +46,8 @@ public class Main implements ConsumerDelegate, ProducerDelegate, AggregatorServi
     }
     
     @Override
-    public void didAggregatorServiceWithOptionalException(HashMap message, Exception ex) {
+
+    public void didAggregatorServiceWithOptionalException(String message, Exception ex) {
         System.out.println("\n{Aggregator} -- didAggregatorServiceWithOptionalException");
         if (ex == null) {
             System.out.println("Message: " + message.toString());
