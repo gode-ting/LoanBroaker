@@ -333,4 +333,6 @@ also, obviously there should have been an actual user interface, and not just so
 
 1. Use the rest service to post a request.
 
-![rest POST]()
+![rest POST post](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-post-postman.PNG)
+
+![rest POST server response](https://github.com/gode-ting/LoanBroaker/blob/master/Resources/client-get-response.PNG)
