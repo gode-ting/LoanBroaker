@@ -64,31 +64,16 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
             ObjectMapper mapper = new ObjectMapper();
             HashMap message = mapper.readValue(jsonString, new TypeReference<HashMap>() {});
             
-            System.out.println("keys: " + message.keySet().toString());
-            System.out.println("loanDuration");
-            
-//        JSONObject request = (JSONObject)SerializationUtils.deserialize(body);
-//        System.out.println("{GetCreditScore} didConsumeJSONMessage: " + request);
-//        HashMap<String, Object> application = new HashMap();
-//        application.put("ssn", (String)request.get("ssn"));
-//        application.put("loanAmount", (double)request.get("loanAmount"));
-//        application.put("loanDuration", (int)request.get("loanDuration"));
-//        
-//        
-////        HashMap application = (HashMap) SerializationUtils.deserialize(body);
         delegate.didConsumeMessageWithOptionalException(message, null);
     }
 
     public void handleCancel(String consumerTag) { 
-        System.out.println("????");
     }
 
     public void handleCancelOk(String consumerTag) {
-        System.out.println("2222");
     }
 
     public void handleRecoverOk(String consumerTag) {
-        System.out.println("6666");
     }
 
     public void handleShutdownSignal(String consumerTag, ShutdownSignalException arg1) {

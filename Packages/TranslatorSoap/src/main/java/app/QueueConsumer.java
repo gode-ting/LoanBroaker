@@ -56,12 +56,9 @@ public class QueueConsumer extends EndPointConsumer implements Runnable, com.rab
 
         try {
             String message = new String(body);
-            System.out.println(" [x] Received '" + env.getRoutingKey() + "':'" + message + "'");
             
-            System.out.println("BEFORE JSON");
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(message);
-            System.out.println("JSOOOOOOOON FROM TRANSLATOR - " + json);
             
             delegate.didConsumeMessageWithOptionalException(json, null);
         } catch (ParseException ex) {
@@ -72,26 +69,21 @@ public class QueueConsumer extends EndPointConsumer implements Runnable, com.rab
 
     @Override
     public void handleCancel(String consumerTag) {
-        System.out.println("444");
     }
 
     @Override
     public void handleCancelOk(String consumerTag) {
-        System.out.println("333");
     }
 
     @Override
     public void handleRecoverOk(String consumerTag) {
-        System.out.println("222");
     }
 
     @Override
     public void handleShutdownSignal(String consumerTag, ShutdownSignalException arg1) {
-        System.out.println("111");
     }
 
     public void accept(Object t) {
-        System.out.println("000");
     }
 
 }

@@ -25,7 +25,6 @@ public class ReciepientListService {
         JSONObject response = new JSONObject();
         response.put("ssn", (String) application.get("ssn"));
         response.put("creditScore", (int) application.get("creditScore"));
-        System.out.println(application.get("loanAmount"));
         response.put("loanAmount", (double) application.get("loanAmount"));
         response.put("loanDuration", (int) application.get("loanDuration"));
 

@@ -36,7 +36,6 @@ public class CreditScoreService implements Runnable {
 //                    String result = Integer.toString(port.creditScore(ssn));
                     String ssn = (String) application.get("ssn");
                     int score = (int) port.creditScore(ssn);
-                    System.out.println("{Credit Score} : " + score);
                     application.put("creditScore", score);
                     application.put("ssn", ((String)application.get("ssn")).replace("-", ""));
                     delegate.didGetCreditScoreWithOptionalException(application, null);

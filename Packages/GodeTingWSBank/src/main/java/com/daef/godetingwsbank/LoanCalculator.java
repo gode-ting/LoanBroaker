@@ -39,10 +39,6 @@ public class LoanCalculator {
         float interestRate = 0.0f;
        
         interestRate =  maxInterest - (maxInterest * (maxCreditScore - creditScore) / maxCreditScore);
-        System.out.println(maxInterest);
-        System.out.println(maxCreditScore);
-        System.out.println(creditScore);
-        System.out.println(interestRate);
         return interestRate;
     }
     

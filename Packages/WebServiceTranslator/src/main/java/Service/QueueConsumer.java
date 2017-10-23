@@ -56,14 +56,12 @@ public class QueueConsumer extends EndPoint implements Runnable, com.rabbitmq.cl
      */
     public void handleDelivery(String consumerTag, Envelope env,
             BasicProperties props, byte[] body) throws IOException {
-        System.out.println("hallo1");
         String application = new String(body);
         ObjectMapper mapper = new ObjectMapper();
         HashMap message = mapper.readValue(application, new TypeReference<HashMap>() {
         });
         JSONObject obj = new JSONObject();
 
-        System.out.println("hallo2: " + application);
         delegate.didConsumeMessageWithOptionalException(message, null);
     }
 

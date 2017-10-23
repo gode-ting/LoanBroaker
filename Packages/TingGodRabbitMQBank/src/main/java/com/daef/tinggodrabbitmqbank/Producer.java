@@ -30,9 +30,7 @@ public class Producer extends RabbitMQEndPointProducer {
                 BasicProperties props = new BasicProperties.Builder()
                         .headers(headers)
                         .build();
-                System.out.println("Before send - " + response.toJSONString());
                 byte[] data = SerializationUtils.serialize(response.toJSONString());
-                System.out.println("deserializing - " + SerializationUtils.deserialize(data));
                 
                 try {
                     channel.exchangeDeclare(replyTo_exchange, "fanout");

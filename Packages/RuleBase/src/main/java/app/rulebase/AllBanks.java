@@ -61,26 +61,12 @@ public class AllBanks {
     
     public static void main(String[] args) {
         AllBanks app = new AllBanks();
-        ArrayList<HashMap> allBanks = app.createBanks().get("banks");   
-        
-        
-        
-        
-        System.out.println("--- All banks ---");
-        
-        for(HashMap bank: allBanks) {
-            System.out.println("Bank name: " + bank.get("bankName"));
-        }
+        ArrayList<HashMap> allBanks = app.createBanks().get("banks");
         
 
         int creditScoreOne = 100;
         int creditScoreTwo = 250;
         int creditScoreThree = 500;
         int creditScoreFour = 800;
-
-        System.out.println("credit score one: " + app.getBanksByCreditScore(creditScoreOne).get("banks"));
-        System.out.println("credit score two: " + app.getBanksByCreditScore(creditScoreTwo).get("banks"));
-        System.out.println("credit score three: " + app.getBanksByCreditScore(creditScoreThree).get("banks"));
-        System.out.println("credit score four: " + app.getBanksByCreditScore(creditScoreFour).get("banks"));
     }
 }
