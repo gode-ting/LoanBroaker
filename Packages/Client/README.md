@@ -39,11 +39,11 @@ The client is a REST service where you can post request for loan providers, and 
 It's not possible to use the POST endpoint if you've already made one that you haven't yet reviewed by the GET endpoint.
 Also, it's not possible to use the GET endpoint unless you've already made a request by the POST endpoint.
 
-| Endpoint           | Method | Description                                                          | Paramters | Result               |
-|--------------------|--------|----------------------------------------------------------------------|-----------|----------------------|
-| `/loanRequest`     | POST   | Posts a request to get the best loan of available providers          |           | *Success* or *error* |
-| `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`     | Json of the result   |
-| `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |           | json                 |
+| Endpoint           | Method | Description                                                          | Paramters                           | Result               |
+|--------------------|--------|----------------------------------------------------------------------|-------------------------------------|----------------------|
+| `/loanRequest`     | POST   | Posts a request to get the best loan of available providers          | `ssn`, `loanAmount`, `loanDuration` | *Success* or *error* |
+| `/loanRequst/:ssn` | GET    | Request result of the POST endpoint - that is the best loan provider | `ssn`                               | Json of the result   |
+| `/`                | GET    | Returns an object/list of all available endpoints with descriptions  |                                     | json                 |
 
 ### What could have been done different on the client
 
